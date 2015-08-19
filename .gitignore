@@ -12,3 +12,5 @@ pom.xml.asc
 .lein-repl-history
 
 hs_err_pid85826.log
+
+*.mid
