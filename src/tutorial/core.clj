@@ -1,28 +1,56 @@
-(ns tutorial.core
-	(:use overtone.live)
-	(:require [beatr.beatr :as b]))
+(ns tutorial.core)
 
-(definst kick [freq 120 dur 0.3 width 0.5]
-  (let [freq-env (* freq (env-gen (perc 0 (* 0.99 dur))))
-        env (env-gen (perc 0.01 dur) 1 1 0 1 FREE)
-        sqr (* (env-gen (perc 0 0.01)) (pulse (* 2 freq) width))
-        src (sin-osc freq-env)
-        drum (+ sqr (* env src))]
-    (compander drum drum 0.2 1 0.1 0.01 0.01)))
+(def c-major-notes ["C" "E" "G" "B" "z" "c" "e" "g" "b" "z" "c'" "e'" "g'" "b'" "z"])
+(def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
+(def c-major-root "\"Am\"")
+(def tempo-root "Q:1/4=")
+(def default-tempo 360)
+(def header "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c\nQ:1/4=360\n")
 
-(definst c-hat [amp 0.8 t 0.04]
-  (let [env (env-gen (perc 0.001 t) 1 1 0 1 FREE)
-        noise (white-noise)
-        sqr (* (env-gen (perc 0.01 0.04)) (pulse 880 0.2))
-        filt (bpf (+ sqr noise) 9000 0.5)]
-    (* amp env filt)))
+(defn- metric-line-to-bits [metric]
+	(clojure.string/split metric #"\s+"))
 
-(def metro (metronome 128))
+(defn- complexity-from-metric [metric]
+	(if (> (count (metric-line-to-bits metric)) 2)
+		(let [complexity (nth (metric-line-to-bits metric) 2)
+			; _ (prn complexity)
+			]
+			(read-string complexity))
+		0))
 
-(defn player [beat]
-  (at (metro beat) (kick))
-  (at (metro (+ 0.5 beat)) (c-hat))
-  (apply-by (metro (inc beat)) #'player (inc beat) []))
+(defn- line-width-from-metric [metric]
+	; (prn metric)
+	(let [line-width (read-string (nth (metric-line-to-bits metric) 1))
+		; _ (prn line-width)
+		]
+		line-width))
+
+(defn- metric-to-note-index [metric]
+	(let [note-index (mod (line-width-from-metric metric) (count c-major-notes))
+		; _ (prn note-index)
+		]
+		note-index))
+
+(defn- metric-to-note [metric]
+	(let [complexity (complexity-from-metric metric)
+				note (nth c-major-notes (metric-to-note-index metric))]
+		(cond (> complexity 0)
+			(str "\n" tempo-root (+ (* 20 complexity) default-tempo) "\n" note)
+			; note
+			:else note)))
+
+(defn- generate-notation [notes-per-measure line-metrics]
+	; (prn line-metrics)
+	(let [mapped-notes (map #(metric-to-note %1) line-metrics)
+		notes-in-measures (apply str (flatten (interpose (str "|\n" c-major-root) (partition notes-per-measure mapped-notes))))
+		completed-score (str header "|" c-major-root notes-in-measures "|")
+		_ (prn completed-score)
+		]
+		(spit "songaliser.abc", completed-score)
+		)
+	)
 
 (defn -main []
-	(player (metro)))
+	(with-open [rdr (clojure.java.io/reader "all-metrics.txt")]
+     (generate-notation 4 (line-seq rdr)))
+	)
