@@ -11,9 +11,18 @@ The name, Aeolian, apart from being a Greek musical mode, refers to a leading co
 
 1. Generate the metrics
 
+
 2. Generate the ABC Notation
 
+    lein run
+
 3. Generate a playable version of the ABC Notation
+
+    abc2midi aeolian.abc
+
+4. Play the music
+
+    timidity aeolian1.mid
 
 ## License
 
