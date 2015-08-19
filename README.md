@@ -4,8 +4,8 @@ A Clojure console application that injests (currently) a limited set of source c
 
 The name, Aeolian, apart from being a Greek musical mode, refers to a leading company in the production of [player pianos][2], which takes punched paper as input and drives a mechanical piano.
 
-[1]: [http://abcnotation.com/]
-[2]: [https://en.wikipedia.org/wiki/Player_piano]
+[1]: http://abcnotation.com/
+[2]: https://en.wikipedia.org/wiki/Player_piano
 
 ## Usage
 
