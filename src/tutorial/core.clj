@@ -50,7 +50,7 @@
 		)
 	)
 
-(defn -main []
-	(with-open [rdr (clojure.java.io/reader "all-metrics.txt")]
+(defn -main [& args]
+	(with-open [rdr (clojure.java.io/reader (first args))]
      (generate-notation 4 (line-seq rdr)))
 	)
