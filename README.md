@@ -27,7 +27,9 @@ Currently, Aeolian only cares about two code metrics; one is used to determine w
 	```
 
 	A sample Checkstyle to generate the complexity metrics shown about can be found [here](resources/checkstyle.xml).
-	
+
+	A sample Java source file (courtesy of [RXJava][6]) can be found [here](resources/Notification.java).
+
 2. _Generate the ABC Notation._
 
 	Aeolian takes a metric file as input (foo.txt) and generates an ABC Notation file from the input file (foo.abc) for use in the next stage of the pipeline.
@@ -61,3 +63,4 @@ Distributed under the Eclipse Public License, the same as Clojure.
 [3]: http://ifdo.pugmarks.com/~seymour/runabc/top.html
 [4]: http://timidity.sourceforge.net/
 [5]: http://checkstyle.sourceforge.net/
+[6]: https://github.com/ReactiveX/RxJava
