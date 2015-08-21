@@ -21,7 +21,7 @@ Note: there are still lots of dimensions to code quality and song composition an
 
 	How the metrics are generated are less important than what format they are generated in.  For development purposes, I used [Checkstyle][5] plus some bash scripty-magic to create sample input files from a Java source file.  
 
-	```
+	```script
 	# Generate some complexity metrics from Checkstyle
 	java -jar /path/to/checkstyle.jar -c /path/to/checkstyle.xml Foo.java | grep "Cyclomatic Complexity" | awk '{print $1 " " $5}' | awk -F: '{print $2 " " $4}' > complexity.txt
 	# Generate some line length metrics from awk
@@ -34,11 +34,11 @@ Note: there are still lots of dimensions to code quality and song composition an
 
 	A sample Java source file (courtesy of [RXJava][6]) can be found [here](resources/Notification.java).
 
-	The key formatting rules of the resultant '''combined-metrics.txt''' file are that each line of the source code is represented by a corresponding line in the metrics file.  Each line will have at least two and up to three components:
+	The key formatting rules of the resultant `combined-metrics.txt` file are that each line of the source code is represented by a corresponding line in the metrics file.  Each line will have at least two and up to three components:
 
-	'''
+	```script
 	<line number> <line length> [<change in complexity>]
-	'''
+	```
 
 2. _Generate the ABC Notation._
 
