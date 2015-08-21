@@ -11,6 +11,10 @@ Currently, Aeolian only cares about two code metrics; one is used to determine w
 [1]: http://abcnotation.com/
 [2]: https://en.wikipedia.org/wiki/Player_piano
 
+Because there is one note played for each line of code processed, a larger source file will produce a longer song.  Likewise, more complex code will result in faster passages in the song, whilst less complex code will result in slower passages.
+
+Note: there are still lots of dimensions to code quality and song composition and structure which haven't been covered by Aeolian.  I give this to you as a starting point to build out more complex audio representations of code quality for your own edification.
+
 ## Usage
 
 1. _Generate the metrics._
@@ -53,6 +57,8 @@ Currently, Aeolian only cares about two code metrics; one is used to determine w
 	```
 	timidity aeolian1.mid
 	```
+
+	Assuming all steps of the pipeline have been successful, you should now be listening to the quality of your code playing.
 
 ## License
 
