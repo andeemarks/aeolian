@@ -34,6 +34,12 @@ Note: there are still lots of dimensions to code quality and song composition an
 
 	A sample Java source file (courtesy of [RXJava][6]) can be found [here](resources/Notification.java).
 
+	The key formatting rules of the resultant '''combined-metrics.txt''' file are that each line of the source code is represented by a corresponding line in the metrics file.  Each line will have at least two and up to three components:
+
+	'''
+	<line number> <line length> [<change in complexity>]
+	'''
+
 2. _Generate the ABC Notation._
 
 	Aeolian takes a metric file as input (foo.txt) and generates an ABC Notation file from the input file (foo.abc) for use in the next stage of the pipeline.
