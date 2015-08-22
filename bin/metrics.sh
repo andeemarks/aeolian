@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo `pwd`
+
 if [ "$#" -ne 1 ]
 then
   echo "Usage: metrics.sh <Java source file>"
@@ -16,7 +18,6 @@ fi
 CHECKSTYLE_JAR=../resources/checkstyle-6.9-all.jar
 CHECKSTYLE_PROPS=../resources/checkstyle.xml
 
-TEMP_DIR=/tmp
 TEMP_COMPLEXITY_METRICS=`mktemp /tmp/complexity.txt.XXXXXX` || exit 1
 TEMP_LENGTH_METRICS=`mktemp /tmp/line-lengths.txt.XXXXXX` || exit 1
 
