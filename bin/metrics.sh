@@ -20,7 +20,7 @@ TEMP_DIR=/tmp
 TEMP_COMPLEXITY_METRICS=`mktemp /tmp/complexity.txt.XXXXXX` || exit 1
 TEMP_LENGTH_METRICS=`mktemp /tmp/line-lengths.txt.XXXXXX` || exit 1
 
-COMBINED_METRICS=$(basename $SOURCE_FILE).metrics
+COMBINED_METRICS=combined-metrics.txt
 
 echo "Processing $SOURCE_FILE..."
 echo "1. Generating complexity metrics with Checkstyle..."

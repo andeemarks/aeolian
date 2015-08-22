@@ -14,5 +14,3 @@ pom.xml.asc
 hs_err_pid85826.log
 
 *.mid
-
-*.metrics
