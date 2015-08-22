@@ -33,3 +33,6 @@ echo "3. Merging metric datasets..."
 join -a1 <(sort $TEMP_LENGTH_METRICS) <(sort $TEMP_COMPLEXITY_METRICS) | sort -n > $COMBINED_METRICS
 
 echo "Generated " $COMBINED_METRICS
+
+echo "4. Generating ABC Notation from metrics..."
+lein run $COMBINED_METRICS
