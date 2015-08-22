@@ -4,7 +4,7 @@
 (def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def c-major-root "\"Am\"")
 (def tempo-root "Q:1/4=")
-(def default-tempo 360)
+(def default-tempo 120)
 (def header "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c\nQ:1/4=360\n")
 
 (defn- metric-line-to-bits [metric]
@@ -34,7 +34,7 @@
 (defn- metric-to-note [metric]
 	(let [complexity (complexity-from-metric metric)
 				note (nth c-major-notes (metric-to-note-index metric))]
-		(cond (> complexity 0)
+		(cond (> complexity 1)
 			(str "\n" tempo-root (+ (* 20 complexity) default-tempo) "\n" note)
 			; note
 			:else note)))

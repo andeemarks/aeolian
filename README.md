@@ -15,6 +15,12 @@ Because there is one note played for each line of code processed, a larger sourc
 
 Note: there are still lots of dimensions to code quality and song composition and structure which haven't been covered by Aeolian.  I give this to you as a starting point to build out more complex audio representations of code quality for your own edification.
 
+## Song Composition
+
+All generated songs are in the key of C major, with a default tempo of 120bpm.  Ideally, you would map other code metrics to determine the overall key for the songs - a generally clean codebase should be in a major scale and a smellier one in a minor scale, for example.  The tempo will increase by 20 beats for each method with a complexity rating greater than 1 (e.g., complexity of 10 will give a tempo of 320).
+
+There are not currently any representation of verse, chorus, bridge or other modern song elements, although I would like to add them in somehow.
+
 ## Usage
 
 1. _Generate the metrics._
