@@ -5,5 +5,4 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main aeolian.core
   :jvm-opts ^:replace []
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [overtone "0.9.1"]])
+  :dependencies [[midje "1.7.0"]])

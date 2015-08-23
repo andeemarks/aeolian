@@ -1,7 +1,7 @@
 (ns aeolian.core-test
-  (:use clojure.test
+  (:use midje.sweet
         aeolian.core))
 
-(deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+(facts a-test
+  (fact "FIXME, I fail."
+    (= 0 1) => true))
