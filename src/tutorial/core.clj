@@ -5,7 +5,8 @@
 (def c-major-root "\"Am\"")
 (def tempo-root "Q:1/4=")
 (def default-tempo 120)
-(def header "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c\nQ:1/4=120\n")
+(def drum-beat "%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c")
+(def header (str "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n" drum-beat "\n" tempo-root default-tempo "\n"))
 
 (defn- metric-line-to-bits [metric]
 	(clojure.string/split metric #"\s+"))
@@ -31,11 +32,14 @@
 		]
 		note-index))
 
+(defn- complexity-to-tempo [complexity]
+	(str tempo-root (+ (* 20 complexity) default-tempo)))
+
 (defn- metric-to-note [metric]
 	(let [complexity (complexity-from-metric metric)
 				note (nth c-major-notes (metric-to-note-index metric))]
 		(cond (> complexity 1)
-			(str "\n" tempo-root (+ (* 20 complexity) default-tempo) "\n" note)
+			(str "\n" (complexity-to-tempo complexity) "\n" note)
 			; note
 			:else note)))
 
@@ -47,11 +51,13 @@
 		; _ (prn completed-score)
 		]
 		(spit notation-file-name, completed-score)
+		notation-file-name
 		)
 	)
 
 (defn -main [& args]
 	(println (str "Generating ABC Notation from " (first args) "..."))
 	(with-open [rdr (clojure.java.io/reader (first args))]
-     (generate-notation 4 (line-seq rdr) (str (first args) ".abc")))
+     (let [notation-file-name (generate-notation 4 (line-seq rdr) (str (first args) ".abc"))]
+     	(println (str "Generated " notation-file-name))))
 	)
