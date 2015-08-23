@@ -1,4 +1,4 @@
-(ns tutorial.core)
+(ns aeolian.core)
 
 (def c-major-notes ["C" "E" "G" "B" "z" "c" "e" "g" "b" "z" "c'" "e'" "g'" "b'" "z"])
 (def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])

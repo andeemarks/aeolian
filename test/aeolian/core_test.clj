@@ -1,6 +1,6 @@
-(ns tutorial.core-test
+(ns aeolian.core-test
   (:use clojure.test
-        tutorial.core))
+        aeolian.core))
 
 (deftest a-test
   (testing "FIXME, I fail."
