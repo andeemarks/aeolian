@@ -24,6 +24,12 @@ if [[ -r $SOURCEFILE ]]; then
 	cat $SOURCEFILE | awk '{print NR " " length($0)}' > /tmp/line-lengths.txt
 	echo "Merging the two datasets..."
 	join -a1 <(sort /tmp/line-lengths.txt) <(sort /tmp/complexity.txt) > combined-metrics.txt
+	echo "Generating ABC notation..."
+	lein run combined-metrics.txt
+	echo "Generating MIDI..."
+	abc2midi combined-metrics.txt.abc
+	echo "Playing MIDI..."
+	timidity combined-metrics.txt1.mid
 else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
     exit 1
