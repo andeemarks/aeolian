@@ -18,3 +18,7 @@ hs_err_pid85826.log
 *.metrics
 
 *.abc
+
+combined-metrics.txt
+complexity.txt
+line-lengths.txt
