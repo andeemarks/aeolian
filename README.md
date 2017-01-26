@@ -28,13 +28,10 @@ There are not currently any representation of verse, chorus, bridge or other mod
 	How the metrics are generated are less important than what format they are generated in.  For development purposes, I used [Checkstyle][5] plus some bash scripty-magic to create sample input files from a Java source file.  
 
 	```script
-	# Generate some complexity metrics from Checkstyle
-	java -jar /path/to/checkstyle.jar -c /path/to/checkstyle.xml Foo.java | grep "Cyclomatic Complexity" | awk '{print $1 " " $5}' | awk -F: '{print $2 " " $4}' > complexity.txt
-	# Generate some line length metrics from awk
-	cat Foo.java | awk '{print NR " " length($0)}' > line-lengths.txt
-	# Merge the two datasets
-	join -a1 <(sort line-lengths.txt) <(sort complexity.txt) > combined-metrics.txt
+	./go.sh Foo.java
 	```
+
+	The script file mentioned above can be found [here](resources/go.sh).
 
 	A sample Checkstyle to generate the complexity metrics shown about can be found [here](resources/checkstyle.xml).
 
@@ -56,7 +53,7 @@ There are not currently any representation of verse, chorus, bridge or other mod
 
 3. _Generate a playable version of the ABC Notation._
 
-	Aeolian was developed using [abcmidi][3] (available via Homebrew on OSX).  abcmidi takes an ABC Notation file as input (foo.abc) and generates a MIDI file from the input file (foo1.mid) for use in the next stage of the pipeline.
+	Aeolian was developed using [abcmidi][3] (available on OSX and Ubuntu).  abcmidi takes an ABC Notation file as input (foo.abc) and generates a MIDI file from the input file (foo1.mid) for use in the next stage of the pipeline.
 
 	```
 	abc2midi aeolian.abc
@@ -64,7 +61,7 @@ There are not currently any representation of verse, chorus, bridge or other mod
 
 4. _Play the music._  
 
-	Aeolian was developed using [timidity][4] (available via Homebrew on OSX).
+	Aeolian was developed using [timidity][4] (available on OSX and Ubuntu).
 
 	```
 	timidity aeolian1.mid
