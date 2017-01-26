@@ -3,17 +3,15 @@
 (defn- metric-line-to-bits [metric]
 	(clojure.string/split metric #"\s+"))
 
+(defn- check-valid-line-number [metric]
+	(Integer/parseInt (nth (metric-line-to-bits metric) 0)))
+
 (defn complexity-from-metric [metric]
+	(check-valid-line-number metric)
 	(if (> (count (metric-line-to-bits metric)) 2)
-		(let [complexity (nth (metric-line-to-bits metric) 2)
-			; _ (prn complexity)
-			]
-			(read-string complexity))
+		(Integer/parseInt (nth (metric-line-to-bits metric) 2))
 		0))
 
 (defn line-width-from-metric [metric]
-	; (prn metric)
-	(let [line-width (read-string (nth (metric-line-to-bits metric) 1))
-		; _ (prn line-width)
-		]
-		line-width))
+	(check-valid-line-number metric)
+	(Integer/parseInt (nth (metric-line-to-bits metric) 1)))
