@@ -5,5 +5,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main aeolian.core
   :jvm-opts ^:replace []
-  :dependencies [	[org.clojure/clojure "1.8.0"]
-  					[midje "1.8.3"]])
+  :dependencies [	[org.clojure/clojure "1.8.0"]]
+  :profiles 
+  	{:dev 
+  		{:dependencies 
+  			[
+  				[midje "1.8.3" :exclusions [org.clojure/clojure]]]}})
