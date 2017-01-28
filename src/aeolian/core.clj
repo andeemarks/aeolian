@@ -1,12 +1,11 @@
 (ns aeolian.core
 	(:require [aeolian.parser :as parser]
+						[aeolian.tempo :as tempo]
 						[clojure.java.io :as io]))
 
 (def c-major-notes ["C" "E" "G" "B" "z" "c" "e" "g" "b" "z" "c'" "e'" "g'" "b'" "z"])
 (def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def c-major-root "\"Am\"")
-(def tempo-root "Q:1/4=")
-(def default-tempo 120)
 (def drum-beat "%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c")
 (def header (str "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n" drum-beat "\n" tempo-root default-tempo "\n"))
 
@@ -14,14 +13,11 @@
 (defn- metric-to-note-index [metric]
 	(mod (parser/line-width-from-metric metric) (count c-major-notes)))
 
-(defn complexity-to-tempo [complexity]
-	(str tempo-root (+ (* 20 complexity) default-tempo)))
-
 (defn- metric-to-note [metric]
 	(let [complexity (parser/complexity-from-metric metric)
 				note (nth c-major-notes (metric-to-note-index metric))]
 		(cond (> complexity 1)
-			(str "\n" (complexity-to-tempo complexity) "\n" note)
+			(str "\n" (tempo/complexity-to-tempo complexity) "\n" note)
 			; note
 			:else note)))
 
