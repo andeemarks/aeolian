@@ -12,10 +12,9 @@
 
 
 (defn- metric-to-note-index [metric]
-	(let [note-index (mod (parser/line-width-from-metric metric) (count c-major-notes))]
-		note-index))
+	(mod (parser/line-width-from-metric metric) (count c-major-notes)))
 
-(defn- complexity-to-tempo [complexity]
+(defn complexity-to-tempo [complexity]
 	(str tempo-root (+ (* 20 complexity) default-tempo)))
 
 (defn- metric-to-note [metric]
