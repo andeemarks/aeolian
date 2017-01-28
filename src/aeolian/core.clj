@@ -17,7 +17,7 @@
 	(let [complexity (parser/complexity-from-metric metric)
 				note (nth c-major-notes (metric-to-note-index metric))]
 		(cond (> complexity 1)
-			(str "\n" (tempo/complexity-to-tempo complexity) "\n" note)
+			(str "\n" (tempo/as-abc complexity) "\n" note)
 			; note
 			:else note)))
 
