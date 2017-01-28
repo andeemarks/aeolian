@@ -12,9 +12,7 @@
 
 
 (defn- metric-to-note-index [metric]
-	(let [note-index (mod (parser/line-width-from-metric metric) (count c-major-notes))
-		; _ (prn note-index)
-		]
+	(let [note-index (mod (parser/line-width-from-metric metric) (count c-major-notes))]
 		note-index))
 
 (defn- complexity-to-tempo [complexity]
@@ -29,22 +27,20 @@
 			:else note)))
 
 (defn- generate-notation [notes-per-measure line-metrics notation-file-name]
-	; (prn line-metrics)
 	(let [mapped-notes (map #(metric-to-note %1) line-metrics)
 		notes-in-measures (apply str (flatten (interpose (str "|\n" c-major-root) (partition notes-per-measure mapped-notes))))
-		completed-score (str header "|" c-major-root notes-in-measures "|")
-		; _ (prn completed-score)
-		]
-		(spit notation-file-name, completed-score)
-		notation-file-name
-		)
-	)
+		completed-score (str header "|" c-major-root notes-in-measures "|") ]
+		(spit notation-file-name, completed-score) ) )
+
+(defn notation-file-name [original-file-name]
+	(str original-file-name ".abc"))
 
 (defn- generate-notation-from [metrics-file-name]
 	(println (str "Generating ABC Notation from " metrics-file-name "..."))
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
-     (let [notation-file-name (generate-notation 4 (line-seq rdr) (str metrics-file-name ".abc"))]
-     	(println (str "Generated " notation-file-name))))
+     (let [notation-file-name (notation-file-name metrics-file-name)
+     		_ (generate-notation 4 (line-seq rdr) notation-file-name)]
+     		(println (str "Generated " notation-file-name))))
 	)
 
 (defn -main [& args]
