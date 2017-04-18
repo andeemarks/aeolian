@@ -20,11 +20,10 @@ SOURCEFILE=$1
 if [[ -r $SOURCEFILE ]]; then
 	echo -e "\e[33mGenerating Checkstyle cyclomatic complexity metrics...\e[0m"
 	java -jar $DIR/resources/checkstyle-7.4-all.jar -c $DIR/resources/checkstyle.xml $SOURCEFILE | grep "CyclomaticComplexity" | awk '{print $2 " " $3}' | awk -F: '{print $1 " " $2 " " $4}' > /tmp/complexity.txt
-	less /tmp/complexity.txt
 	echo -e "\e[33mGenerating Awk line length metrics...\e[0m"
 	awk '{print FILENAME " " NR " " length($0)}' $SOURCEFILE > /tmp/line-lengths.txt
 	echo -e "\e[33mMerging the two datasets...\e[0m"
-	join -a1 <(sort /tmp/line-lengths.txt) <(sort /tmp/complexity.txt) > combined-metrics.txt
+	join -a1 <(sort -g --key=2 /tmp/line-lengths.txt) <(sort -g --key=2 /tmp/complexity.txt) > combined-metrics.txt
 	echo -e "\e[33mGenerating ABC notation...\e[0m"
 	lein run combined-metrics.txt
 	echo -e "\e[33mGenerating MIDI...\e[0m"
