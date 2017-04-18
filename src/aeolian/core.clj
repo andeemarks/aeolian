@@ -31,7 +31,7 @@
 	(str original-file-name ".abc"))
 
 (defn- generate-notation-from [metrics-file-name]
-	(println (str "Generating ABC Notation from " metrics-file-name "..."))
+	; (println (str "Generating ABC Notation from " metrics-file-name "..."))
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
      (let [notation-file-name (notation-file-name metrics-file-name)
      		_ (generate-notation 4 (line-seq rdr) notation-file-name)]
