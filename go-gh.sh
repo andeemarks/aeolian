@@ -22,7 +22,7 @@ cd $GITHUB_REPO
 
 echo -e "\e[33mListing files...\e[0m"
 
-rm blames.txt
+# Probably need to filter files first, then generate stats, then blame
 git ls-tree -r -z --name-only HEAD| xargs -t -0 -n1 git blame -f -t | awk '{print $2 " " $5}' > blames.txt
 
 function cleanup {
