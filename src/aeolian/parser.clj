@@ -4,7 +4,7 @@
 	(clojure.string/split metric #"\s+"))
 
 (defn- check-valid-line-number [metric]
-	(Integer/parseInt (nth (metric-line-to-bits metric) 0)))
+	(Integer/parseInt (nth (metric-line-to-bits metric) 1)))
 
 (defn complexity-from-metric [metric]
 	(check-valid-line-number metric)
@@ -14,4 +14,4 @@
 
 (defn line-width-from-metric [metric]
 	(check-valid-line-number metric)
-	(Integer/parseInt (nth (metric-line-to-bits metric) 1)))
+	(Integer/parseInt (nth (metric-line-to-bits metric) 3)))

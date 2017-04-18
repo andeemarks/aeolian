@@ -6,15 +6,10 @@
 <module name="Checker">
 	<module name="TreeWalker">
 
-		<module name="JavaNCSS">
-		    <property name="methodMaximum" value="0"/>
-    		<message key="ncss.method" value="{0}" />
-		</module>
-		
-		<module name="CyclomaticComplexity">
+		 <module name="LineLength">
 		    <property name="max" value="0"/>
-    		<message key="cyclomaticComplexity" value="{0}" />
-		</module>
+    		<message key="maxLineLen" value="{1}" />
+		 </module>
 	
 	</module>
 </module>
