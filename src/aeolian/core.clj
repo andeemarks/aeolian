@@ -7,7 +7,7 @@
 (def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def c-major-root "\"Am\"")
 (def drum-beat "%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c")
-(def header (str "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n" drum-beat "\n" tempo-root default-tempo "\n"))
+(def header (str "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n" drum-beat "\n" tempo/abc-template tempo/default-tempo "\n"))
 
 
 (defn- metric-to-note-index [metric]

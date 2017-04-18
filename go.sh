@@ -19,7 +19,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SOURCEFILE=$1
 if [[ -r $SOURCEFILE ]]; then
 	echo -e "\e[33mGenerating some complexity metrics from Checkstyle...\e[0m"
-	java -jar $DIR/resources/checkstyle-7.4-all.jar -c $DIR/resources/checkstyle.xml $SOURCEFILE | grep "Cyclomatic Complexity" | awk '{print $2 " " $6}' | awk -F: '{print $2 " " $4}' > /tmp/complexity.txt
+	java -jar $DIR/resources/checkstyle-7.4-all.jar -c $DIR/resources/checkstyle.xml $SOURCEFILE | grep "Cyclomatic Complexity" | awk '{print $2 " " $3}' | awk -F: '{print $1 " " $2 " " $4}' > /tmp/complexity.txt
 	echo -e "\e[33mGenerating some line length metrics from awk...\e[0m"
 	cat $SOURCEFILE | awk '{print NR " " length($0)}' > /tmp/line-lengths.txt
 	echo -e "\e[33mMerging the two datasets...\e[0m"

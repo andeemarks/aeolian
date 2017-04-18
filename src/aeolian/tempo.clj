@@ -7,5 +7,5 @@
 	(+ (* 20 complexity) default-tempo))
 
 (defn as-abc [complexity]
-	(str tempo-root (generate complexity)))
+	(str abc-template (generate complexity)))
 
