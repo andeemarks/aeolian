@@ -18,17 +18,17 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SOURCEFILE=$1
 if [[ -r $SOURCEFILE ]]; then
-	echo "Generating some complexity metrics from Checkstyle..."
+	echo -e "\e[33mGenerating some complexity metrics from Checkstyle...\e[0m"
 	java -jar $DIR/resources/checkstyle-7.4-all.jar -c $DIR/resources/checkstyle.xml $SOURCEFILE | grep "Cyclomatic Complexity" | awk '{print $2 " " $6}' | awk -F: '{print $2 " " $4}' > /tmp/complexity.txt
-	echo "Generating some line length metrics from awk..."
+	echo -e "\e[33mGenerating some line length metrics from awk...\e[0m"
 	cat $SOURCEFILE | awk '{print NR " " length($0)}' > /tmp/line-lengths.txt
-	echo "Merging the two datasets..."
+	echo -e "\e[33mMerging the two datasets...\e[0m"
 	join -a1 <(sort /tmp/line-lengths.txt) <(sort /tmp/complexity.txt) > combined-metrics.txt
-	echo "Generating ABC notation..."
+	echo -e "\e[33mGenerating ABC notation...\e[0m"
 	lein run combined-metrics.txt
-	echo "Generating MIDI..."
+	echo -e "\e[33mGenerating MIDI...\e[0m"
 	abc2midi combined-metrics.txt.abc
-	echo "Playing MIDI..."
+	echo -e "\e[33mPlaying MIDI...\e[0m"
 	timidity combined-metrics.txt1.mid
 else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
