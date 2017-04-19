@@ -1,14 +1,14 @@
 (ns aeolian.composer
 	(:require [aeolian.parser :as parser]
-						[aeolian.tempo :as tempo]
+						[aeolian.tempo :as t]
 						[aeolian.abc.header :as h]
+						[aeolian.midi.drums :as d]
 						[clojure.java.io :as io]))
 
-(def c-major-notes ["C" "E" "G" "B" "z" "c" "e" "g" "b" "z" "c'" "e'" "g'" "b'" "z"])
+(def c-major-notes ["C," "E," "G," "B," "z" "C" "E" "G" "B" "z" "c" "e" "g" "b" "z" "c'" "e'" "g'" "b'" "z"])
 (def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def c-major-root "\"Am\"")
-(def drum-beat "%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c")
-(def output-header (str h/header drum-beat "\n" tempo/abc-template tempo/default-tempo "\n"))
+(def output-header (str h/header d/beat "\n" t/abc-template t/default-tempo "\n"))
 (def notes-per-measure 4)
 
 (defn- metric-to-note-index [metric]
@@ -22,7 +22,7 @@
 				; _ (println note)
 				]
 		(cond (> complexity 1)
-			(str "\n" (tempo/as-abc complexity) "\n" note)
+			(str "\n" (t/as-abc complexity) "\n" note)
 			; note
 			:else note)))
 
