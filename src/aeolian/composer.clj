@@ -5,10 +5,11 @@
 						[aeolian.midi.drums :as d]
 						[clojure.java.io :as io]))
 
-(def c-major-notes ["C," "E," "G," "B," "z" "C" "E" "G" "B" "z" "c" "e" "g" "b" "z" "c'" "e'" "g'" "b'" "z"])
+(def rest-note "z")
+(def c-major-notes ["C," "E," "G," "B," rest-note "C" "E" "G" "B" rest-note "c" "e" "g" "b" rest-note "c'" "e'" "g'" "b'" rest-note])
 (def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def c-major-root "\"Am\"")
-(def output-header (str h/header d/beat "\n" t/abc-template t/default-tempo "\n"))
+(def output-header (str h/header d/beat t/abc-template t/default-tempo "\n"))
 (def notes-per-measure 4)
 
 (defn- metric-to-note-index [metric]
