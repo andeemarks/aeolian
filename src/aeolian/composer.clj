@@ -21,7 +21,9 @@
 			:else note)))
 
 (defn compose [notes-per-measure line-metrics notation-file-name]
-	(let [mapped-notes (map #(metric-to-note %1) (rest line-metrics))
+	(let [header (first line-metrics)
+		metrics (rest line-metrics)
+		mapped-notes (map #(metric-to-note %1) metrics)
 		notes-in-measures (apply str (flatten (interpose (str "|\n" c-major-root) (partition notes-per-measure mapped-notes))))
 		completed-score (str header "|" c-major-root notes-in-measures "|") ]
 		(spit notation-file-name, completed-score) ) )
