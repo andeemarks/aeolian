@@ -7,7 +7,7 @@
 	<module name="TreeWalker">
 
 		 <module name="LineLength">
-		    <property name="max" value="0"/>
+		    <property name="max" value="-1"/>
     		<message key="maxLineLen" value="{1}" />
 		 </module>
 	

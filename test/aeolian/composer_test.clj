@@ -3,14 +3,17 @@
   (:require [aeolian.composer :as c]
             [clojure.string :as str]
             [aeolian.tempo :as t]
-            [aeolian.abc.notes :as notes]))
+            [aeolian.abc.notes :as n]))
 
 (facts "when processing metrics"
-  (fact "line length is mapped to note"
-    (some #(= (c/metric-to-note "Foo.java#1 3") %) notes/major-notes ) => truthy
-    (some #(= (c/metric-to-note "Foo.java#1 30") %) notes/major-notes ) => truthy
-    (some #(= (c/metric-to-note "Foo.java#1 300") %) notes/major-notes ) => truthy
-    (some #(= (c/metric-to-note "Foo.java#1 33") %) notes/major-notes ) => truthy)
+  (facts "line length is mapped to note"
+    (fact "empty lines are mapped to rests"
+      (c/metric-to-note "Foo.java#1 0") => n/rest-note)
+
+    (some #(= (c/metric-to-note "Foo.java#1 3") %) n/major-notes ) => truthy
+    (some #(= (c/metric-to-note "Foo.java#1 30") %) n/major-notes ) => truthy
+    (some #(= (c/metric-to-note "Foo.java#1 300") %) n/major-notes ) => truthy
+    (some #(= (c/metric-to-note "Foo.java#1 33") %) n/major-notes ) => truthy)
 
   (fact "complexity > 1 is mapped to tempo"
     (str/index-of (c/metric-to-note "Foo.java#1 30 1") t/abc-template ) => falsey
