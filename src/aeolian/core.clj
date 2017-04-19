@@ -10,8 +10,9 @@
 (defn- generate-notation-from [metrics-file-name]
 	; (println (str "Generating ABC Notation from " metrics-file-name "..."))
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
-     (let [notation-file-name (notation-file-name metrics-file-name)
-     		_ (composer/compose 4 (line-seq rdr) notation-file-name)]
+     	(let [notation-file-name (notation-file-name metrics-file-name)
+     				composition (composer/compose (line-seq rdr))]
+ 				(spit notation-file-name, composition)
      		(println (str "Generated " notation-file-name))))
 	)
 
