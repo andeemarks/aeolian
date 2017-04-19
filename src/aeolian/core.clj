@@ -11,7 +11,7 @@
 
 
 (defn- metric-to-note-index [metric]
-	(mod (parser/line-width-from-metric metric) (count c-major-notes)))
+	(mod (parser/line-length-from-metric metric) (count c-major-notes)))
 
 (defn- metric-to-note [metric]
 	(let [complexity (parser/complexity-from-metric metric)
