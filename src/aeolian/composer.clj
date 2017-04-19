@@ -3,8 +3,7 @@
 						[aeolian.tempo :as t]
 						[aeolian.midi.drums :as d]
 						[aeolian.abc.notes :as n]
-						[aeolian.abc.header :as h]
-						[clojure.java.io :as io]))
+						[aeolian.abc.header :as h]))
 
 (def output-header (str h/header d/beat t/abc-template t/default-tempo "\n"))
 (def notes-per-measure 4)
@@ -16,8 +15,6 @@
 	; (println metric)
 	(let [complexity (parser/complexity-from-metric metric)
 				note (nth n/major-notes (metric-to-note-index metric))
-				; _ (println complexity)
-				; _ (println note)
 				]
 		(cond (> complexity 1)
 			(str "\n" (t/as-abc complexity) "\n" note)
@@ -26,10 +23,8 @@
 
 (defn- map-metrics [metrics]
 	(let [
-		mapped-notes (map #(metric-to-note %1) metrics)
-		; _ (println mapped-notes)
-		notes-in-measures (apply str (flatten (interpose (str "|\n" n/major-root) (partition notes-per-measure mapped-notes)))) 
-		; _ (println notes-in-measures)
+			mapped-notes (map #(metric-to-note %1) metrics)
+			notes-in-measures (apply str (flatten (interpose (str "|\n" n/major-root) (partition notes-per-measure mapped-notes)))) 
 		]
 		(str output-header "|" n/major-root notes-in-measures "|")))
 
