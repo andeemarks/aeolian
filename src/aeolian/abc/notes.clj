@@ -7,7 +7,7 @@
 (def octave-4 ["c'" "e'" "g'" "b'"])
 (def octave-5 ["c''" "e''" "g''" "b''"])
 (def major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
-(def major-root "\"Am\"")
+(def major-root "\"C\"")
 
 (defn pick-octave-for-line-length [line-length]
 	(cond
