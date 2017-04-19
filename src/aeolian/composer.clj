@@ -5,7 +5,7 @@
 						[aeolian.abc.notes :as n]
 						[aeolian.abc.header :as h]))
 
-(def output-header (str h/header d/beat t/abc-template t/default-tempo "\n"))
+(def output-header (str h/header d/drum-track t/abc-template t/default-tempo "\n"))
 (def notes-per-measure 4)
 
 (defn- metric-to-note-index [metric]
