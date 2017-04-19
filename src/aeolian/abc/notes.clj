@@ -1,6 +1,12 @@
 (ns aeolian.abc.notes)
 
 (def rest-note "z")
-(def major-notes ["C," "E," "G," "B," "C" "E" "G" "B" "c" "e" "g" "b" "c'" "e'" "g'" "b'"])
+(def octave-1 ["C," "E," "G," "B,"])
+(def octave-2 ["C" "E" "G" "B"])
+(def octave-3 ["c" "e" "g" "b"])
+(def octave-4 ["c'" "e'" "g'" "b'"])
+(def octave-5 ["c''" "e''" "g''" "b''"])
+(def octave-6 ["c'''" "e'''" "g'''" "b'''"])
+(def major-notes (flatten [octave-1 octave-2 octave-3 octave-4 octave-5 octave-6]))
 (def major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def major-root "\"Am\"")
