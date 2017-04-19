@@ -21,11 +21,11 @@ SOURCEFILE=$1
 COMBINEDMETRICSFILE='combined-metrics.txt'
 if [[ -r $SOURCEFILE ]]; then
 	echo -e "\e[33mGenerating Checkstyle cyclomatic complexity metrics...\e[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "CyclomaticComplexity" | awk '{print $2 " " $3}' | awk -F: '{print $1 "_" $2 " " $4}' > /tmp/complexity.txt
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "CyclomaticComplexity" | awk '{print $2 " " $3}' | awk -F: '{print $1 "#" $2 " " $4}' > /tmp/complexity.txt
 	echo -e "\e[33mGenerating Checkstyle line length metrics...\e[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "LineLength" | awk '{print $2 " " $3}' | awk -F: '{print $1 "_" $2 " " $3}' > /tmp/line-lengths.txt
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "LineLength" | awk '{print $2 " " $3}' | awk -F: '{print $1 "#" $2 " " $3}' > /tmp/line-lengths.txt
 	echo -e "\e[33mMerging the two datasets...\e[0m"
-	echo "[source-file_line-number] [line-length] [cyclomatic-complexity]" > $COMBINEDMETRICSFILE
+	echo "[source-file#line-number] [line-length] [cyclomatic-complexity]" > $COMBINEDMETRICSFILE
 	join -a 1 <(sort -k 1b,1 /tmp/line-lengths.txt) <(sort -k 1b,1 /tmp/complexity.txt) >> $COMBINEDMETRICSFILE
 	echo -e "\e[33mGenerating ABC notation...\e[0m"
 	lein run $COMBINEDMETRICSFILE
