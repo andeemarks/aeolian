@@ -10,4 +10,5 @@
   	{:dev 
   		{:dependencies 
   			[
+          [com.jakemccrary/lein-test-refresh "0.19.0"]
   				[midje "1.8.3" :exclusions [org.clojure/clojure]]]}})
