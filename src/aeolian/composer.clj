@@ -11,10 +11,11 @@
 (defn- metric-to-note-index [metric]
 	(mod (parser/line-length-from-metric metric) (count n/major-notes)))
 
-(defn- metric-to-note [metric]
+(defn metric-to-note [metric]
 	; (println metric)
 	(let [complexity (parser/complexity-from-metric metric)
-				note (nth n/major-notes (metric-to-note-index metric))
+				note (nth n/major-notes (metric-to-note-index metric)) 
+				; _ (println note)
 				]
 		(cond (> complexity 1)
 			(str "\n" (t/as-abc complexity) "\n" note)
