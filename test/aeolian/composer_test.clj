@@ -7,13 +7,27 @@
 
 (facts "when processing metrics"
   (facts "line length is mapped to note"
-    (fact "empty lines are mapped to rests"
+    (future-fact "empty lines are mapped to rests"
       (c/metric-to-note "Foo.java#1 0") => n/rest-note)
 
-    (some #(= (c/metric-to-note "Foo.java#1 3") %) n/major-notes ) => truthy
-    (some #(= (c/metric-to-note "Foo.java#1 30") %) n/major-notes ) => truthy
-    (some #(= (c/metric-to-note "Foo.java#1 300") %) n/major-notes ) => truthy
-    (some #(= (c/metric-to-note "Foo.java#1 33") %) n/major-notes ) => truthy)
+    (facts "short lines are mapped to rests"
+      (c/metric-to-note "Foo.java#1 1") => n/rest-note
+      (c/metric-to-note "Foo.java#1 2") => n/rest-note
+      (c/metric-to-note "Foo.java#1 3") => n/rest-note
+      (c/metric-to-note "Foo.java#1 4") => n/rest-note
+      (c/metric-to-note "Foo.java#1 5") => n/rest-note
+      (c/metric-to-note "Foo.java#1 6") => n/rest-note
+      (c/metric-to-note "Foo.java#1 7") => n/rest-note
+      (c/metric-to-note "Foo.java#1 8") => n/rest-note
+      (c/metric-to-note "Foo.java#1 9") => n/rest-note
+      )
+
+    (facts "longer lines are mapped to actual notes"
+      (some #(= (c/metric-to-note "Foo.java#1 30") %) n/major-notes ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 300") %) n/major-notes ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 33") %) n/major-notes ) => truthy)
+
+    )
 
   (fact "complexity > 1 is mapped to tempo"
     (str/index-of (c/metric-to-note "Foo.java#1 30 1") t/abc-template ) => falsey

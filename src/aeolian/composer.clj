@@ -8,13 +8,21 @@
 (def output-header (str h/header d/drum-track t/abc-template t/default-tempo "\n"))
 (def notes-per-measure 4)
 
-(defn- metric-to-note-index [metric]
-	(mod (parser/line-length-from-metric metric) (count n/major-notes)))
+(defn- metric-to-note-index [line-length]
+	(mod line-length (count n/major-notes)))
+
+(defn build-note [metric]
+	(let [line-length (parser/line-length-from-metric metric)]
+		(if (< line-length 10)
+			n/rest-note
+			(nth n/major-notes (metric-to-note-index line-length))
+			))
+		)
 
 (defn metric-to-note [metric]
 	; (println metric)
 	(let [complexity (parser/complexity-from-metric metric)
-				note (nth n/major-notes (metric-to-note-index metric)) 
+				note (build-note metric)
 				; _ (println note)
 				]
 		(cond (> complexity 1)
