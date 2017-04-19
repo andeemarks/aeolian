@@ -23,15 +23,19 @@
       )
 
     (facts "longer lines are mapped to actual notes with longer lines at higher octaves"
-      (some #(= (c/metric-to-note "Foo.java#1 10") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 40") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 41") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 80") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 81") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 99") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 100") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 119") %) n/major-notes ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 120") %) n/major-notes ) => truthy )
+      (some #(= (c/metric-to-note "Foo.java#1 10") %) n/octave-1 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 39") %) n/octave-1 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 40") %) n/octave-2 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 79") %) n/octave-2 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 80") %) n/octave-3 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 99") %) n/octave-3 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 100") %) n/octave-4 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 119") %) n/octave-4 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 120") %) n/octave-5 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 121") %) n/octave-5 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 200") %) n/octave-5 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 2000") %) n/octave-5 ) => truthy
+       )
 
     )
 
