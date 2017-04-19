@@ -1,24 +1,21 @@
 (ns aeolian.composer
 	(:require [aeolian.parser :as parser]
 						[aeolian.tempo :as t]
-						[aeolian.abc.header :as h]
 						[aeolian.midi.drums :as d]
+						[aeolian.abc.notes :as n]
+						[aeolian.abc.header :as h]
 						[clojure.java.io :as io]))
 
-(def rest-note "z")
-(def c-major-notes ["C," "E," "G," "B," rest-note "C" "E" "G" "B" rest-note "c" "e" "g" "b" rest-note "c'" "e'" "g'" "b'" rest-note])
-(def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
-(def c-major-root "\"Am\"")
 (def output-header (str h/header d/beat t/abc-template t/default-tempo "\n"))
 (def notes-per-measure 4)
 
 (defn- metric-to-note-index [metric]
-	(mod (parser/line-length-from-metric metric) (count c-major-notes)))
+	(mod (parser/line-length-from-metric metric) (count n/c-major-notes)))
 
 (defn- metric-to-note [metric]
 	; (println metric)
 	(let [complexity (parser/complexity-from-metric metric)
-				note (nth c-major-notes (metric-to-note-index metric))
+				note (nth n/c-major-notes (metric-to-note-index metric))
 				; _ (println complexity)
 				; _ (println note)
 				]
@@ -31,10 +28,10 @@
 	(let [
 		mapped-notes (map #(metric-to-note %1) metrics)
 		; _ (println mapped-notes)
-		notes-in-measures (apply str (flatten (interpose (str "|\n" c-major-root) (partition notes-per-measure mapped-notes)))) 
+		notes-in-measures (apply str (flatten (interpose (str "|\n" n/c-major-root) (partition notes-per-measure mapped-notes)))) 
 		; _ (println notes-in-measures)
 		]
-		(str output-header "|" c-major-root notes-in-measures "|")))
+		(str output-header "|" n/c-major-root notes-in-measures "|")))
 
 (defn compose [line-metrics]
 	(let [
