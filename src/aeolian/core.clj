@@ -1,6 +1,5 @@
 (ns aeolian.core
 	(:require [aeolian.parser :as parser]
-						[aeolian.tempo :as tempo]
 						[aeolian.composer :as composer]
 						[clojure.java.io :as io]))
 

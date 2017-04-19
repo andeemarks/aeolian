@@ -1,13 +1,14 @@
 (ns aeolian.composer
 	(:require [aeolian.parser :as parser]
 						[aeolian.tempo :as tempo]
+						[aeolian.abc.header :as h]
 						[clojure.java.io :as io]))
 
 (def c-major-notes ["C" "E" "G" "B" "z" "c" "e" "g" "b" "z" "c'" "e'" "g'" "b'" "z"])
 (def c-major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def c-major-root "\"Am\"")
 (def drum-beat "%%MIDI program 0\n%%MIDI drum zd 60\n%%MIDI drumon\n%%MIDI gchord c")
-(def output-header (str "X:1\nT:Hello World\nM:4/4\nL:1/4\nK:C\n" drum-beat "\n" tempo/abc-template tempo/default-tempo "\n"))
+(def output-header (str h/header drum-beat "\n" tempo/abc-template tempo/default-tempo "\n"))
 (def notes-per-measure 4)
 
 (defn- metric-to-note-index [metric]
@@ -26,12 +27,11 @@
 			:else note)))
 
 (defn- map-metrics [metrics]
-	(println metrics)
 	(let [
 		mapped-notes (map #(metric-to-note %1) metrics)
-		_ (println mapped-notes)
+		; _ (println mapped-notes)
 		notes-in-measures (apply str (flatten (interpose (str "|\n" c-major-root) (partition notes-per-measure mapped-notes)))) 
-		_ (println notes-in-measures)
+		; _ (println notes-in-measures)
 		]
 		(str output-header "|" c-major-root notes-in-measures "|")))
 
