@@ -10,12 +10,12 @@
 (def notes-per-measure 4)
 
 (defn- metric-to-note-index [metric]
-	(mod (parser/line-length-from-metric metric) (count n/c-major-notes)))
+	(mod (parser/line-length-from-metric metric) (count n/major-notes)))
 
 (defn- metric-to-note [metric]
 	; (println metric)
 	(let [complexity (parser/complexity-from-metric metric)
-				note (nth n/c-major-notes (metric-to-note-index metric))
+				note (nth n/major-notes (metric-to-note-index metric))
 				; _ (println complexity)
 				; _ (println note)
 				]
@@ -28,10 +28,10 @@
 	(let [
 		mapped-notes (map #(metric-to-note %1) metrics)
 		; _ (println mapped-notes)
-		notes-in-measures (apply str (flatten (interpose (str "|\n" n/c-major-root) (partition notes-per-measure mapped-notes)))) 
+		notes-in-measures (apply str (flatten (interpose (str "|\n" n/major-root) (partition notes-per-measure mapped-notes)))) 
 		; _ (println notes-in-measures)
 		]
-		(str output-header "|" n/c-major-root notes-in-measures "|")))
+		(str output-header "|" n/major-root notes-in-measures "|")))
 
 (defn compose [line-metrics]
 	(let [
