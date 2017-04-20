@@ -5,20 +5,18 @@
 (facts "When parsing a metric line"
   (facts "the line length"
     (fact "is the second value"
-      (parser/line-length-from-metric "/home/amarks/Code/aeolian/resources/Notification.java#47 66 1") => 66)
+      (parser/line-length-from-metric "/Notification.java#190 LL=13 CC=9 ML=16") => 13)
 
     (fact "must be numeric"
-      (parser/line-length-from-metric "/home/amarks/Code/aeolian/resources/Notification.java#47 6h 1") => (throws Exception)))
+      (parser/line-length-from-metric "/Notification.java#190 LL=abc CC=9 ML=16") => (throws Exception)))
 
   (facts "the complexity"
     (fact "is the third value"
-      (parser/complexity-from-metric "/home/amarks/Code/aeolian/resources/Notification.java#47 66 1") => 1)
+      (parser/complexity-from-metric "/Notification.java#190 LL=13 CC=9 ML=16") => 9)
 
     (fact "must be numeric"
-      (parser/complexity-from-metric "/home/amarks/Code/aeolian/resources/Notification.java#47 66 u") => (throws Exception))
+      (parser/complexity-from-metric "/Notification.java#190 LL=13 CC=abc ML=16") => (throws Exception))
 
     (fact "defaults to 0"
-      (parser/complexity-from-metric "/home/amarks/Code/aeolian/resources/Notification.java#47 66") => 0))
-
-  (fact "the line number is the first value"
-    (parser/line-length-from-metric "a 2 3") => (throws Exception)))
+      (parser/complexity-from-metric "/Notification.java#190 LL=13") => 0))
+    )

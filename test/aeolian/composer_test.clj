@@ -8,42 +8,42 @@
 (facts "when processing metrics"
   (facts "line length is mapped to note"
     (future-fact "empty lines are mapped to rests"
-      (c/metric-to-note "Foo.java#1 0") => n/rest-note)
+      (c/metric-to-note "Foo.java#1 LL=0") => n/rest-note)
 
     (facts "short lines are mapped to rests"
-      (c/metric-to-note "Foo.java#1 1") => n/rest-note
-      (c/metric-to-note "Foo.java#1 2") => n/rest-note
-      (c/metric-to-note "Foo.java#1 3") => n/rest-note
-      (c/metric-to-note "Foo.java#1 4") => n/rest-note
-      (c/metric-to-note "Foo.java#1 5") => n/rest-note
-      (c/metric-to-note "Foo.java#1 6") => n/rest-note
-      (c/metric-to-note "Foo.java#1 7") => n/rest-note
-      (c/metric-to-note "Foo.java#1 8") => n/rest-note
-      (c/metric-to-note "Foo.java#1 9") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=1") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=2") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=3") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=4") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=5") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=6") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=7") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=8") => n/rest-note
+      (c/metric-to-note "Foo.java#1 LL=9") => n/rest-note
       )
 
     (facts "longer lines are mapped to actual notes with longer lines at higher octaves"
-      (some #(= (c/metric-to-note "Foo.java#1 10") %) n/octave-1 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 39") %) n/octave-1 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 40") %) n/octave-2 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 79") %) n/octave-2 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 80") %) n/octave-3 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 99") %) n/octave-3 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 100") %) n/octave-4 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 119") %) n/octave-4 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 120") %) n/octave-5 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 121") %) n/octave-5 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 200") %) n/octave-5 ) => truthy
-      (some #(= (c/metric-to-note "Foo.java#1 2000") %) n/octave-5 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=10") %) n/octave-1 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=39") %) n/octave-1 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=40") %) n/octave-2 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=79") %) n/octave-2 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=80") %) n/octave-3 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=99") %) n/octave-3 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=100") %) n/octave-4 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=119") %) n/octave-4 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=120") %) n/octave-5 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=121") %) n/octave-5 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=200") %) n/octave-5 ) => truthy
+      (some #(= (c/metric-to-note "Foo.java#1 LL=2000") %) n/octave-5 ) => truthy
        )
 
     )
 
   (fact "complexity > 1 is mapped to tempo"
-    (str/index-of (c/metric-to-note "Foo.java#1 30 1") t/abc-template ) => falsey
-    (str/index-of (c/metric-to-note "Foo.java#1 30 10") t/abc-template ) => truthy
-    (str/index-of (c/metric-to-note "Foo.java#1 30 5") t/abc-template ) => truthy
-    (str/index-of (c/metric-to-note "Foo.java#1 30 3") t/abc-template ) => truthy)
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=1") t/abc-template ) => falsey
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=10") t/abc-template ) => truthy
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=5") t/abc-template ) => truthy
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=3") t/abc-template ) => truthy)
   )
 
 (facts "when opening metrics files"
@@ -52,7 +52,7 @@
 
   (fact "subsequent lines are used in composition"
     (c/compose ["[source-file#line-number] [line-length] [cyclomatic-complexity]"
-                        "/home/amarks/Code/aeolian/resources/Notification.java#1 3"
-                        "/home/amarks/Code/aeolian/resources/Notification.java#10 70"
-                        "/home/amarks/Code/aeolian/resources/Notification.java#100 99"
+                        "/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"
+                        "/home/amarks/Code/aeolian/resources/Notification.java#10 LL=70"
+                        "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"
                         ]) => truthy ))

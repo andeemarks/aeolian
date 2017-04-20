@@ -13,9 +13,13 @@
 (defn complexity-from-metric [metric]
 	(check-valid-line-number metric)
 	(if (> (count (metric-line-to-bits metric)) 2)
-		(Integer/parseInt (nth (metric-line-to-bits metric) 2))
+		(Integer/parseInt 
+			(second (clojure.string/split 
+				(nth (metric-line-to-bits metric) 2) #"CC=")))
 		0))
 
 (defn line-length-from-metric [metric]
 	(check-valid-line-number metric)
-	(Integer/parseInt (nth (metric-line-to-bits metric) 1)))
+	(Integer/parseInt 
+		(second (clojure.string/split 
+			(nth (metric-line-to-bits metric) 1) #"LL="))))

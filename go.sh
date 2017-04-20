@@ -21,12 +21,15 @@ SOURCEFILE=$1
 COMBINEDMETRICSFILE='combined-metrics.txt'
 if [[ -r $SOURCEFILE ]]; then
 	echo -e "\e[33mGenerating Checkstyle cyclomatic complexity metrics...\e[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "CyclomaticComplexity" | awk '{print $2 " " $3}' | awk -F: '{print $1 "#" $2 " " $4}' > /tmp/complexity.txt
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "CyclomaticComplexity" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > /tmp/complexity.txt
 	echo -e "\e[33mGenerating Checkstyle line length metrics...\e[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "LineLength" | awk '{print $2 " " $3}' | awk -F: '{print $1 "#" $2 " " $3}' > /tmp/line-lengths.txt
-	echo -e "\e[33mMerging the two datasets...\e[0m"
-	echo "[source-file#line-number] [line-length] [cyclomatic-complexity]" > $COMBINEDMETRICSFILE
-	join -a 1 <(sort -k 1b,1 /tmp/line-lengths.txt) <(sort -k 1b,1 /tmp/complexity.txt) | sort -V >> $COMBINEDMETRICSFILE
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "LineLength" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d LL=%d\n", $1, $2, $3 }' > /tmp/line-lengths.txt
+	echo -e "\e[33mGenerating Checkstyle method length metrics...\e[0m"
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-methodlength.xml $SOURCEFILE | grep "MethodLength" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d ML=%d\n", $1, $2, $4 }' > /tmp/method-lengths.txt
+	echo -e "\e[33mMerging all datasets...\e[0m"
+	join -a 1 <(sort -k 1b,1 /tmp/line-lengths.txt) <(sort -k 1b,1 /tmp/complexity.txt) > $COMBINEDMETRICSFILE.tmp
+	echo "[source-file#line-number] [LL=line-length] [CC=cyclomatic-complexity] [ML=method-length]" > $COMBINEDMETRICSFILE
+	join -a 1 <(sort -k 1b,1 $COMBINEDMETRICSFILE.tmp) <(sort -k 1b,1 /tmp/method-lengths.txt) | sort -V >> $COMBINEDMETRICSFILE
 	echo -e "\e[33mGenerating ABC notation...\e[0m"
 	lein run $COMBINEDMETRICSFILE
 	echo -e "\e[33mGenerating MIDI...\e[0m"
