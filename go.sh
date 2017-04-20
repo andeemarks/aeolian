@@ -26,7 +26,7 @@ if [[ -r $SOURCEFILE ]]; then
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "LineLength" | awk '{print $2 " " $3}' | awk -F: '{print $1 "#" $2 " " $3}' > /tmp/line-lengths.txt
 	echo -e "\e[33mMerging the two datasets...\e[0m"
 	echo "[source-file#line-number] [line-length] [cyclomatic-complexity]" > $COMBINEDMETRICSFILE
-	join -a 1 <(sort -k 1b,1 /tmp/line-lengths.txt) <(sort -k 1b,1 /tmp/complexity.txt) >> $COMBINEDMETRICSFILE
+	join -a 1 <(sort -k 1b,1 /tmp/line-lengths.txt) <(sort -k 1b,1 /tmp/complexity.txt) | sort -V >> $COMBINEDMETRICSFILE
 	echo -e "\e[33mGenerating ABC notation...\e[0m"
 	lein run $COMBINEDMETRICSFILE
 	echo -e "\e[33mGenerating MIDI...\e[0m"
