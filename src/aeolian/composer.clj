@@ -5,7 +5,6 @@
 						[aeolian.abc.notes :as n]
 						[aeolian.abc.header :as h]))
 
-(def output-header (str h/header d/drum-track t/abc-template t/default-tempo "\n"))
 (def notes-per-measure 4)
 
 (defn- metric-to-octave-note [line-length]
@@ -34,7 +33,7 @@
 			mapped-notes (map #(metric-to-note %1) metrics)
 			notes-in-measures (apply str (flatten (interpose (str "|\n" n/major-root) (partition notes-per-measure mapped-notes)))) 
 		]
-		(str output-header "|" n/major-root notes-in-measures "|")))
+		(str n/major-root notes-in-measures)))
 
 (defn compose [line-metrics]
 	(let [

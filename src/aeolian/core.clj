@@ -1,7 +1,12 @@
 (ns aeolian.core
 	(:require [aeolian.parser :as parser]
 						[aeolian.composer :as composer]
+						[aeolian.tempo :as t]
+						[aeolian.midi.drums :as d]
+						[aeolian.abc.header :as h]
 						[clojure.java.io :as io]))
+
+(def output-header (str h/header d/drum-track t/abc-template t/default-tempo "|\n"))
 
 (defn notation-file-name [original-file-name]
 	(str original-file-name ".abc"))
@@ -11,7 +16,7 @@
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
      	(let [notation-file-name (notation-file-name metrics-file-name)
      				composition (composer/compose (line-seq rdr))]
- 				(spit notation-file-name, composition)
+ 				(spit notation-file-name, (str output-header composition))
      		(println (str "Generated " notation-file-name))))
 	)
 
