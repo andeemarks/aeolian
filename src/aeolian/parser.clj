@@ -14,8 +14,20 @@
 	(check-valid-line-number metric)
 	(if (> (count (metric-line-to-bits metric)) 2)
 		(Integer/parseInt 
-			(second (clojure.string/split 
-				(nth (metric-line-to-bits metric) 2) #"CC=")))
+			(second 
+				(clojure.string/split 
+					(nth (metric-line-to-bits metric) 2) 
+					#"CC=")))
+		0))
+
+(defn method-length-from-metric [metric]
+	(check-valid-line-number metric)
+	(if (> (count (metric-line-to-bits metric)) 2)
+		(Integer/parseInt 
+			(second 
+				(clojure.string/split 
+					(nth (metric-line-to-bits metric) 3) 
+					#"ML=")))
 		0))
 
 (defn line-length-from-metric [metric]
