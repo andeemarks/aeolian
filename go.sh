@@ -20,17 +20,21 @@ CHECKSTYLEDIR=$DIR/resources
 SOURCEFILE=$1
 RAWSOURCECLASSNAME=$(basename ${SOURCEFILE} .java)
 COMBINEDMETRICSFILE=${RAWSOURCECLASSNAME}.metrics
+COMPLEXITYMETRICS=/tmp/${RAWSOURCECLASSNAME}.complexity.metrics
+LINELENGTHMETRICS=/tmp/${RAWSOURCECLASSNAME}.line-length.metrics
+METHODLENGTHMETRICS=/tmp/${RAWSOURCECLASSNAME}.method-length.metrics
+
 if [[ -r $SOURCEFILE ]]; then
 	echo -e "\e[33mGenerating Checkstyle cyclomatic complexity metrics...\e[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "CyclomaticComplexity" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > /tmp/${RAWSOURCECLASSNAME}.complexity.metrics
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "CyclomaticComplexity" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
 	echo -e "\e[33mGenerating Checkstyle line length metrics...\e[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "LineLength" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d LL=%d\n", $1, $2, $3 }' > /tmp/${RAWSOURCECLASSNAME}.line-lengths.metrics
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "LineLength" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d LL=%d\n", $1, $2, $3 }' > ${LINELENGTHMETRICS}
 	echo -e "\e[33mGenerating Checkstyle method length metrics...\e[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-methodlength.xml $SOURCEFILE | grep "MethodLength" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d ML=%d\n", $1, $2, $4 }' > /tmp/${RAWSOURCECLASSNAME}.method-lengths.metrics
+	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-methodlength.xml $SOURCEFILE | grep "MethodLength" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d ML=%d\n", $1, $2, $4 }' > ${METHODLENGTHMETRICS}
 	echo -e "\e[33mMerging all datasets...\e[0m"
-	join -a 1 <(sort -k 1b,1 /tmp/${RAWSOURCECLASSNAME}.line-lengths.metrics) <(sort -k 1b,1 /tmp/${RAWSOURCECLASSNAME}.complexity.metrics) > $COMBINEDMETRICSFILE.tmp
+	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > $COMBINEDMETRICSFILE.tmp
 	echo "[source-file#line-number] [LL=line-length] [CC=cyclomatic-complexity] [ML=method-length]" > $COMBINEDMETRICSFILE
-	join -a 1 <(sort -k 1b,1 $COMBINEDMETRICSFILE.tmp) <(sort -k 1b,1 /tmp/${RAWSOURCECLASSNAME}.method-lengths.metrics) | sort -V >> $COMBINEDMETRICSFILE
+	join -a 1 <(sort -k 1b,1 $COMBINEDMETRICSFILE.tmp) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V >> $COMBINEDMETRICSFILE
 	echo -e "\e[33mGenerating ABC notation...\e[0m"
 	lein run $COMBINEDMETRICSFILE
 	echo -e "\e[33mGenerating MIDI...\e[0m"
