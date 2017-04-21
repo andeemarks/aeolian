@@ -1,11 +1,12 @@
-(ns aeolian.abc.header)
+(ns aeolian.abc.header
+	(:require [aeolian.tempo :as t]))
 
-(def reference "X:1\n")
-(def title-prefix "T:")
-(def composer "C:AEOLIAN\n")
-(def meter "M:4/4\n")
-(def key-signature "K:C\n")
-(def note-length "L:1/4\n")
+(def reference "\nX:1")
+(def title-prefix "\nT:")
+(def composer "\nC:AEOLIAN")
+(def meter "\nM:4/4")
+(def xxx-key-signature "\nK:C")
+(def note-length "\nL:1/4")
 
 (defn build-header [title]
-	(str reference title-prefix title "\n" composer meter note-length key-signature))
+	(str reference title-prefix title composer meter note-length t/starting-tempo xxx-key-signature))

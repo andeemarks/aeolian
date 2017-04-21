@@ -19,12 +19,13 @@
 (defn adjust-for-complexity [metric]
 	(let [complexity (parser/complexity-from-metric metric)]
 		(if (> complexity 1) 
-			(t/as-abc complexity))))
+			(t/tempo-for complexity))))
 	
 (defn adjust-for-method-length [metric]
-	(let [method-length (parser/method-length-from-metric metric)]
-		(if (> method-length 1) 
-			(d/volume-for method-length))))
+	nil)
+	; (let [method-length (parser/method-length-from-metric metric)]
+	; 	(if (> method-length 1) 
+	; 		(d/volume-for method-length))))
 
 (defn metric-to-note [metric]
 	; (println metric)
@@ -36,6 +37,7 @@
 				; _ (println raw-note)
 				]
 
+				(println (str metric " becomes " final-note))
 		final-note))
 
 (defn- map-metrics [metrics]
@@ -48,7 +50,7 @@
 							(str "|\n") 
 							(partition notes-per-measure mapped-notes)))) 
 		]
-		(str n/major-root notes-in-measures)))
+		(str notes-in-measures)))
 
 (defn compose [line-metrics]
 	(let [

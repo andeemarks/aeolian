@@ -1,11 +1,12 @@
 (ns aeolian.tempo)
 
-(def abc-template "Q:1/4=")
+(def prefix "\nQ:1/4=")
 (def default-tempo 140)
+(def starting-tempo (str prefix default-tempo))
 
 (defn generate [complexity]
 	(+ (* 20 complexity) default-tempo))
 
-(defn as-abc [complexity]
-	(str abc-template (generate complexity)))
+(defn tempo-for [complexity]
+	(str prefix (generate complexity)))
 

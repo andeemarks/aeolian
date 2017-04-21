@@ -8,10 +8,8 @@
 
 (defn- build-header [metrics-file-name] 
 	(str (h/build-header metrics-file-name) 
-			d/drum-track 
-			t/abc-template 
-			t/default-tempo 
-			"|\n"))
+			"\n"
+			d/drum-track))
 
 (defn notation-file-name [original-file-name]
 	(str original-file-name ".abc"))

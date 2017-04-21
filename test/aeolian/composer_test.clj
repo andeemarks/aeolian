@@ -40,10 +40,16 @@
     )
 
   (fact "complexity > 1 is mapped to tempo"
-    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=1") t/abc-template ) => falsey
-    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=10") t/abc-template ) => truthy
-    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=5") t/abc-template ) => truthy
-    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=3") t/abc-template ) => truthy)
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=1") t/prefix ) => falsey
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=10") t/prefix ) => truthy
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=5") t/prefix ) => truthy
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 CC=3") t/prefix ) => truthy)
+
+  (future-fact "method-length > 5 is mapped to tempo"
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 ML=1") t/prefix ) => falsey
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 ML=10") t/prefix ) => truthy
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 ML=5") t/prefix ) => truthy
+    (str/index-of (c/metric-to-note "Foo.java#1 LL=30 ML=3") t/prefix ) => truthy)
   )
 
 (facts "when opening metrics files"
