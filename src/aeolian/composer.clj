@@ -11,23 +11,32 @@
 	(let [octave (n/pick-octave-for-line-length line-length)]
 		(nth octave (mod line-length (count octave)))))
 
-(defn build-note [metric]
-	(let [line-length (parser/line-length-from-metric metric)]
-		(if (< line-length 10)
-			n/rest-note
-			(metric-to-octave-note line-length))))
+(defn build-note [line-length]
+	(if (< line-length 10)
+		n/rest-note
+		(metric-to-octave-note line-length)))
+
+(defn adjust-for-complexity [metric]
+	(let [complexity (parser/complexity-from-metric metric)]
+		(if (> complexity 1) 
+			(t/as-abc complexity))))
+	
+(defn adjust-for-method-length [metric]
+	(let [method-length (parser/method-length-from-metric metric)]
+		(if (> method-length 1) 
+			(d/volume-for method-length))))
 
 (defn metric-to-note [metric]
 	; (println metric)
-	(let [complexity (parser/complexity-from-metric metric)
-				method-length (parser/method-length-from-metric metric)
-				note (build-note metric)
-				; _ (println note)
+	(let [
+				raw-note (build-note (parser/line-length-from-metric metric))
+				final-note-bits (cons (adjust-for-method-length metric) 
+													(cons (adjust-for-complexity metric) (list raw-note)))
+				final-note (apply str (interpose "\n" (filter #(not (nil? %)) final-note-bits)))
+				; _ (println raw-note)
 				]
-		(cond (> complexity 1)
-			(str "\n" (t/as-abc complexity) "\n" note)
-			; note
-			:else note)))
+
+		final-note))
 
 (defn- map-metrics [metrics]
 	(let [
