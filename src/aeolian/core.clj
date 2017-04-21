@@ -21,7 +21,7 @@
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
      	(let [notation-file-name (notation-file-name metrics-file-name)
      				composition (composer/compose (line-seq rdr))]
- 				(spit notation-file-name, (str (h/build-header metrics-file-name) composition))
+ 				(spit notation-file-name, (str (build-header metrics-file-name) composition))
      		(println (str "Generated " notation-file-name))))
 	)
 
