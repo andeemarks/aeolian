@@ -20,6 +20,7 @@
 (defn metric-to-note [metric]
 	; (println metric)
 	(let [complexity (parser/complexity-from-metric metric)
+				method-length (parser/method-length-from-metric metric)
 				note (build-note metric)
 				; _ (println note)
 				]

@@ -28,5 +28,5 @@
       (parser/method-length-from-metric "/Notification.java#190 LL=13 CC=abc ML=abc") => (throws Exception))
 
     (fact "defaults to 0"
-      (parser/method-length-from-metric "/Notification.java#190 LL=13") => 0))
-    )
+      (parser/method-length-from-metric "/Notification.java#190 LL=13") => 0)
+      (parser/method-length-from-metric "/Notification.java#190 LL=13 CC=9") => 0))

@@ -12,26 +12,19 @@
 
 (defn complexity-from-metric [metric]
 	(check-valid-line-number metric)
-	(if (> (count (metric-line-to-bits metric)) 2)
-		(Integer/parseInt 
-			(second 
-				(clojure.string/split 
-					(nth (metric-line-to-bits metric) 2) 
-					#"CC=")))
-		0))
+	(let [complexity (second (re-find #"CC=(\w+)" metric))]
+		(if (not (nil? complexity))
+			(Integer/parseInt complexity)
+			0)))
 
 (defn method-length-from-metric [metric]
 	(check-valid-line-number metric)
-	(if (> (count (metric-line-to-bits metric)) 2)
-		(Integer/parseInt 
-			(second 
-				(clojure.string/split 
-					(nth (metric-line-to-bits metric) 3) 
-					#"ML=")))
-		0))
+	(let [method-length (second (re-find #"ML=(\w+)" metric))]
+		(if (not (nil? method-length))
+			(Integer/parseInt method-length)
+			0)))
 
 (defn line-length-from-metric [metric]
 	(check-valid-line-number metric)
-	(Integer/parseInt 
-		(second (clojure.string/split 
-			(nth (metric-line-to-bits metric) 1) #"LL="))))
+	(let [line-length (second (re-find #"LL=(\w+)" metric))]
+		(Integer/parseInt line-length)))
