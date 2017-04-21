@@ -31,7 +31,12 @@
 (defn- map-metrics [metrics]
 	(let [
 			mapped-notes (map #(metric-to-note %1) metrics)
-			notes-in-measures (apply str (flatten (interpose (str "|\n" n/major-root) (partition notes-per-measure mapped-notes)))) 
+			notes-in-measures 
+				(apply str 
+					(flatten 
+						(interpose 
+							(str "|\n") 
+							(partition notes-per-measure mapped-notes)))) 
 		]
 		(str n/major-root notes-in-measures)))
 
