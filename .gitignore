@@ -19,6 +19,6 @@ hs_err_pid85826.log
 
 *.abc
 
-*.tmp
+*.tmp*
 
 combined-metrics.txt

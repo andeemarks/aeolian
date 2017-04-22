@@ -12,4 +12,4 @@
 (def drum-track (str "%%MIDI program 32\n" first-beat-emphasis four-beat-metro no-accents "%%MIDI drumon\n%%MIDI gchord c\n"))
 
 (defn volume-for [method-length]
-	"")
+	"%%MIDI control 7 50")
