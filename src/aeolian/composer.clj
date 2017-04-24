@@ -3,6 +3,7 @@
 						[aeolian.tempo :as t]
 						[aeolian.midi.drums :as d]
 						[aeolian.abc.notes :as n]
+						[clojure.tools.logging :as log]
 						[aeolian.abc.header :as h]))
 
 (def notes-per-measure 4)
@@ -43,7 +44,7 @@
 					; (println (str metric " becomes " final-note))
 			final-note))
 	([metric-idx metric total-metrics]
-		(println (str "Processing metric " (+ 1 metric-idx) " of " total-metrics))
+		(log/info (str "Processing metric " (+ 1 metric-idx) " of " total-metrics))
 		(metric-to-note metric)))
 
 (defn- map-metrics [metrics]
