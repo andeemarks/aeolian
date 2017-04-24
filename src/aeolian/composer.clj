@@ -30,21 +30,25 @@
 	; 	(if (> method-length 1) 
 	; 		(str "\n%%MIDI control 7 " (+ (* 2 method-length) 50)))))
 
-(defn metric-to-note [metric]
-	(let [
-				raw-note (build-note (parser/line-length-from-metric metric))
-				final-note-bits (cons (adjust-for-indentation metric)
-													(cons (adjust-for-method-length metric) 
-														(cons (adjust-for-complexity metric) (list raw-note))))
-				final-note (apply str (interpose "\n" (filter #(not (nil? %)) final-note-bits)))
-				]
+(defn metric-to-note 
+	([metric]
+		(let [
+					raw-note (build-note (parser/line-length-from-metric metric))
+					final-note-bits (cons (adjust-for-indentation metric)
+														(cons (adjust-for-method-length metric) 
+															(cons (adjust-for-complexity metric) (list raw-note))))
+					final-note (apply str (interpose "\n" (filter #(not (nil? %)) final-note-bits)))
+					]
 
-				; (println (str metric " becomes " final-note))
-		final-note))
+					; (println (str metric " becomes " final-note))
+			final-note))
+	([metric-idx metric total-metrics]
+		(println (str "Processing metric " (+ 1 metric-idx) " of " total-metrics))
+		(metric-to-note metric)))
 
 (defn- map-metrics [metrics]
 	(let [
-			mapped-notes (map #(metric-to-note %1) metrics)
+			mapped-notes (map-indexed #(metric-to-note %1 %2 (count metrics)) metrics)
 			notes-in-measures 
 				(apply str 
 					(flatten 
