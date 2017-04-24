@@ -6,6 +6,10 @@
 <module name="Checker">
 	<module name="TreeWalker">
 
+		<module name="LeftCurly"/>
+		<module name="RightCurly"/>
+		<module name="NeedBraces"/>
+		
 		<module name="Indentation">
 			<property name="caseIndent" value="0"/>
 			<property name="forceStrictCondition" value="true"/>
