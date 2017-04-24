@@ -50,10 +50,7 @@
 		]
 		(str n/major-root notes-in-measures)))
 
-(defn compose [line-metrics]
-	(let [
-		header (first line-metrics)
-		metrics (rest line-metrics)]
-		(if (<= (count metrics) 0)
-			nil
- 			(map-metrics metrics))))
+(defn compose [metrics]
+	(if (<= (count metrics) 0)
+		nil
+			(map-metrics metrics)))

@@ -53,12 +53,8 @@
   )
 
 (facts "when opening metrics files"
-  (fact "the header line is ignored"
-    (c/compose ["[source-file#line-number] [line-length] [cyclomatic-complexity]"]) => nil )
-
-  (fact "subsequent lines are used in composition"
-    (c/compose ["[source-file#line-number] [line-length] [cyclomatic-complexity]"
-                        "/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"
-                        "/home/amarks/Code/aeolian/resources/Notification.java#10 LL=70"
-                        "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"
+  (fact "all lines are used in composition"
+    (c/compose ["/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"
+                "/home/amarks/Code/aeolian/resources/Notification.java#10 LL=70"
+                "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"
                         ]) => truthy ))
