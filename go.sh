@@ -53,7 +53,7 @@ if [[ -r $SOURCEFILE ]]; then
 	echo -e "\e[33mGenerating MIDI...\e[0m"
 	abc2midi ${COMBINEDMETRICSFILE}.abc -o ${COMBINEDMETRICSFILE}.mid
 	echo -e "\e[33mPlaying MIDI...\e[0m"
-	timidity -in ${COMBINEDMETRICSFILE}.mid
+	timidity ${COMBINEDMETRICSFILE}.mid
 else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
     exit 1
