@@ -23,6 +23,9 @@
 	
 (defn adjust-for-method-length [metric]
 	nil)
+
+(defn adjust-for-indentation [metric]
+	nil)
 	; (let [method-length (parser/method-length-from-metric metric)]
 	; 	(if (> method-length 1) 
 	; 		(str "\n%%MIDI control 7 " (+ (* 2 method-length) 50)))))
@@ -30,8 +33,9 @@
 (defn metric-to-note [metric]
 	(let [
 				raw-note (build-note (parser/line-length-from-metric metric))
-				final-note-bits (cons (adjust-for-method-length metric) 
-														(cons (adjust-for-complexity metric) (list raw-note)))
+				final-note-bits (cons (adjust-for-indentation metric)
+													(cons (adjust-for-method-length metric) 
+														(cons (adjust-for-complexity metric) (list raw-note))))
 				final-note (apply str (interpose "\n" (filter #(not (nil? %)) final-note-bits)))
 				]
 
