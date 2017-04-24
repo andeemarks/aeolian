@@ -49,7 +49,7 @@
 				(apply str 
 					(flatten 
 						(interpose 
-							(str "|\n") 
+							(str "|\n" n/major-root) 
 							(partition notes-per-measure mapped-notes)))) 
 		]
 		(str n/major-root notes-in-measures)))
