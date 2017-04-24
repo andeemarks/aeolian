@@ -24,6 +24,10 @@
 			(Integer/parseInt method-length)
 			0)))
 
+(defn indentation-from-metric [metric]
+	(check-valid-line-number metric)
+	(re-find #"IND(\s*)" metric))
+
 (defn line-length-from-metric [metric]
 	(check-valid-line-number metric)
 	(let [line-length (second (re-find #"LL=(\w+)" metric))]

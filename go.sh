@@ -47,7 +47,7 @@ if [[ -r $SOURCEFILE ]]; then
 	echo -e "\e[33mMerging all datasets...\e[0m"
 	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > ${COMBINEDMETRICSFILE}.tmp
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp) <(sort -k 1b,1 ${INDENTATIONMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}.tmp2
-	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp2) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V >> ${COMBINEDMETRICSFILE}
+	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp2) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}
 	echo -e "\e[33mGenerating ABC notation...\e[0m"
 	lein run ${COMBINEDMETRICSFILE}
 	echo -e "\e[33mGenerating MIDI...\e[0m"

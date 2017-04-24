@@ -10,6 +10,10 @@
     (fact "must be numeric"
       (parser/line-length-from-metric "/Notification.java#190 LL=abc") => (throws Exception)))
 
+  (facts "indentation errors"
+    (fact "can be found"
+      (parser/indentation-from-metric "/Notification.java#190 IND") => truthy))
+
   (facts "the complexity"
     (fact "can be found"
       (parser/complexity-from-metric "/Notification.java#190 CC=9") => 9)
