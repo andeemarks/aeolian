@@ -10,6 +10,16 @@ if ! which abc2midi &> /dev/null; then
 	exit 1
 fi
 
+if ! which lein &> /dev/null; then
+	>&2 echo “Error: Please install Leinginen and make sure it is in your path”
+	exit 1
+fi
+
+if ! which java &> /dev/null; then
+	>&2 echo “Error: Please install Java and make sure it is in your path”
+	exit 1
+fi
+
 if ! which timidity &> /dev/null; then
 	>&2 echo “Error: Please install timidity and make sure it is in your path”
 	exit 1
