@@ -57,4 +57,6 @@
     (c/compose ["/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"
                 "/home/amarks/Code/aeolian/resources/Notification.java#10 LL=70"
                 "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"
-                        ]) => truthy ))
+                        ]) => truthy )
+  (fact "no metrics means no composition"
+    (c/compose []) => nil ))
