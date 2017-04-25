@@ -6,8 +6,6 @@
 (def octave-3 ["c" "e" "g" "b"])
 (def octave-4 ["c'" "e'" "g'" "b'"])
 (def octave-5 ["c''" "e''" "g''" "b''"])
-(def or-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
-(def or-root "\"Am\"")
 
 (defn pick-chord-for-method-length [method-length]
 	(cond
