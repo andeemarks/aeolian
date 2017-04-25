@@ -1,11 +1,12 @@
 (ns aeolian.abc.notes)
 
 (def rest-note "z")
-(def octave-1 ["C," "E," "G," "B,"])
-(def octave-2 ["C" "E" "G" "B"])
-(def octave-3 ["c" "e" "g" "b"])
-(def octave-4 ["c'" "e'" "g'" "b'"])
-(def octave-5 ["c''" "e''" "g''" "b''"])
+(def raw-notes ["C" "E" "G" "B"])
+(def octave-1 (map #(str %1 ",") raw-notes))
+(def octave-2 raw-notes)
+(def octave-3 (map clojure.string/lower-case raw-notes))
+(def octave-4 (map #(str %1 "'") octave-3))
+(def octave-5 (map #(str %1 "'") octave-4))
 
 (defn pick-chord-for-method-length [method-length]
 	(cond
