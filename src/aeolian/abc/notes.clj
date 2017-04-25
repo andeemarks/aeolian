@@ -19,10 +19,11 @@
 	   	(<= 40 method-length) "B"
 	   	:else "C"))
 
-(defn pick-octave-for-line-length [line-length]
+(defn pick-note-for-line-length [line-length]
 	(cond
-	   	(<= 10 line-length 39) octave-1
-	   	(<= 40 line-length 79) octave-2
-	   	(<= 80 line-length 99) octave-3
-	   	(<= 100 line-length 119) octave-4
-	   	(<= 120 line-length) octave-5))
+		(< line-length 10) rest-note
+	   	(<= 10 line-length 39) (nth octave-1 (mod line-length (count octave-1))) 
+	   	(<= 40 line-length 79) (nth octave-2 (mod line-length (count octave-2)))
+	   	(<= 80 line-length 99) (nth octave-3 (mod line-length (count octave-3)))
+	   	(<= 100 line-length 119) (nth octave-4 (mod line-length (count octave-4)))
+	   	(<= 120 line-length) (nth octave-5 (mod line-length (count octave-5)))))

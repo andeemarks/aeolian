@@ -8,14 +8,8 @@
 
 (def notes-per-measure 8)
 
-(defn- metric-to-octave-note [line-length]
-	(let [octave (n/pick-octave-for-line-length line-length)]
-		(nth octave (mod line-length (count octave)))))
-
-(defn build-note [line-length]
-	(if (< line-length 10)
-		n/rest-note
-		(metric-to-octave-note line-length)))
+(defn- build-note [line-length]
+	(n/pick-note-for-line-length line-length))
 
 (defn adjust-for-complexity [metric]
 	(let [complexity (parser/complexity-from-metric metric)]
@@ -25,8 +19,7 @@
 (defn adjust-for-indentation [metric]
 	nil)
 
-(defn metric-to-note 
-	[metric]
+(defn metric-to-note [metric]
 		(let [
 					raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
 					final-note-bits (cons (adjust-for-indentation metric)
