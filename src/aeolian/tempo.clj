@@ -1,7 +1,7 @@
 (ns aeolian.tempo)
 
 (def prefix "Q:1/4=")
-(def default-tempo 140)
+(def default-tempo 120)
 (def starting-tempo (str prefix default-tempo))
 
 (defn generate [complexity]

@@ -10,4 +10,4 @@
 		(> (tempo/generate 3) (tempo/generate 2)) => truthy)
 
 	(fact "defaults to 140 bpm"
-		(tempo/generate 0) => 140))
+		(tempo/generate 0) => 120))

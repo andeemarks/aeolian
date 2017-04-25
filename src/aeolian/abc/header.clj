@@ -6,7 +6,7 @@
 (def composer "\nC:AEOLIAN")
 (def meter "\nM:4/4")
 (def xxx-key-signature "\nK:C")
-(def note-length "\nL:1/4")
+(def note-length "\nL:1/8")
 
 (defn build-header [title]
 	(str reference title-prefix title composer meter note-length "\n" t/starting-tempo xxx-key-signature))

@@ -6,7 +6,7 @@
 						[taoensso.timbre :as log]
 						[aeolian.abc.header :as h]))
 
-(def notes-per-measure 4)
+(def notes-per-measure 8)
 
 (defn- metric-to-octave-note [line-length]
 	(let [octave (n/pick-octave-for-line-length line-length)]
@@ -20,7 +20,7 @@
 (defn adjust-for-complexity [metric]
 	(let [complexity (parser/complexity-from-metric metric)]
 		(if (> complexity 1) 
-			(t/tempo-for complexity))))
+			(str "\n" (t/tempo-for complexity)))))
 	
 (defn adjust-for-method-length [metric]
 	nil)
