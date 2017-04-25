@@ -24,9 +24,6 @@
 	
 (defn adjust-for-indentation [metric]
 	nil)
-	; (let [method-length (parser/method-length-from-metric metric)]
-	; 	(if (> method-length 1) 
-	; 		(str "\n%%MIDI control 7 " (+ (* 2 method-length) 50)))))
 
 (defn metric-to-note 
 	[metric]
@@ -38,15 +35,11 @@
 					]
 			final-note))
 
-(defn find-longest-method-length-in [metrics]
-	(let [all-method-lengths (remove nil? 
-															(map #(parser/method-length-from-metric %1) metrics))]
-		(last (sort all-method-lengths))))
-
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
 	(log/info (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
 	(let [measure (map #(metric-to-note %1) metrics-in-measure)
-				accompanying-chord (n/pick-chord-for-method-length (find-longest-method-length-in metrics-in-measure))]
+				method-length (parser/find-longest-method-length-in metrics-in-measure)
+				accompanying-chord (n/pick-chord-for-method-length method-length)]
 		(str "| \"" accompanying-chord "\"" (apply str measure) " |\n")))
 
 (defn- map-metrics [metrics]

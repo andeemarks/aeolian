@@ -7,15 +7,6 @@
 
 (facts "when processing metrics"
 
-  (facts "a method length metric can be found amongst a collection of metrics"
-    (c/find-longest-method-length-in []) => nil  
-    (c/find-longest-method-length-in ["Foo.java#1 LL=1"]) => nil  
-    (c/find-longest-method-length-in ["Foo.java#1 LL=30 ML=1"]) => 1  
-    (c/find-longest-method-length-in ["Foo.java#1 LL=30" "Foo.java#1 LL=30 ML=3"]) => 3  
-    (c/find-longest-method-length-in ["Foo.java#1 LL=30 ML=3" "Foo.java#1 LL=30 ML=2"]) => 3  
-    (c/find-longest-method-length-in ["Foo.java#1 LL=30 ML=3" "Foo.java#1 LL=30"]) => 3  
-    )
-
   (facts "line length is mapped to note"
     (future-fact "empty lines are mapped to rests"
       (c/metric-to-note "Foo.java#1 LL=0") => n/rest-note)

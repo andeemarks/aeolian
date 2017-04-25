@@ -32,3 +32,8 @@
 	(check-valid-line-number metric)
 	(let [line-length (second (re-find #"LL=(\w+)" metric))]
 		(Integer/parseInt line-length)))
+
+(defn find-longest-method-length-in [metrics]
+	(let [all-method-lengths (remove nil? 
+								(map #(method-length-from-metric %1) metrics))]
+		(last (sort all-method-lengths))))
