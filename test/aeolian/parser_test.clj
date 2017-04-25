@@ -31,6 +31,6 @@
     (fact "must be numeric"
       (parser/method-length-from-metric "/Notification.java#190 ML=abc") => (throws Exception))
 
-    (fact "defaults to 0"
-      (parser/method-length-from-metric "/Notification.java#190 LL=13") => 0)
-      (parser/method-length-from-metric "/Notification.java#190 LL=13 CC=9") => 0))
+    (fact "defaults to nil"
+      (parser/method-length-from-metric "/Notification.java#190 LL=13") => nil)
+      (parser/method-length-from-metric "/Notification.java#190 LL=13 CC=9") => nil))

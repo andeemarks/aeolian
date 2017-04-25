@@ -22,7 +22,7 @@
 	(let [method-length (second (re-find #"ML=(\w+)" metric))]
 		(if (not (nil? method-length))
 			(Integer/parseInt method-length)
-			0)))
+			nil)))
 
 (defn indentation-from-metric [metric]
 	(check-valid-line-number metric)

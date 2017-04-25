@@ -6,6 +6,14 @@
             [aeolian.abc.notes :as n]))
 
 (facts "when processing metrics"
+
+  (facts "a method length metric can be found amongst a collection of metrics"
+    (c/find-last-method-length-in []) => nil  
+    (c/find-last-method-length-in ["Foo.java#1 LL=1"]) => nil  
+    (c/find-last-method-length-in ["Foo.java#1 LL=30 ML=1"]) => 1  
+    (c/find-last-method-length-in ["Foo.java#1 LL=30" "Foo.java#1 LL=30 ML=3"]) => 3  
+    )
+
   (facts "line length is mapped to note"
     (future-fact "empty lines are mapped to rests"
       (c/metric-to-note "Foo.java#1 LL=0") => n/rest-note)

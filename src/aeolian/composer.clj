@@ -42,10 +42,14 @@
 					]
 			final-note))
 
+(defn find-last-method-length-in [metrics]
+	(last (map #(parser/method-length-from-metric %1) metrics)))
+
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
 	(log/info (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
-	(let [measure (map #(metric-to-note %1) metrics-in-measure)]
-		(str "| " n/major-root (apply str measure) " |\n")))
+	(let [measure (map #(metric-to-note %1) metrics-in-measure)
+				accompanying-chord (n/pick-chord-for-method-length (find-last-method-length-in metrics-in-measure))]
+		(str "| " accompanying-chord (apply str measure) " |\n")))
 
 (defn- map-metrics [metrics]
 	(let [
