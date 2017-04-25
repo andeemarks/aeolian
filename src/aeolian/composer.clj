@@ -3,7 +3,7 @@
 						[aeolian.tempo :as t]
 						[aeolian.midi.drums :as d]
 						[aeolian.abc.notes :as n]
-						[clojure.tools.logging :as log]
+						[taoensso.timbre :as log]
 						[aeolian.abc.header :as h]))
 
 (def notes-per-measure 4)
