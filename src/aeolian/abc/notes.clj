@@ -6,19 +6,21 @@
 (def octave-3 ["c" "e" "g" "b"])
 (def octave-4 ["c'" "e'" "g'" "b'"])
 (def octave-5 ["c''" "e''" "g''" "b''"])
-(def major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
-(def major-root "\"Am\"")
+(def or-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
+(def or-root "\"Am\"")
 
 (defn pick-chord-for-method-length [method-length]
-	(cond
-	   (<= 1 method-length 5) "Cmaj"
-	   (<= 6 method-length 10) "Dmaj"
-	   (<= 11 method-length 15) "Emaj"
-	   (<= 16 method-length 20) "Fmaj"
-	   (<= 21 method-length 29) "Gmaj"
-	   (<= 30 method-length 39) "Amaj"
-	   (<= 40 method-length) "Bmaj")
-	)
+	(if (nil? method-length)
+		"C"
+		(cond
+		   (<= 1 method-length 5) "C"
+		   (<= 6 method-length 10) "D"
+		   (<= 11 method-length 15) "E"
+		   (<= 16 method-length 20) "F"
+		   (<= 21 method-length 29) "G"
+		   (<= 30 method-length 39) "A"
+		   (<= 40 method-length) "B"
+		   :else "C")))
 
 (defn pick-octave-for-line-length [line-length]
 	(cond

@@ -22,9 +22,6 @@
 		(if (> complexity 1) 
 			(str "\n" (t/tempo-for complexity)))))
 	
-(defn adjust-for-method-length [metric]
-	nil)
-
 (defn adjust-for-indentation [metric]
 	nil)
 	; (let [method-length (parser/method-length-from-metric metric)]
@@ -36,20 +33,21 @@
 		(let [
 					raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
 					final-note-bits (cons (adjust-for-indentation metric)
-														(cons (adjust-for-method-length metric) 
-															(cons (adjust-for-complexity metric) (list raw-note))))
+														(cons (adjust-for-complexity metric) (list raw-note)))
 					final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
 					]
 			final-note))
 
-(defn find-last-method-length-in [metrics]
-	(last (map #(parser/method-length-from-metric %1) metrics)))
+(defn find-longest-method-length-in [metrics]
+	(let [all-method-lengths (remove nil? 
+															(map #(parser/method-length-from-metric %1) metrics))]
+		(last (sort all-method-lengths))))
 
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
 	(log/info (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
 	(let [measure (map #(metric-to-note %1) metrics-in-measure)
-				accompanying-chord (n/pick-chord-for-method-length (find-last-method-length-in metrics-in-measure))]
-		(str "| " accompanying-chord (apply str measure) " |\n")))
+				accompanying-chord (n/pick-chord-for-method-length (find-longest-method-length-in metrics-in-measure))]
+		(str "| \"" accompanying-chord "\"" (apply str measure) " |\n")))
 
 (defn- map-metrics [metrics]
 	(let [
