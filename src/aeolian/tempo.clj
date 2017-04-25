@@ -1,6 +1,6 @@
 (ns aeolian.tempo)
 
-(def prefix "\nQ:1/4=")
+(def prefix "Q:1/4=")
 (def default-tempo 140)
 (def starting-tempo (str prefix default-tempo))
 

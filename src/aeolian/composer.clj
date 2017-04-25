@@ -34,11 +34,11 @@
 (defn metric-to-note 
 	([metric]
 		(let [
-					raw-note (build-note (parser/line-length-from-metric metric))
+					raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
 					final-note-bits (cons (adjust-for-indentation metric)
 														(cons (adjust-for-method-length metric) 
 															(cons (adjust-for-complexity metric) (list raw-note))))
-					final-note (apply str (interpose "\n" (filter #(not (nil? %)) final-note-bits)))
+					final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
 					]
 
 					; (println (str metric " becomes " final-note))
@@ -54,10 +54,10 @@
 				(apply str 
 					(flatten 
 						(interpose 
-							(str "|\n" n/major-root) 
+							(str "|\n|" n/major-root) 
 							(partition notes-per-measure mapped-notes)))) 
 		]
-		(str n/major-root notes-in-measures)))
+		(str "|" n/major-root notes-in-measures " |")))
 
 (defn compose [metrics]
 	(if (<= (count metrics) 0)

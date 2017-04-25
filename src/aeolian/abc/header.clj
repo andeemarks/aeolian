@@ -9,4 +9,4 @@
 (def note-length "\nL:1/4")
 
 (defn build-header [title]
-	(str reference title-prefix title composer meter note-length t/starting-tempo xxx-key-signature))
+	(str reference title-prefix title composer meter note-length "\n" t/starting-tempo xxx-key-signature))
