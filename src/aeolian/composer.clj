@@ -32,7 +32,7 @@
 	; 		(str "\n%%MIDI control 7 " (+ (* 2 method-length) 50)))))
 
 (defn metric-to-note 
-	([metric]
+	[metric]
 		(let [
 					raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
 					final-note-bits (cons (adjust-for-indentation metric)
@@ -43,21 +43,19 @@
 
 					; (println (str metric " becomes " final-note))
 			final-note))
-	([metric-idx metric total-metrics]
-		(log/info (str "Processing metric " (+ 1 metric-idx) " of " total-metrics))
-		(metric-to-note metric)))
+
+(defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
+	(log/info (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
+	(let [measure (map #(metric-to-note %1) metrics-in-measure)]
+		(str "| " n/major-root (apply str measure) " |\n")))
 
 (defn- map-metrics [metrics]
 	(let [
-			mapped-notes (map-indexed #(metric-to-note %1 %2 (count metrics)) metrics)
-			notes-in-measures 
-				(apply str 
-					(flatten 
-						(interpose 
-							(str "|\n|" n/major-root) 
-							(partition notes-per-measure mapped-notes)))) 
+			metrics-in-measures (partition notes-per-measure metrics)
+			mapped-notes (map-indexed #(metrics-to-measure %1 %2 (count metrics-in-measures)) metrics-in-measures)
+			notes-in-measures (apply str mapped-notes)
 		]
-		(str "|" n/major-root notes-in-measures " |")))
+		notes-in-measures))
 
 (defn compose [metrics]
 	(if (<= (count metrics) 0)
