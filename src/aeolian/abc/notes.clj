@@ -9,6 +9,17 @@
 (def major-chords ["\"C\"" "\"F\"" "\"G\"" "\"Am\""])
 (def major-root "\"Am\"")
 
+(defn pick-chord-for-method-length [method-length]
+	(cond
+	   (<= 1 method-length 5) "Cmaj"
+	   (<= 6 method-length 10) "Dmaj"
+	   (<= 11 method-length 15) "Emaj"
+	   (<= 16 method-length 20) "Fmaj"
+	   (<= 21 method-length 29) "Gmaj"
+	   (<= 30 method-length 39) "Amaj"
+	   (<= 40 method-length) "Bmaj")
+	)
+
 (defn pick-octave-for-line-length [line-length]
 	(cond
 	   (<= 10 line-length 39) octave-1

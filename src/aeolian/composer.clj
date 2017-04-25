@@ -40,8 +40,6 @@
 															(cons (adjust-for-complexity metric) (list raw-note))))
 					final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
 					]
-
-					; (println (str metric " becomes " final-note))
 			final-note))
 
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
