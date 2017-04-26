@@ -27,10 +27,13 @@ echo -e "\e[33mRunning metrics on all Java files...\e[0m"
 # find . -name "*.java" | xargs -t -n1 git blame -f -t -e | awk '{print $1 " " $2 " " $3 " " $6}' > blames.txt
 find $WORK_DIR -regextype sed -regex ".*[^Test]\.java" -exec ./go.sh '{}' $WORK_DIR \;
 
+echo -e "\033[33mPlaying All MIDI...\033[0m"
+timidity $WORK_DIR/*.mid
+
 function cleanup {
   rm -rf "$WORK_DIR"
   echo "Deleted temp working directory $WORK_DIR"
 }
 
 # register the cleanup function to be called on the EXIT signal
-# trap cleanup EXIT
+trap cleanup EXIT

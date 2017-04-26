@@ -52,16 +52,21 @@ if [[ -r $SOURCEFILE ]]; then
 	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > ${COMBINEDMETRICSFILE}.tmp
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp) <(sort -k 1b,1 ${INDENTATIONMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}.tmp2
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp2) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}
-	rm -f ${COMBINEDMETRICSFILE}.tmp
-	rm -f ${COMBINEDMETRICSFILE}.tmp2
 	echo -e "\033[33mGenerating ABC notation...\033[0m"
 	lein run ${COMBINEDMETRICSFILE}
 	echo -e "\033[33mGenerating MIDI...\033[0m"
 	abc2midi ${COMBINEDMETRICSFILE}.abc -o ${COMBINEDMETRICSFILE}.mid
-	echo -e "\033[33mPlaying MIDI...\033[0m"
-	timidity ${COMBINEDMETRICSFILE}.mid
 	exit 0
 else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
     exit 1
 fi
+
+function cleanup {
+	rm -f ${COMBINEDMETRICSFILE}.tmp
+	rm -f ${COMBINEDMETRICSFILE}.tmp2
+  	echo "Deleted temp metrics files"
+}
+
+# register the cleanup function to be called on the EXIT signal
+trap cleanup EXIT
