@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ $# -eq 0 ]]; then
-    >&2 echo "Usage: go.sh <source-file.java>"
+    >&2 echo "Usage: go.sh <source-file.java> <output-dir>"
     exit 1
 fi
 
@@ -28,15 +28,17 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CHECKSTYLEDIR=$DIR/resources
 SOURCEFILE=$1
+TEMPDIR="/tmp"
+OUTPUTDIR=${2:-$TEMPDIR}
 RAWSOURCECLASSNAME=$(basename ${SOURCEFILE} .java)
-COMBINEDMETRICSFILE=${RAWSOURCECLASSNAME}.metrics
-COMPLEXITYMETRICS=/tmp/${RAWSOURCECLASSNAME}.complexity.metrics
-LINELENGTHMETRICS=/tmp/${RAWSOURCECLASSNAME}.line-length.metrics
-METHODLENGTHMETRICS=/tmp/${RAWSOURCECLASSNAME}.method-length.metrics
-INDENTATIONMETRICS=/tmp/${RAWSOURCECLASSNAME}.indentation.metrics
+COMBINEDMETRICSFILE=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.metrics
+COMPLEXITYMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.complexity.metrics
+LINELENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.line-length.metrics
+METHODLENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.method-length.metrics
+INDENTATIONMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.indentation.metrics
 
 if [[ -r $SOURCEFILE ]]; then
-	echo -e "\033[33mProcessing ${SOURCEFILE}...\033[0m"
+	echo -e "\033[33mProcessing ${SOURCEFILE} into ${OUTPUTDIR}...\033[0m"
 	echo -e "\033[33mGenerating Checkstyle cyclomatic complexity metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
 	echo -e "\033[33mGenerating Checkstyle line length metrics...\033[0m"
@@ -56,7 +58,7 @@ if [[ -r $SOURCEFILE ]]; then
 	echo -e "\033[33mGenerating MIDI...\033[0m"
 	abc2midi ${COMBINEDMETRICSFILE}.abc -o ${COMBINEDMETRICSFILE}.mid
 	echo -e "\033[33mPlaying MIDI...\033[0m"
-	# timidity ${COMBINEDMETRICSFILE}.mid
+	timidity ${COMBINEDMETRICSFILE}.mid
 	exit 0
 else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"

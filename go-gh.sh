@@ -25,7 +25,7 @@ cd $BIN_DIR
 echo -e "\e[33mRunning metrics on all Java files...\e[0m"
 
 # find . -name "*.java" | xargs -t -n1 git blame -f -t -e | awk '{print $1 " " $2 " " $3 " " $6}' > blames.txt
-find $WORK_DIR -name "*.java" -exec ./go.sh '{}' \;
+find $WORK_DIR -name "*.java" -exec ./go.sh '{}' $WORK_DIR \;
 
 function cleanup {
   rm -rf "$WORK_DIR"
