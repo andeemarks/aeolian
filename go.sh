@@ -32,7 +32,7 @@ TEMPDIR="/tmp"
 OUTPUTDIR=${2:-$TEMPDIR}
 RAWSOURCECLASSNAME=$(basename ${SOURCEFILE} .java)
 SEMIUID=`od -x /dev/urandom | head -1 | awk '{OFS="-"; print $2}'`
-COMBINEDMETRICSFILE=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.${SEMIUID}.metrics
+COMBINEDMETRICSFILE=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.${SEMIUID}.metrics.all
 COMPLEXITYMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.complexity.metrics
 LINELENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.line-length.metrics
 METHODLENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.method-length.metrics
@@ -52,10 +52,6 @@ if [[ -r $SOURCEFILE ]]; then
 	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > ${COMBINEDMETRICSFILE}.tmp
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp) <(sort -k 1b,1 ${INDENTATIONMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}.tmp2
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp2) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}
-	echo -e "\033[33mGenerating ABC notation...\033[0m"
-	lein run ${COMBINEDMETRICSFILE}
-	echo -e "\033[33mGenerating MIDI...\033[0m"
-	abc2midi ${COMBINEDMETRICSFILE}.abc -o ${COMBINEDMETRICSFILE}.mid
 	exit 0
 else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
