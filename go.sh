@@ -5,26 +5,6 @@ if [[ $# -eq 0 ]]; then
     exit 1
 fi
 
-if ! which abc2midi &> /dev/null; then
-	>&2 echo “Error: Please install abc2midi and make sure it is in your path”
-	exit 1
-fi
-
-if ! which lein &> /dev/null; then
-	>&2 echo “Error: Please install Leinginen and make sure it is in your path”
-	exit 1
-fi
-
-if ! which java &> /dev/null; then
-	>&2 echo “Error: Please install Java and make sure it is in your path”
-	exit 1
-fi
-
-if ! which timidity &> /dev/null; then
-	>&2 echo “Error: Please install timidity and make sure it is in your path”
-	exit 1
-fi
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CHECKSTYLEDIR=$DIR/resources
 SOURCEFILE=$1
@@ -39,16 +19,16 @@ METHODLENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.method-length.metrics
 INDENTATIONMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.indentation.metrics
 
 if [[ -r $SOURCEFILE ]]; then
-	echo -e "\033[33mProcessing ${SOURCEFILE} into ${OUTPUTDIR}...\033[0m"
-	echo -e "\033[33mGenerating Checkstyle cyclomatic complexity metrics...\033[0m"
+	echo -e "\033[1;34mProcessing ${SOURCEFILE} into ${OUTPUTDIR}...\033[0m"
+	echo -e "\033[34mGenerating Checkstyle cyclomatic complexity metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
-	echo -e "\033[33mGenerating Checkstyle line length metrics...\033[0m"
+	echo -e "\033[34mGenerating Checkstyle line length metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d LL=%d\n", $1, $2, $3 }' > ${LINELENGTHMETRICS}
-	echo -e "\033[33mGenerating Checkstyle method length metrics...\033[0m"
+	echo -e "\033[34mGenerating Checkstyle method length metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-methodlength.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d ML=%d\n", $1, $2, $4 }' > ${METHODLENGTHMETRICS}
-	echo -e "\033[33mGenerating Checkstyle indentation metrics...\033[0m"
+	echo -e "\033[34mGenerating Checkstyle indentation metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-indentation.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d IND\n", $1, $2 }' > ${INDENTATIONMETRICS}
-	echo -e "\033[33mMerging all datasets...\033[0m"
+	echo -e "\033[34mMerging all metrics...\033[0m"
 	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > ${COMBINEDMETRICSFILE}.tmp
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp) <(sort -k 1b,1 ${INDENTATIONMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}.tmp2
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp2) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}
@@ -61,7 +41,7 @@ fi
 function cleanup {
 	rm -f ${COMBINEDMETRICSFILE}.tmp
 	rm -f ${COMBINEDMETRICSFILE}.tmp2
-  	echo "Deleted temp metrics files"
+  	echo "\033[34mDeleted temp metrics files\033[0m"
 }
 
 # register the cleanup function to be called on the EXIT signal

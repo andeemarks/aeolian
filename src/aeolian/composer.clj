@@ -6,6 +6,8 @@
 						[taoensso.timbre :as log]
 						[aeolian.abc.header :as h]))
 
+(log/set-level! :info)
+
 (def notes-per-measure 8)
 
 (defn- build-note [line-length]
@@ -29,7 +31,7 @@
 			final-note))
 
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
-	(log/info (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
+	(log/debug (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
 	(let [measure (map #(metric-to-note %1) metrics-in-measure)
 				method-length (parser/find-longest-method-length-in metrics-in-measure)
 				accompanying-chord (n/pick-chord-for-method-length method-length)]

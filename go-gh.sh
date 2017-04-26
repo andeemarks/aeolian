@@ -42,7 +42,7 @@ timidity ${UBERMETRICSFILE}.mid
 
 function cleanup {
   rm -rf "$WORK_DIR"
-  echo "Deleted temp working directory $WORK_DIR"
+  echo "\033[33mDeleted temp working directory $WORK_DIR\033[0m"
 }
 
 # register the cleanup function to be called on the EXIT signal
