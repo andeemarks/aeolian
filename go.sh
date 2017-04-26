@@ -36,6 +36,7 @@ METHODLENGTHMETRICS=/tmp/${RAWSOURCECLASSNAME}.method-length.metrics
 INDENTATIONMETRICS=/tmp/${RAWSOURCECLASSNAME}.indentation.metrics
 
 if [[ -r $SOURCEFILE ]]; then
+	echo -e "\033[33mProcessing ${SOURCEFILE}...\033[0m"
 	echo -e "\033[33mGenerating Checkstyle cyclomatic complexity metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
 	echo -e "\033[33mGenerating Checkstyle line length metrics...\033[0m"
@@ -48,12 +49,15 @@ if [[ -r $SOURCEFILE ]]; then
 	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > ${COMBINEDMETRICSFILE}.tmp
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp) <(sort -k 1b,1 ${INDENTATIONMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}.tmp2
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp2) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}
+	rm -f ${COMBINEDMETRICSFILE}.tmp
+	rm -f ${COMBINEDMETRICSFILE}.tmp2
 	echo -e "\033[33mGenerating ABC notation...\033[0m"
 	lein run ${COMBINEDMETRICSFILE}
 	echo -e "\033[33mGenerating MIDI...\033[0m"
 	abc2midi ${COMBINEDMETRICSFILE}.abc -o ${COMBINEDMETRICSFILE}.mid
 	echo -e "\033[33mPlaying MIDI...\033[0m"
-	timidity ${COMBINEDMETRICSFILE}.mid
+	# timidity ${COMBINEDMETRICSFILE}.mid
+	exit 0
 else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
     exit 1

@@ -20,6 +20,9 @@
 	   	(<= 40 method-length) "B"
 	   	:else "C"))
 
+(defn- pick-not-from-octave [octave line-length]
+	(nth octave (mod line-length (count octave))))
+
 (defn pick-note-for-line-length [line-length]
 	(cond
 		(< line-length 10) rest-note

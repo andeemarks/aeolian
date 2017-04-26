@@ -20,4 +20,6 @@ hs_err_pid85826.log
 
 *.tmp*
 
+tmp.*
+
 combined-metrics.txt
