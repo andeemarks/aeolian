@@ -19,7 +19,7 @@ METHODLENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.method-length.metrics
 INDENTATIONMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.indentation.metrics
 
 if [[ -r $SOURCEFILE ]]; then
-	echo -e "\033[1;34mProcessing ${RAWSOURCECLASSNAME} into ${OUTPUTDIR}...\033[0m"
+	echo -e "\033[1;34mProcessing ${RAWSOURCECLASSNAME}...\033[0m"
 	echo -e "\033[34mGenerating Checkstyle cyclomatic complexity metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
 	echo -e "\033[34mGenerating Checkstyle line length metrics...\033[0m"

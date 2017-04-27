@@ -24,7 +24,7 @@
 (defn adjust-for-complexity [metric]
 	(let [complexity (parser/complexity-from-metric metric)]
 		(if (> complexity 1) 
-			(str "\n" (t/tempo-for complexity)))))
+			(str "[" (t/tempo-for complexity) "]"))))
 	
 (defn adjust-for-indentation [metric]
 	nil)
