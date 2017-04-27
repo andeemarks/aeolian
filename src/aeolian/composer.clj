@@ -1,20 +1,21 @@
 (ns aeolian.composer
 	(:require [aeolian.parser :as parser]
 						[aeolian.tempo :as t]
-						[aeolian.midi.drums :as d]
+						[aeolian.midi.core :as midi]
 						[aeolian.abc.notes :as n]
+						[aeolian.abc.core :as abc]
 						[taoensso.timbre :as log]
 						[aeolian.abc.header :as h]))
 
 (log/set-level! :info)
 
-(def current-source-file (atom ""))
+(def source-file (atom ""))
 
-(defn get-current-source-file []
-  @current-source-file)
+(defn get-source-file []
+  @source-file)
 
-(defn update-current-source-file [new-source-file]
-  (swap! current-source-file (fn [f] new-source-file)))
+(defn update-source-file [new-source-file]
+  (swap! source-file (fn [f] new-source-file)))
 
 (def notes-per-measure 8)
 
@@ -24,28 +25,30 @@
 (defn adjust-for-complexity [metric]
 	(let [complexity (parser/complexity-from-metric metric)]
 		(if (> complexity 1) 
-			(str "[" (t/tempo-for complexity) "]"))))
+			(abc/inline (t/tempo-for complexity)))))
 	
-(defn adjust-for-indentation [metric]
-	nil)
+(defn adjust-for-file-change [current-source-file]
+	(if (not (= current-source-file (deref source-file)))
+		(midi/instrument-command-for current-source-file)
+		nil))
 
 (defn metric-to-note [metric]
-	(dosync
-		(let [
-			raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
-			final-note-bits (cons (adjust-for-indentation metric)
-												(cons (adjust-for-complexity metric) (list raw-note)))
-			final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
-			]
-			(update-current-source-file (parser/source-file-from-metric metric))
-			final-note)))
+	(let [
+		current-source-file (parser/source-file-from-metric metric)
+		raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
+		final-note-bits (cons (adjust-for-file-change current-source-file)
+							(cons (adjust-for-complexity metric) (list raw-note)))
+		final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
+		]
+		(update-source-file current-source-file)
+		final-note))
 
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
 	(log/debug (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
 	(let [measure (map #(metric-to-note %1) metrics-in-measure)
 			method-length (parser/find-longest-method-length-in metrics-in-measure)
 			accompanying-chord (n/pick-chord-for-method-length method-length)]
-		(str "| " accompanying-chord (apply str measure) " |\n")))
+		(abc/measure (str accompanying-chord (apply str measure)))))
 
 (defn- split-metrics-into-equal-measures [metrics]
 	(partition 

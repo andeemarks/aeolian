@@ -2,14 +2,14 @@
 	(:require [aeolian.parser :as parser]
 						[aeolian.composer :as composer]
 						[aeolian.tempo :as t]
-						[aeolian.midi.drums :as d]
+						[aeolian.midi.core :as midi]
 						[aeolian.abc.header :as h]
 						[clojure.java.io :as io]))
 
 (defn- build-header [metrics-file-name] 
 	(str (h/build-header metrics-file-name) 
 			"\n"
-			d/drum-track))
+			midi/header))
 
 (defn notation-file-name [original-file-name]
 	(str original-file-name ".abc"))
