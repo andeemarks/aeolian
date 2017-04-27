@@ -43,13 +43,20 @@
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
 	(log/debug (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
 	(let [measure (map #(metric-to-note %1) metrics-in-measure)
-				method-length (parser/find-longest-method-length-in metrics-in-measure)
-				accompanying-chord (n/pick-chord-for-method-length method-length)]
-		(str "| \"" accompanying-chord "\"" (apply str measure) " |\n")))
+			method-length (parser/find-longest-method-length-in metrics-in-measure)
+			accompanying-chord (n/pick-chord-for-method-length method-length)]
+		(str "| " accompanying-chord (apply str measure) " |\n")))
+
+(defn- split-metrics-into-equal-measures [metrics]
+	(partition 
+		notes-per-measure ; size of each partition
+		notes-per-measure ; index to start next partition
+		[(last metrics)]  ; value to pad out small partitions
+		metrics))
 
 (defn- map-metrics [metrics]
 	(let [
-			metrics-in-measures (partition notes-per-measure notes-per-measure [(last metrics)] metrics)
+			metrics-in-measures (split-metrics-into-equal-measures metrics)
 			mapped-notes (map-indexed #(metrics-to-measure %1 %2 (count metrics-in-measures)) metrics-in-measures)
 			notes-in-measures (apply str mapped-notes)
 		]

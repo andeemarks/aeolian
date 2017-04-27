@@ -10,15 +10,15 @@
 
 (defn pick-chord-for-method-length [method-length]
 	(cond
-		(nil? method-length) "C"
-	   	(<= 1 method-length 5) "C"
-	   	(<= 6 method-length 10) "D"
-	   	(<= 11 method-length 15) "E"
-	   	(<= 16 method-length 20) "F"
-	   	(<= 21 method-length 29) "G"
-	   	(<= 30 method-length 39) "A"
-	   	(<= 40 method-length) "B"
-	   	:else "C"))
+		(nil? method-length) "\"C\""
+	   	(<= 1 method-length 5) "\"C\""
+	   	(<= 6 method-length 10) "\"D\""
+	   	(<= 11 method-length 15) "\"E\""
+	   	(<= 16 method-length 20) "\"F\""
+	   	(<= 21 method-length 29) "\"G\""
+	   	(<= 30 method-length 39) "\"A\""
+	   	(<= 40 method-length) "\"B\""
+	   	:else "\"C\""))
 
 (defn- pick-not-from-octave [octave line-length]
 	(nth octave (mod line-length (count octave))))
