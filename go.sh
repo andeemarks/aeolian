@@ -41,7 +41,7 @@ fi
 function cleanup {
 	rm -f ${COMBINEDMETRICSFILE}.tmp
 	rm -f ${COMBINEDMETRICSFILE}.tmp2
-  	echo "\033[34mDeleted temp metrics files\033[0m"
+  	echo -e "\033[34mDeleted temp metrics files\033[0m"
 }
 
 # register the cleanup function to be called on the EXIT signal

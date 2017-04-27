@@ -58,12 +58,18 @@ lein run ${UBERMETRICSFILE}
 echo -e "\033[33mGenerating MIDI...\033[0m"
 abc2midi ${UBERMETRICSFILE}.abc -s -o ${UBERMETRICSFILE}.mid
 
-echo -e "\033[33mPlaying All MIDI...\033[0m"
+echo -e "\033[33mPlaying MIDI...\033[0m"
 timidity ${UBERMETRICSFILE}.mid
+
+MIDIARCHIVEDIR=${DIR}/archive/midi
+ABCARCHIVEDIR=${DIR}/archive/abc
+echo -e "\033[33mArchiving generated files...\033[0m"
+cp ${UBERMETRICSFILE}.mid ${MIDIARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).mid
+cp ${UBERMETRICSFILE}.abc ${ABCARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).abc
 
 function cleanup {
   rm -rf "$WORK_DIR"
-  echo "\033[33mDeleted temp working directory $WORK_DIR\033[0m"
+  echo -e "\033[33mDeleted temp working directory $WORK_DIR\033[0m"
 }
 
 # register the cleanup function to be called on the EXIT signal

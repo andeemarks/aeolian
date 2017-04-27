@@ -59,5 +59,9 @@
                 "/home/amarks/Code/aeolian/resources/Notification.java#10 LL=70"
                 "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"
                         ]) => truthy )
+  (fact "file names are persisted"
+    (c/compose ["/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"])
+    (c/get-current-source-file) => "Notification.java")
+
   (fact "no metrics means no composition"
     (c/compose []) => nil ))

@@ -10,6 +10,12 @@
 	(let [file-line-id (first (metric-line-to-bits metric))]
 		(Integer/parseInt (last (clojure.string/split file-line-id #"#")))))
 
+(defn source-file-from-metric [metric]
+	(check-valid-line-number metric)
+	(let [source-file (second (re-find #"(\w+)\.java\#\d+" metric))]
+		(if (not (nil? source-file))
+			(str source-file ".java"))))
+
 (defn complexity-from-metric [metric]
 	(check-valid-line-number metric)
 	(let [complexity (second (re-find #"CC=(\w+)" metric))]

@@ -24,6 +24,10 @@
     (fact "can be found"
       (parser/indentation-from-metric "/Notification.java#190 IND") => truthy))
 
+  (facts "the source file"
+    (fact "can be found"
+      (parser/source-file-from-metric "/Notification.java#190 IND") => "Notification.java"))
+
   (facts "the complexity"
     (fact "can be found"
       (parser/complexity-from-metric "/Notification.java#190 CC=9") => 9)
