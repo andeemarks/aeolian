@@ -46,12 +46,12 @@ cd $BIN_DIR
 # Git blame each file to get author and commit SHA
 echo -e "\033[33mFind commit history for each Java file...\033[0m"
 pushd $WORK_DIR/$GITHUB_REPO >/dev/null
-find . -regextype sed -regex ".*[^Test]\.java" | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " TS=" $4}' > ${WORK_DIR}/blames.txt
+find . -regex ".*[^Test]\.java" | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " TS=" $4}' > ${WORK_DIR}/blames.txt
 popd >/dev/null
 
 # Run each non Test source file through go.sh
 echo -e "\033[33mRunning metrics on all Java files...\033[0m"
-find $WORK_DIR -regextype sed -regex ".*[^Test]\.java" -exec ./go.sh '{}' $WORK_DIR \;
+find $WORK_DIR -regex ".*[^Test]\.java" -exec ./go.sh '{}' $WORK_DIR \;
 
 UBERMETRICSFILE=${WORK_DIR}/${GITHUB_REPO}.metrics
 echo -e "\033[33mBuilding uber metrics file...\033[0m"
