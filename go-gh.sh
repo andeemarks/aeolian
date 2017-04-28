@@ -46,8 +46,10 @@ cd $BIN_DIR
 # Git blame each file to get author and commit SHA
 echo -e "\e[33mFind commit history for each Java file...\e[0m"
 pushd $WORK_DIR/$GITHUB_REPO 
-find . -regextype sed -regex ".*[^Test]\.java" | xargs -t -n1 git blame -f -t -e | awk '{print $1 " " $2 " " $3 " " $6}' > ${WORK_DIR}/blames.txt
+find . -regextype sed -regex ".*[^Test]\.java" | xargs -t -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO} -F "[ ()]" '{print PREFIX $2 "#"$7 " AU=" $4 " SHA=" $1}' > ${WORK_DIR}/blames.txt
 popd
+
+exit
 
 # Run each non Test source file through go.sh
 echo -e "\e[33mRunning metrics on all Java files...\e[0m"
