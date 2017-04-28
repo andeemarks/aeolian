@@ -13,6 +13,14 @@
     ))
 
 (facts "When parsing a metric line"
+  (facts "the commit author"
+    (fact "can be found"
+      (parser/author-from-metric "/ExecNpmOfflineMojo.java#1 AU=<adam.dubiel@allegro.pl> TS=1396276249") => "<adam.dubiel@allegro.pl>"))
+
+  (facts "the commit timestamp"
+    (fact "can be found"
+      (parser/timestamp-from-metric "/ExecNpmOfflineMojo.java#1 AU=<adam.dubiel@allegro.pl> TS=1396276249") => "1396276249"))
+
   (facts "the line length"
     (fact "can be found"
       (parser/line-length-from-metric "/Notification.java#190 LL=13") => 13)

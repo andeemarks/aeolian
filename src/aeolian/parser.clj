@@ -34,6 +34,14 @@
 	(check-valid-line-number metric)
 	(re-find #"IND(\s*)" metric))
 
+(defn author-from-metric [metric]
+	(check-valid-line-number metric)
+	(second (re-find #"AU=(\S*)\s" metric)))
+
+(defn timestamp-from-metric [metric]
+	(check-valid-line-number metric)
+	(second (re-find #"TS=(\d+)" metric)))
+
 (defn line-length-from-metric [metric]
 	(check-valid-line-number metric)
 	(let [line-length (second (re-find #"LL=(\w+)" metric))]

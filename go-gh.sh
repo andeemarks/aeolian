@@ -45,9 +45,9 @@ cd $BIN_DIR
 
 # Git blame each file to get author and commit SHA
 echo -e "\e[33mFind commit history for each Java file...\e[0m"
-pushd $WORK_DIR/$GITHUB_REPO 
-find . -regextype sed -regex ".*[^Test]\.java" | xargs -t -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO} -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " SHA=" $1}' > ${WORK_DIR}/blames.txt
-popd
+pushd $WORK_DIR/$GITHUB_REPO >/dev/null
+find . -regextype sed -regex ".*[^Test]\.java" | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " TS=" $4}' > ${WORK_DIR}/blames.txt
+popd >/dev/null
 
 # Run each non Test source file through go.sh
 echo -e "\e[33mRunning metrics on all Java files...\e[0m"
@@ -57,11 +57,15 @@ UBERMETRICSFILE=${WORK_DIR}/${GITHUB_REPO}.metrics
 echo -e "\033[33mBuilding uber metrics file...\033[0m"
 cat $WORK_DIR/*.metrics.all > ${UBERMETRICSFILE}
 
+echo -e "\033[33mJoining metrics file with Git commit history...\033[0m"
+join -a 1 <(sort -k 1b,1 ${WORK_DIR}/blames.txt) <(sort -k 1b,1 ${UBERMETRICSFILE}) | sort -V > ${UBERMETRICSFILE}.history
+sed -i.bak '/LL=/!d' ${UBERMETRICSFILE}.history
+
 echo -e "\033[33mGenerating ABC notation...\033[0m"
-lein run ${UBERMETRICSFILE}
+lein run ${UBERMETRICSFILE}.history
 
 echo -e "\033[33mGenerating MIDI...\033[0m"
-abc2midi ${UBERMETRICSFILE}.abc -s -o ${UBERMETRICSFILE}.mid
+abc2midi ${UBERMETRICSFILE}.history.abc -s -o ${UBERMETRICSFILE}.mid
 
 echo -e "\033[33mPlaying MIDI...\033[0m"
 timidity ${UBERMETRICSFILE}.mid

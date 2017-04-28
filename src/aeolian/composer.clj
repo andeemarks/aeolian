@@ -33,6 +33,7 @@
 		nil))
 
 (defn metric-to-note [metric]
+	(log/debug (str "Processing metric " metric))
 	(let [
 		current-source-file (parser/source-file-from-metric metric)
 		raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
