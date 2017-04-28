@@ -64,17 +64,19 @@ sed -i.bak '/LL=/!d' ${UBERMETRICSFILE}.history
 echo -e "\033[33mGenerating ABC notation...\033[0m"
 lein run ${UBERMETRICSFILE}.history
 
+ABCFILE=${UBERMETRICSFILE}.history.abc
+MIDIFILE=${UBERMETRICSFILE}.mid
 echo -e "\033[33mGenerating MIDI...\033[0m"
-abc2midi ${UBERMETRICSFILE}.history.abc -s -o ${UBERMETRICSFILE}.mid
+abc2midi ${ABCFILE} -s -o ${MIDIFILE}
 
 echo -e "\033[33mPlaying MIDI...\033[0m"
-timidity ${UBERMETRICSFILE}.mid
+timidity ${MIDIFILE}
 
 MIDIARCHIVEDIR=${DIR}/archive/midi
 ABCARCHIVEDIR=${DIR}/archive/abc
 echo -e "\033[33mArchiving generated files...\033[0m"
-cp ${UBERMETRICSFILE}.mid ${MIDIARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).mid
-cp ${UBERMETRICSFILE}.abc ${ABCARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).abc
+cp ${MIDIFILE} ${MIDIARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).mid
+cp ${ABCFILE} ${ABCARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).abc
 
 function cleanup {
   rm -rf "$WORK_DIR"

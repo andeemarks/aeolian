@@ -29,5 +29,5 @@
 (defn instrument-command-for [filename]
 	(str "[I: MIDI program " (instrument-for filename) "]"))
 
-(defn volume-for [method-length]
-	"%%MIDI control 7 50")
+(defn volume-boost []
+	(str "[I: MIDI volinc +50]"))

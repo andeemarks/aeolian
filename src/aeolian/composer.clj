@@ -26,6 +26,11 @@
 	(let [complexity (parser/complexity-from-metric metric)]
 		(if (> complexity 1) 
 			(abc/inline (t/tempo-for complexity)))))
+
+(defn adjust-for-indentation [metric]
+	(let [indentation-error (parser/indentation-from-metric metric)]
+		(if (not (nil? indentation-error))
+			(midi/volume-boost))))
 	
 (defn adjust-for-file-change [current-source-file]
 	(if (not (= current-source-file (deref source-file)))
@@ -37,8 +42,9 @@
 	(let [
 		current-source-file (parser/source-file-from-metric metric)
 		raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
-		final-note-bits (cons (adjust-for-file-change current-source-file)
-							(cons (adjust-for-complexity metric) (list raw-note)))
+		final-note-bits (cons (adjust-for-indentation metric)
+							(cons (adjust-for-file-change current-source-file)
+								(cons (adjust-for-complexity metric) (list raw-note))))
 		final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
 		]
 		(update-source-file current-source-file)
