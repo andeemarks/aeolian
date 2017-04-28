@@ -5,7 +5,7 @@
 (def stick "37")
 (def beat stick)
 
-(def four-beat-metro (str "%%MIDI drum dzdzdzdz " beat " " beat " " beat " " beat " ""\n"))
+(def four-beat-metro (str "%%MIDI drum dzdzdzdz " (apply str (repeat 4 (str beat " "))) "\n"))
 (def no-accents "%%MIDI nobeataccents\n")
 (def first-beat-emphasis "%%MIDI beatstring pmmm\n")
 (def header (str first-beat-emphasis four-beat-metro no-accents "%%MIDI drumon\n%%MIDI gchord c\n"))

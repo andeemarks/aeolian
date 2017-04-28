@@ -42,10 +42,15 @@ git clone -q https://github.com/$GITHUB_USER/$GITHUB_REPO.git
 
 cd $BIN_DIR
 
-echo -e "\e[33mRunning metrics on all Java files...\e[0m"
 
-# find . -name "*.java" | xargs -t -n1 git blame -f -t -e | awk '{print $1 " " $2 " " $3 " " $6}' > blames.txt
+# Git blame each file to get author and commit SHA
+echo -e "\e[33mFind commit history for each Java file...\e[0m"
+pushd $WORK_DIR/$GITHUB_REPO 
+find . -regextype sed -regex ".*[^Test]\.java" | xargs -t -n1 git blame -f -t -e | awk '{print $1 " " $2 " " $3 " " $6}' > ${WORK_DIR}/blames.txt
+popd
+
 # Run each non Test source file through go.sh
+echo -e "\e[33mRunning metrics on all Java files...\e[0m"
 find $WORK_DIR -regextype sed -regex ".*[^Test]\.java" -exec ./go.sh '{}' $WORK_DIR \;
 
 UBERMETRICSFILE=${WORK_DIR}/${GITHUB_REPO}.metrics
@@ -73,4 +78,4 @@ function cleanup {
 }
 
 # register the cleanup function to be called on the EXIT signal
-trap cleanup EXIT
+# trap cleanup EXIT
