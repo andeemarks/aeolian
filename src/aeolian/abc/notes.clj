@@ -20,14 +20,14 @@
 	   	(<= 40 method-length) "\"B\""
 	   	:else "\"C\""))
 
-(defn- pick-not-from-octave [octave line-length]
+(defn- pick-note-from-octave [octave line-length]
 	(nth octave (mod line-length (count octave))))
 
 (defn pick-note-for-line-length [line-length]
 	(cond
 		(< line-length 10) rest-note
-	   	(<= 10 line-length 39) (nth octave-1 (mod line-length (count octave-1))) 
-	   	(<= 40 line-length 79) (nth octave-2 (mod line-length (count octave-2)))
-	   	(<= 80 line-length 99) (nth octave-3 (mod line-length (count octave-3)))
-	   	(<= 100 line-length 119) (nth octave-4 (mod line-length (count octave-4)))
-	   	(<= 120 line-length) (nth octave-5 (mod line-length (count octave-5)))))
+	   	(<= 10 line-length 39) (pick-note-from-octave octave-1 line-length) 
+	   	(<= 40 line-length 79) (pick-note-from-octave octave-2 line-length)
+	   	(<= 80 line-length 99) (pick-note-from-octave octave-3 line-length)
+	   	(<= 100 line-length 119) (pick-note-from-octave octave-4 line-length)
+	   	(<= 120 line-length) (pick-note-from-octave octave-5 line-length)))
