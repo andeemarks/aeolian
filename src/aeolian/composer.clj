@@ -34,7 +34,7 @@
 	
 (defn adjust-for-file-change [current-source-file]
 	(if (not (= current-source-file (deref source-file)))
-		(midi/instrument-command-for current-source-file)
+		(str (midi/instrument-command-for current-source-file) "\n" "w: " current-source-file "\n")
 		nil))
 
 (defn metric-to-note [metric]
