@@ -39,6 +39,7 @@ BIN_DIR=$DIR
 echo -e "\033[33mCloning repo to $WORK_DIR...\033[0m"
 cd $WORK_DIR
 git clone -q https://github.com/$GITHUB_USER/$GITHUB_REPO.git
+# git clone -q https://github.com/ReactiveX/RxJava.git
 
 cd $BIN_DIR
 
@@ -48,6 +49,20 @@ echo -e "\033[33mFind commit history for each Java file...\033[0m"
 pushd $WORK_DIR/$GITHUB_REPO >/dev/null
 find . -regex ".*[^Test]\.java" | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " TS=" $4}' > ${WORK_DIR}/blames.txt
 popd >/dev/null
+
+echo -e "\033[34mGenerating Checkstyle duplication metrics...\033[0m"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CHECKSTYLEDIR=$DIR/resources
+java -jar $CHECKSTYLEDIR/simian-2.4.0.jar -threshold=10 -excludes="**/test/**/*.java" $WORK_DIR/$GITHUB_REPO/**/*.java | tail -3 | head -2 > ${WORK_DIR}/duplication.txt
+DUPLICATESTATS=`cat ${WORK_DIR}/duplication.txt`
+TOTALDUPLINESRE='Found ([0-9]+).*'
+TOTALLINESRE='Processed a total of ([0-9]+).*'
+[[ "${DUPLICATESTATS}" =~ ${TOTALDUPLINESRE} ]]
+TOTALDUPLINES=${BASH_REMATCH[1]}
+[[ "${DUPLICATESTATS}" =~ ${TOTALLINESRE} ]] 
+TOTALLINES=${BASH_REMATCH[1]}
+echo ${TOTALDUPLINES}
+echo ${TOTALLINES}
 
 # Run each non Test source file through go.sh
 echo -e "\033[33mRunning metrics on all Java files...\033[0m"
