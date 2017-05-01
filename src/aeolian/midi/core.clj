@@ -8,7 +8,7 @@
 (def four-beat-metro (str "%%MIDI drum dzdzdzdz " (apply str (repeat 4 (str beat " "))) "\n"))
 (def no-accents "%%MIDI nobeataccents\n")
 (def first-beat-emphasis "%%MIDI beatstring pppp\n")
-(def header (str first-beat-emphasis four-beat-metro no-accents "%%MIDI drumon\n%%MIDI gchord c\n"))
+(def header (str first-beat-emphasis four-beat-metro no-accents "%%MIDI drumoff\n%%MIDI gchord c\n"))
 
 (def flute 73)
 (def voice 53)
