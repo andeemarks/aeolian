@@ -26,6 +26,8 @@
 (defn -main [& args]
 	(if-let [metrics-file-name (first args)]
 		(if (.exists (io/as-file metrics-file-name))
-			(generate-notation-from metrics-file-name)
+			(let [duplicate-metrics (second args)]
+				(println duplicate-metrics)
+				(generate-notation-from metrics-file-name))
 			(println (str "Error: cannot find metrics file - " metrics-file-name)))
 		(println "Error: no metrics file supplied")))

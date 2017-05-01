@@ -77,7 +77,7 @@ join -a 1 <(sort -k 1b,1 ${WORK_DIR}/blames.txt) <(sort -k 1b,1 ${UBERMETRICSFIL
 sed -i.bak '/LL=/!d' ${UBERMETRICSFILE}.history
 
 echo -e "\033[33mGenerating ABC notation...\033[0m"
-lein run ${UBERMETRICSFILE}.history
+lein run ${UBERMETRICSFILE}.history "{:duplicate-lines ${TOTALDUPLINES} :total-lines ${TOTALLINES}}"
 
 ABCFILE=${UBERMETRICSFILE}.history.abc
 MIDIFILE=${UBERMETRICSFILE}.mid
