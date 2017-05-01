@@ -25,9 +25,8 @@
 
 (defn pick-note-for-line-length [line-length]
 	(cond
-		(< line-length 10) rest-note
-	   	(<= 10 line-length 39) (pick-note-from-octave octave-1 line-length) 
-	   	(<= 40 line-length 79) (pick-note-from-octave octave-2 line-length)
-	   	(<= 80 line-length 99) (pick-note-from-octave octave-3 line-length)
-	   	(<= 100 line-length 119) (pick-note-from-octave octave-4 line-length)
-	   	(<= 120 line-length) (pick-note-from-octave octave-5 line-length)))
+		(< line-length 10) (pick-note-from-octave octave-1 line-length)
+	   	(<= 10 line-length 39) (pick-note-from-octave octave-2 line-length) 
+	   	(<= 40 line-length 79) (pick-note-from-octave octave-3 line-length)
+	   	(<= 80 line-length 99) (pick-note-from-octave octave-4 line-length)
+	   	(<= 100 line-length) (pick-note-from-octave octave-5 line-length)))

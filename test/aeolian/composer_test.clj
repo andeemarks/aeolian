@@ -11,29 +11,16 @@
     (future-fact "empty lines are mapped to rests"
       (c/metric-to-note "Foo.java#1 LL=0") => n/rest-note)
 
-    (facts "short lines are mapped to rests"
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=1") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=2") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=3") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=4") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=5") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=6") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=7") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=8") n/rest-note) => truthy
-      (str/index-of (c/metric-to-note "Foo.java#1 LL=9") n/rest-note) => truthy
-      )
-
     (facts "longer lines are mapped to actual notes with longer lines at higher octaves"
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=10")) %) n/octave-1 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=39")) %) n/octave-1 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=40")) %) n/octave-2 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=79")) %) n/octave-2 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=80")) %) n/octave-3 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=99")) %) n/octave-3 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=100")) %) n/octave-4 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=119")) %) n/octave-4 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=120")) %) n/octave-5 ) => truthy
-      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=121")) %) n/octave-5 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=1")) %) n/octave-1 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=9")) %) n/octave-1 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=10")) %) n/octave-2 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=39")) %) n/octave-2 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=40")) %) n/octave-3 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=79")) %) n/octave-3 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=80")) %) n/octave-4 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=99")) %) n/octave-4 ) => truthy
+      (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=100")) %) n/octave-5 ) => truthy
       (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=200")) %) n/octave-5 ) => truthy
       (some #(= (str/trim (c/metric-to-note "Foo.java#1 LL=2000")) %) n/octave-5 ) => truthy
        )
