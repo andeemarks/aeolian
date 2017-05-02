@@ -6,16 +6,20 @@
 						[aeolian.abc.header :as h]
 						[clojure.java.io :as io]))
 
-(defn- build-header [metrics-file-name] 
-	(str (h/build-header metrics-file-name) 
-			"\n"
-			midi/header))
+(defn build-header [metrics-file-name duplicate-metrics]
+	(let [duplication-percentage (float 
+									(* 100 
+									(/ 
+										(:duplicate-lines duplicate-metrics) 
+										(:total-lines duplicate-metrics))))]
+		(if (< duplication-percentage 10)
+			(str (h/build-major-header metrics-file-name) "\n" midi/header)
+			(str (h/build-minor-header metrics-file-name) "\n" midi/header))))
 
 (defn notation-file-name [original-file-name]
 	(str original-file-name ".abc"))
 
 (defn- generate-notation-from [metrics-file-name]
-	; (println (str "Generating ABC Notation from " metrics-file-name "..."))
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
      	(let [notation-file-name (notation-file-name metrics-file-name)
      				composition (composer/compose (line-seq rdr))]
