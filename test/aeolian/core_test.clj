@@ -4,6 +4,9 @@
   			[clojure.string :as str]))
 
 (facts "duplication metrics dictate the key"
+	(fact "no code to check will produce a major key"
+        (str/includes? (core/build-header "foo.metrics" {:duplicate-lines 0 :total-lines 0}) "K:Cmin") => falsey )
+
 	(fact ">= 10% duplicate code will produce a minor key"
 		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 10 :total-lines 100}) "K:Cmin") => truthy
 		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 50 :total-lines 500}) "K:Cmin") => truthy

@@ -18,7 +18,7 @@
 
 (defn build-header [metrics-file-name duplicate-metrics]
 	(let [duplicate-lines (:duplicate-lines duplicate-metrics)
-			total-lines (:total-lines duplicate-metrics)
+			total-lines (if (zero? (:total-lines duplicate-metrics)) 1 (:total-lines duplicate-metrics))
 			duplication-percentage (float 
 									(* 	100 
 									(/ 	duplicate-lines total-lines)))]
