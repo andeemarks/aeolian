@@ -8,6 +8,14 @@
 
 (def composition-key (atom ""))
 
+(defn build-header-for-major-key [metrics-file-name]
+	(swap! composition-key (fn [f] :major))
+	(str (h/build-major-header metrics-file-name) "\n" midi/header))
+
+(defn build-header-for-minor-key [metrics-file-name]
+	(swap! composition-key (fn [f] :minor))
+	(str (h/build-minor-header metrics-file-name) "\n" midi/header))
+
 (defn build-header [metrics-file-name duplicate-metrics]
 	(let [duplicate-lines (:duplicate-lines duplicate-metrics)
 			total-lines (:total-lines duplicate-metrics)
@@ -15,12 +23,8 @@
 									(* 	100 
 									(/ 	duplicate-lines total-lines)))]
 		(if (< duplication-percentage 10)
-			(do
-				(swap! composition-key (fn [f] :major))
-				(str (h/build-major-header metrics-file-name) "\n" midi/header))
-			(do
-				(swap! composition-key (fn [f] :minor))
-				(str (h/build-minor-header metrics-file-name) "\n" midi/header)))))
+			(build-header-for-major-key metrics-file-name)
+			(build-header-for-minor-key metrics-file-name))))
 
 (defn notation-file-name [original-file-name]
 	(str original-file-name ".abc"))

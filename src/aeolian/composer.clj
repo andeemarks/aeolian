@@ -10,16 +10,23 @@
 (log/set-level! :info)
 
 (def source-file (atom ""))
+(def author (atom ""))
 
 (defn get-source-file []
   @source-file)
 
+(defn get-author []
+  @author)
+
 (defn update-source-file [new-source-file]
   (swap! source-file (fn [f] new-source-file)))
 
+(defn update-author [new-author]
+  (swap! author (fn [f] new-author)))
+
 (def notes-per-measure 8)
 
-(defn- build-note [line-length]
+(defn build-note [line-length]
 	(n/pick-note-for-line-length line-length))
 
 (defn adjust-for-complexity [metric]
@@ -33,21 +40,28 @@
 			(midi/volume-boost))))
 	
 (defn adjust-for-file-change [current-source-file]
-	(if (not (= current-source-file (deref source-file)))
-		(str (midi/instrument-command-for current-source-file) (abc/lyrics-for current-source-file))
+	(if (not (= current-source-file (get-source-file)))
+		(abc/lyrics-for current-source-file)
+		nil))
+	
+(defn adjust-for-author-change [current-author]
+	(if (not (= current-author (get-author)))
+		(midi/instrument-command-for current-author)
 		nil))
 
 (defn metric-to-note [metric]
 	(log/debug (str "Processing metric " metric))
 	(let [
 		current-source-file (parser/source-file-from-metric metric)
-		raw-note (str (build-note (parser/line-length-from-metric metric)) " ")
-		final-note-bits (cons (adjust-for-indentation metric)
+		current-author 		(parser/author-from-metric metric)
+		raw-note 			(str (build-note (parser/line-length-from-metric metric)) " ")
+		final-note-bits (cons (adjust-for-author-change current-author)
 							(cons (adjust-for-file-change current-source-file)
 								(cons (adjust-for-complexity metric) (list raw-note))))
 		final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
 		]
 		(update-source-file current-source-file)
+		(update-author current-author)
 		final-note))
 
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]

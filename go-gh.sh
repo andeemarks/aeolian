@@ -82,14 +82,14 @@ MIDIFILE=${UBERMETRICSFILE}.mid
 echo -e "\033[33mGenerating MIDI...\033[0m"
 abc2midi ${ABCFILE} -s -o ${MIDIFILE}
 
-echo -e "\033[33mPlaying MIDI...\033[0m"
-timidity ${MIDIFILE}
-
 MIDIARCHIVEDIR=${DIR}/archive/midi
 ABCARCHIVEDIR=${DIR}/archive/abc
 echo -e "\033[33mArchiving generated files...\033[0m"
 cp ${MIDIFILE} ${MIDIARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).mid
 cp ${ABCFILE} ${ABCARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).abc
+
+echo -e "\033[33mPlaying MIDI...\033[0m"
+timidity ${MIDIFILE}
 
 function cleanup {
   rm -rf "$WORK_DIR"
