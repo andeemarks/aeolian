@@ -61,8 +61,6 @@ TOTALLINESRE='Processed a total of ([0-9]+).*'
 TOTALDUPLINES=${BASH_REMATCH[1]}
 [[ "${DUPLICATESTATS}" =~ ${TOTALLINESRE} ]] 
 TOTALLINES=${BASH_REMATCH[1]}
-echo ${TOTALDUPLINES}
-echo ${TOTALLINES}
 
 # Run each non Test source file through go.sh
 echo -e "\033[33mRunning metrics on all Java files...\033[0m"
