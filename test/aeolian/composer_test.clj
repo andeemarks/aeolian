@@ -12,17 +12,17 @@
       (c/metric-to-note "Foo.java#1 LL=0") => n/rest-note)
 
     (facts "longer lines are mapped to actual notes with longer lines at higher octaves"
-      (some #(= (c/build-note 1) %) n/octave-1 ) => truthy
-      (some #(= (c/build-note 9) %) n/octave-1 ) => truthy
-      (some #(= (c/build-note 10) %) n/octave-2 ) => truthy
-      (some #(= (c/build-note 39) %) n/octave-2 ) => truthy
-      (some #(= (c/build-note 40) %) n/octave-3 ) => truthy
-      (some #(= (c/build-note 79) %) n/octave-3 ) => truthy
-      (some #(= (c/build-note 80) %) n/octave-4 ) => truthy
-      (some #(= (c/build-note 99) %) n/octave-4 ) => truthy
-      (some #(= (c/build-note 100) %) n/octave-5 ) => truthy
-      (some #(= (c/build-note 200) %) n/octave-5 ) => truthy
-      (some #(= (c/build-note 2000) %) n/octave-5 ) => truthy )
+      (some #(= (c/build-note 1) %) n/major-octave-1 ) => truthy
+      (some #(= (c/build-note 9) %) n/major-octave-1 ) => truthy
+      (some #(= (c/build-note 10) %) n/major-octave-2 ) => truthy
+      (some #(= (c/build-note 39) %) n/major-octave-2 ) => truthy
+      (some #(= (c/build-note 40) %) n/major-octave-3 ) => truthy
+      (some #(= (c/build-note 79) %) n/major-octave-3 ) => truthy
+      (some #(= (c/build-note 80) %) n/major-octave-4 ) => truthy
+      (some #(= (c/build-note 99) %) n/major-octave-4 ) => truthy
+      (some #(= (c/build-note 100) %) n/major-octave-5 ) => truthy
+      (some #(= (c/build-note 200) %) n/major-octave-5 ) => truthy
+      (some #(= (c/build-note 2000) %) n/major-octave-5 ) => truthy )
 
     )
 

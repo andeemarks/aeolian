@@ -1,12 +1,12 @@
 (ns aeolian.abc.notes)
 
 (def rest-note "z")
-(def raw-notes ["C" "E" "G" "B"])
-(def octave-1 (map #(str %1 ",") raw-notes))
-(def octave-2 raw-notes)
-(def octave-3 (map clojure.string/lower-case raw-notes))
-(def octave-4 (map #(str %1 "'") octave-3))
-(def octave-5 (map #(str %1 "'") octave-4))
+(def major-raw-notes ["C" "E" "G" "B"])
+(def major-octave-1 (map #(str %1 ",") major-raw-notes))
+(def major-octave-2 major-raw-notes)
+(def major-octave-3 (map clojure.string/lower-case major-raw-notes))
+(def major-octave-4 (map #(str %1 "'") major-octave-3))
+(def major-octave-5 (map #(str %1 "'") major-octave-4))
 
 (defn pick-chord-for-method-length [method-length]
 	(cond
@@ -25,8 +25,8 @@
 
 (defn pick-note-for-line-length [line-length]
 	(cond
-		(< line-length 10) (pick-note-from-octave octave-1 line-length)
-	   	(<= 10 line-length 39) (pick-note-from-octave octave-2 line-length) 
-	   	(<= 40 line-length 79) (pick-note-from-octave octave-3 line-length)
-	   	(<= 80 line-length 99) (pick-note-from-octave octave-4 line-length)
-	   	(<= 100 line-length) (pick-note-from-octave octave-5 line-length)))
+		(< line-length 10) (pick-note-from-octave major-octave-1 line-length)
+	   	(<= 10 line-length 39) (pick-note-from-octave major-octave-2 line-length) 
+	   	(<= 40 line-length 79) (pick-note-from-octave major-octave-3 line-length)
+	   	(<= 80 line-length 99) (pick-note-from-octave major-octave-4 line-length)
+	   	(<= 100 line-length) (pick-note-from-octave major-octave-5 line-length)))
