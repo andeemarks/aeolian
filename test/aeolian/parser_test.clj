@@ -13,13 +13,11 @@
     ))
 
 (facts "When parsing a metric line"
-  (facts "the commit author"
-    (fact "can be found"
-      (:author (parser/parse "/ExecNpmOfflineMojo.java#1 AU=<adam.dubiel@allegro.pl> LL=3 TS=1396276249")) => "<adam.dubiel@allegro.pl>"))
+  (fact "the commit author can be found"
+      (:author (parser/parse "/ExecNpmOfflineMojo.java#1 AU=<adam.dubiel@allegro.pl> LL=3 TS=1396276249")) => "<adam.dubiel@allegro.pl>")
 
-  (facts "the commit timestamp"
-    (fact "can be found"
-      (:timestamp (parser/parse "/ExecNpmOfflineMojo.java#1 LL=33 AU=<adam.dubiel@allegro.pl> TS=1396276249")) => "1396276249"))
+  (fact "the commit timestamp can be found"
+      (:timestamp (parser/parse "/ExecNpmOfflineMojo.java#1 LL=33 AU=<adam.dubiel@allegro.pl> TS=1396276249")) => "1396276249")
 
   (facts "the line length"
     (fact "can be found"
@@ -28,13 +26,11 @@
     (fact "must be numeric"
       (:line-length (parser/parse "/Notification.java#190 LL=abc")) => (throws Exception)))
 
-  (facts "indentation errors"
-    (fact "can be found"
-      (:indentation? (parser/parse "/Notification.java#190 LL=23 IND")) => truthy))
+  (fact "indentation errors can be found"
+      (:indentation? (parser/parse "/Notification.java#190 LL=23 IND")) => truthy)
 
-  (facts "the source file"
-    (fact "can be found"
-      (:source-file (parser/parse "/Notification.java#190 IND LL=10")) => "Notification.java"))
+  (fact "the source file can be found"
+      (:source-file (parser/parse "/Notification.java#190 IND LL=10")) => "Notification.java")
 
   (facts "the complexity"
     (fact "can be found"
