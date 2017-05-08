@@ -30,12 +30,12 @@
 	(n/pick-note-for-line-length line-length))
 
 (defn adjust-for-complexity [metric]
-	(let [complexity (:complexity (parser/parse metric))]
+	(let [complexity (:complexity metric)]
 		(if (> complexity 1) 
 			(abc/inline (t/tempo-for complexity)))))
 
 (defn adjust-for-indentation [metric]
-	(let [indentation-error (:indentation? (parser/parse metric))]
+	(let [indentation-error (:indentation? metric)]
 		(if (not (nil? indentation-error))
 			(midi/volume-boost))))
 	
@@ -52,12 +52,13 @@
 (defn metric-to-note [metric]
 	(log/debug (str "Processing metric " metric))
 	(let [
-		current-source-file (:source-file (parser/parse metric))
-		current-author 		(:author (parser/parse metric))
-		raw-note 			(str (build-note (:line-length (parser/parse metric))) " ")
+		metric-components (parser/parse metric)
+		current-source-file (:source-file metric-components)
+		current-author 		(:author metric-components)
+		raw-note 			(str (build-note (:line-length metric-components)) " ")
 		final-note-bits (cons (adjust-for-author-change current-author)
 							(cons (adjust-for-file-change current-source-file)
-								(cons (adjust-for-complexity metric) (list raw-note))))
+								(cons (adjust-for-complexity metric-components) (list raw-note))))
 		final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
 		]
 		(update-source-file current-source-file)
