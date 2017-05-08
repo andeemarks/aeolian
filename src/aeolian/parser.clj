@@ -51,3 +51,7 @@
 	(let [all-method-lengths (remove nil? 
 								(map #(method-length-from-metric %1) metrics))]
 		(last (sort all-method-lengths))))
+
+(defn parse [metric]
+	(let [author (author-from-metric metric)]
+		{:author author}))
