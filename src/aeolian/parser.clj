@@ -53,5 +53,10 @@
 		(last (sort all-method-lengths))))
 
 (defn parse [metric]
-	(let [author (author-from-metric metric)]
-		{:author author}))
+	{	:author (author-from-metric metric) 
+		:line-length (line-length-from-metric metric)
+		:source-file (source-file-from-metric metric)
+		:method-length (method-length-from-metric metric)
+		:indentation? (indentation-from-metric metric)
+		:complexity (complexity-from-metric metric)
+		:timestamp (timestamp-from-metric metric)})
