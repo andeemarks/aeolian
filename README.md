@@ -4,6 +4,8 @@ A (mostly) Clojure console application that injests processes Java source code t
 
 The name Aeolian (apart from being a Greek musical mode) refers to a leading company in the production of [player pianos][2], which takes punched paper as input and drives a mechanical piano.
 
+Aeolian was presented to the [YOW West conference in May 2017][12].  The slides can be found [here][11].
+
 [1]: http://abcnotation.com/
 [2]: https://en.wikipedia.org/wiki/Player_piano
 [3]: https://en.wikipedia.org/wiki/MIDI
@@ -14,6 +16,8 @@ The name Aeolian (apart from being a Greek musical mode) refers to a leading com
 [8]: http://ifdo.pugmarks.com/~seymour/runabc/top.html
 [9]: http://timidity.sourceforge.net/
 [10]: http://checkstyle.sourceforge.net/
+[11]: https://docs.google.com/a/thoughtworks.com/presentation/d/1k8yWYMxy8dPU8AoxXZbIp3o77fbvcfC9naT7Yk6fOW8/edit?usp=sharing
+[12]: http://west.yowconference.com.au/speakers/andy-marks-4/
 
 ## Metrics
 
