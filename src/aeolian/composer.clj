@@ -51,8 +51,7 @@
 
 (defn metric-to-note [metric]
 	(log/debug (str "Processing metric " metric))
-	(let [
-		metric-components (parser/parse metric)
+	(let [metric-components (parser/parse metric)
 		current-source-file (:source-file metric-components)
 		current-author 		(:author metric-components)
 		raw-note 			(str (build-note (:line-length metric-components)) " ")
@@ -67,9 +66,9 @@
 
 (defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
 	(log/debug (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
-	(let [measure (map #(metric-to-note %1) metrics-in-measure)
-			method-length (parser/find-longest-method-length-in metrics-in-measure)
-			accompanying-chord (n/pick-chord-for-method-length method-length)]
+	(let [	measure 			(map #(metric-to-note %1) metrics-in-measure)
+			method-length 		(parser/find-longest-method-length-in metrics-in-measure)
+			accompanying-chord 	(n/pick-chord-for-method-length method-length)]
 		(abc/measure (str accompanying-chord (apply str measure)))))
 
 (defn- split-metrics-into-equal-measures [metrics]
@@ -80,14 +79,12 @@
 		metrics))
 
 (defn- map-metrics [metrics]
-	(let [
-			metrics-in-measures (split-metrics-into-equal-measures metrics)
-			mapped-notes (map-indexed #(metrics-to-measure %1 %2 (count metrics-in-measures)) metrics-in-measures)
-			notes-in-measures (apply str mapped-notes)
-		]
-		notes-in-measures))
+	(let [	metrics-in-measures (split-metrics-into-equal-measures metrics)
+			total-metrics 		(count metrics-in-measures)
+			mapped-notes 		(map-indexed #(metrics-to-measure %1 %2 total-metrics) metrics-in-measures)]
+		(apply str mapped-notes)))
 
 (defn compose [metrics]
 	(if (<= (count metrics) 0)
 		nil
-			(map-metrics metrics)))
+		(map-metrics metrics)))

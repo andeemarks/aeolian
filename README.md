@@ -18,6 +18,7 @@ Aeolian was presented to the [YOW West conference in May 2017][12].  The slides 
 [10]: http://checkstyle.sourceforge.net/
 [11]: https://docs.google.com/a/thoughtworks.com/presentation/d/1k8yWYMxy8dPU8AoxXZbIp3o77fbvcfC9naT7Yk6fOW8/edit?usp=sharing
 [12]: http://west.yowconference.com.au/speakers/andy-marks-4/
+[13]: http://checkstyle.sourceforge.net/config_sizes.html#MethodLength
 
 ## Metrics
 
@@ -27,6 +28,7 @@ Metric 						| Affects... 										| By...
 ---------------------------	| ------------------------------------------------- | --- 
 [Line length][5] 			| Note and octave selection 						| Longer lines -> higher pitched notes 
 [Cyclomatic Complexity][4]	| Tempo 											| Higher complexity -> faster tempo 
+[Method Length][13]			| Accompanying chord 								| A chord based around first, third, fifth or seventh of key 
 [Duplication][6] 			| Key (Major or Minor) 								| Duplication >= 10% -> minor key 
 [Git commit author][7] 		| MIDI instrument (from 7 available instruments) 	| New instrument for each author change 
 Source file name 			| Karaoke lyrics (if MIDI file is played through a player that supports the KAR format) | New filename lyric for each source file change 
