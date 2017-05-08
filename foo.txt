@@ -1,1 +1,0 @@
-[source-file#line-number] [line-length] [cyclomatic-complexity]|"Am"|
