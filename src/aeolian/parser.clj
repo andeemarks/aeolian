@@ -1,8 +1,5 @@
 (ns aeolian.parser)
 
-; Sample metric line - last field (complexity) is optional.
-; /home/amarks/Code/aeolian/resources/Notification.java#203 82 3
-
 (defn- metric-line-to-bits [metric]
 	(clojure.string/split metric #"\s+"))
 
