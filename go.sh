@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# register the cleanup function to be called on the EXIT signal
+
+function cleanup {
+	rm -f ${COMBINEDMETRICSFILE}.tmp
+	rm -f ${COMBINEDMETRICSFILE}.tmp2
+	rm -f ${COMPLEXITYMETRICS}
+	rm -f ${LINELENGTHMETRICS}
+	rm -f ${METHODLENGTHMETRICS}
+	rm -f ${INDENTATIONMETRICS}
+	rm -f *.bak
+	
+  	echo -e "\033[34mDeleted temp metrics files\033[0m"
+}
+
+trap cleanup EXIT
+
 if [[ $# -eq 0 ]]; then
     >&2 echo "Usage: go.sh <source-file.java> <output-dir>"
     exit 1
@@ -37,12 +53,3 @@ else
     >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
     exit 1
 fi
-
-function cleanup {
-	rm -f ${COMBINEDMETRICSFILE}.tmp
-	rm -f ${COMBINEDMETRICSFILE}.tmp2
-  	echo -e "\033[34mDeleted temp metrics files\033[0m"
-}
-
-# register the cleanup function to be called on the EXIT signal
-trap cleanup EXIT
