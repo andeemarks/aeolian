@@ -26,18 +26,16 @@
 
 (def notes-per-measure 8)
 
-(defn build-note [line-length]
+(defn adjust-for-line-length [line-length]
 	(n/pick-note-for-line-length line-length))
 
-(defn adjust-for-complexity [metric]
-	(let [complexity (:complexity metric)]
-		(if (> complexity 1) 
-			(abc/inline (t/tempo-for complexity)))))
+(defn adjust-for-complexity [complexity]
+	(if (> complexity 1) 
+		(abc/inline (t/tempo-for complexity))))
 
-(defn adjust-for-indentation [metric]
-	(let [indentation-error (:indentation? metric)]
-		(if (not (nil? indentation-error))
-			(midi/volume-boost))))
+(defn adjust-for-indentation [indentation?]
+	(if (not (nil? indentation?))
+		(midi/volume-boost)))
 	
 (defn adjust-for-file-change [current-source-file]
 	(if (not (= current-source-file (get-source-file)))
@@ -54,20 +52,18 @@
 	(let [metric-components (parser/parse metric)
 		current-source-file 	(:source-file metric-components)
 		current-author 				(:author metric-components)
-		raw-note 							(str (build-note (:line-length metric-components)) " ")
-		final-note-bits 			(conj 
-														(list raw-note)
+		note-components 			(conj 
+														'()
+														(adjust-for-line-length (:line-length metric-components))
 														(adjust-for-author-change current-author)
 														(adjust-for-file-change current-source-file)
-														(adjust-for-complexity metric-components))
-		final-note (apply str (interpose " " (filter #(not (nil? %)) final-note-bits)))
-		]
+														(adjust-for-complexity (:complexity metric-components)))
+		final-note 						(apply str (interpose " " (filter #(not (nil? %)) note-components)))]
 		(update-source-file current-source-file)
 		(update-author current-author)
 		final-note))
 
-(defn- metrics-to-measure [metric-idx metrics-in-measure total-metrics]
-	(log/debug (str "Processing measure " (+ 1 metric-idx) " of " total-metrics))
+(defn metrics-to-measure [metrics-in-measure]
 	(let [measure 						(map #(metric-to-note %1) metrics-in-measure)
 				method-length 			(parser/find-longest-method-length-in metrics-in-measure)
 				accompanying-chord 	(n/pick-chord-for-method-length method-length)]
@@ -82,8 +78,7 @@
 
 (defn- map-metrics [metrics]
 	(let [metrics-in-measures (split-metrics-into-equal-measures metrics)
-				total-metrics 			(count metrics-in-measures)
-				mapped-notes 				(map-indexed #(metrics-to-measure %1 %2 total-metrics) metrics-in-measures)]
+				mapped-notes 				(map #(metrics-to-measure %1) metrics-in-measures)]
 		(apply str mapped-notes)))
 
 (defn compose [metrics]
