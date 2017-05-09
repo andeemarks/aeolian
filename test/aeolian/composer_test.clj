@@ -12,17 +12,17 @@
       (c/metric-to-note "Foo.java#1 LL=0") => n/rest-note)
 
     (facts "longer lines are mapped to actual notes with longer lines at higher octaves"
-      (some #(= (c/adjust-for-line-length 1) %) n/major-octave-1 ) => truthy
-      (some #(= (c/adjust-for-line-length 9) %) n/major-octave-1 ) => truthy
-      (some #(= (c/adjust-for-line-length 10) %) n/major-octave-2 ) => truthy
-      (some #(= (c/adjust-for-line-length 39) %) n/major-octave-2 ) => truthy
-      (some #(= (c/adjust-for-line-length 40) %) n/major-octave-3 ) => truthy
-      (some #(= (c/adjust-for-line-length 79) %) n/major-octave-3 ) => truthy
-      (some #(= (c/adjust-for-line-length 80) %) n/major-octave-4 ) => truthy
-      (some #(= (c/adjust-for-line-length 99) %) n/major-octave-4 ) => truthy
-      (some #(= (c/adjust-for-line-length 100) %) n/major-octave-5 ) => truthy
-      (some #(= (c/adjust-for-line-length 200) %) n/major-octave-5 ) => truthy
-      (some #(= (c/adjust-for-line-length 2000) %) n/major-octave-5 ) => truthy )
+      (some #(= (c/map-line-length 1) %) n/major-octave-1 ) => truthy
+      (some #(= (c/map-line-length 9) %) n/major-octave-1 ) => truthy
+      (some #(= (c/map-line-length 10) %) n/major-octave-2 ) => truthy
+      (some #(= (c/map-line-length 39) %) n/major-octave-2 ) => truthy
+      (some #(= (c/map-line-length 40) %) n/major-octave-3 ) => truthy
+      (some #(= (c/map-line-length 79) %) n/major-octave-3 ) => truthy
+      (some #(= (c/map-line-length 80) %) n/major-octave-4 ) => truthy
+      (some #(= (c/map-line-length 99) %) n/major-octave-4 ) => truthy
+      (some #(= (c/map-line-length 100) %) n/major-octave-5 ) => truthy
+      (some #(= (c/map-line-length 200) %) n/major-octave-5 ) => truthy
+      (some #(= (c/map-line-length 2000) %) n/major-octave-5 ) => truthy )
 
     )
 

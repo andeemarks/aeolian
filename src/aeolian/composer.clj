@@ -26,23 +26,23 @@
 
 (def notes-per-measure 8)
 
-(defn adjust-for-line-length [line-length]
+(defn map-line-length [line-length]
 	(n/pick-note-for-line-length line-length))
 
-(defn adjust-for-complexity [complexity]
+(defn map-complexity [complexity]
 	(if (> complexity 1) 
 		(abc/inline (t/tempo-for complexity))))
 
-(defn adjust-for-indentation [indentation?]
+(defn map-indentation [indentation?]
 	(if (not (nil? indentation?))
 		(midi/volume-boost)))
 	
-(defn adjust-for-file-change [current-source-file]
+(defn map-file-change [current-source-file]
 	(if (not (= current-source-file (get-source-file)))
 		(abc/lyrics-for current-source-file)
 		nil))
 	
-(defn adjust-for-author-change [current-author]
+(defn map-author-change [current-author]
 	(if (not (= current-author (get-author)))
 		(midi/instrument-command-for current-author)
 		nil))
@@ -54,10 +54,10 @@
 		current-author 				(:author metric-components)
 		note-components 			(conj 
 														'()
-														(adjust-for-line-length (:line-length metric-components))
-														(adjust-for-author-change current-author)
-														(adjust-for-file-change current-source-file)
-														(adjust-for-complexity (:complexity metric-components)))
+														(map-line-length (:line-length metric-components))
+														(map-author-change current-author)
+														(map-file-change current-source-file)
+														(map-complexity (:complexity metric-components)))
 		final-note 						(apply str (interpose " " (filter #(not (nil? %)) note-components)))]
 		(update-source-file current-source-file)
 		(update-author current-author)
