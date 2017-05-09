@@ -5,7 +5,7 @@
 
 (tabular "accompanying chords"
 	(fact "increase in pitch along with method length"
-		(notes/pick-chord-for-method-length ?length) => (contains ?expected-chord)
+		(notes/pick-chord-for-method-length ?length) => (contains ?expected-chord))
 		?length ?expected-chord
 		1 			"C"
 		5 			"C"
@@ -21,4 +21,4 @@
 		39 			"A"
 		40 			"B"
 		400 		"B"
-		4000 		"B"))
+		4000 		"B")

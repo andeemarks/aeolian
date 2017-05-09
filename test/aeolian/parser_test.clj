@@ -14,7 +14,7 @@
 
 (facts "When parsing a metric line"
   (fact "the commit author can be found"
-      (:author (parser/parse "/ExecNpmOfflineMojo.java#1 AU=<adam.dubiel@allegro.pl> LL=3 TS=1396276249")) => "<adam.dubiel@allegro.pl>")
+      (:author (parser/parse "/ExecNpmOff\\\\lineMojo.java#1 AU=<adam.dubiel@allegro.pl> LL=3 TS=1396276249")) => "<adam.dubiel@allegro.pl>")
 
   (fact "the commit timestamp can be found"
       (:timestamp (parser/parse "/ExecNpmOfflineMojo.java#1 LL=33 AU=<adam.dubiel@allegro.pl> TS=1396276249")) => "1396276249")
