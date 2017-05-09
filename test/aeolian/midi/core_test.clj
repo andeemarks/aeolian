@@ -4,15 +4,12 @@
 
 (facts "When picking instruments"
   (fact "their ids vary based on filename"
-  	(some #(= (midi/instrument-for "Foo.java") %) midi/instruments) => truthy
-  	(some #(= (midi/instrument-for "Bar.java") %) midi/instruments) => truthy
-  )
+  	midi/instruments => (contains (midi/instrument-for "Foo.java"))
+  	midi/instruments => (contains (midi/instrument-for "Bar.java")))
 
   (fact "their ids are deterministic based on filename"
-  	(= (midi/instrument-for "Foo.java") (midi/instrument-for "Foo.java")) => truthy
-  )
+  	(midi/instrument-for "Foo.java") => (midi/instrument-for "Foo.java"))
 
   (fact "their ids are different based on filename"
-  	(= (midi/instrument-for "Foo.java") (midi/instrument-for "Bar.java")) => falsey
-  )
+  	(midi/instrument-for "Foo.java") =not=> (midi/instrument-for "Bar.java"))
 )
