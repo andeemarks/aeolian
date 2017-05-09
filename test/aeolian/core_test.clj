@@ -8,13 +8,14 @@
         (str/includes? (core/build-header "foo.metrics" {:duplicate-lines 0 :total-lines 0}) "K:Cmin") => falsey )
 
 	(fact ">= 10% duplicate code will produce a minor key"
-		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 10 :total-lines 100}) "K:Cmin") => truthy
-		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 50 :total-lines 500}) "K:Cmin") => truthy
-		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 21 :total-lines 200}) "K:Cmin") => truthy )
+		(core/build-header "foo.metrics" {:duplicate-lines 10 :total-lines 100}) => (contains "K:Amin")
+		(core/build-header "foo.metrics" {:duplicate-lines 50 :total-lines 500}) => (contains "K:Amin")
+		(core/build-header "foo.metrics" {:duplicate-lines 21 :total-lines 200}) => (contains "K:Amin"))
+
 	(fact "< 10% duplicate code will produce a major key"
-		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 9 :total-lines 100}) "K:Cmin") => falsey
-		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 49 :total-lines 500}) "K:Cmin") => falsey
-		(str/includes? (core/build-header "foo.metrics" {:duplicate-lines 19 :total-lines 200}) "K:Cmin") => falsey ))
+		(core/build-header "foo.metrics" {:duplicate-lines 9 :total-lines 100}) => (contains "K:C")
+		(core/build-header "foo.metrics" {:duplicate-lines 49 :total-lines 500}) => (contains "K:C")
+		(core/build-header "foo.metrics" {:duplicate-lines 19 :total-lines 200}) => (contains "K:C")))
 
 (fact "generating notation file name is based on original-file-name"
 	(core/notation-file-name "foo") => "foo.abc")

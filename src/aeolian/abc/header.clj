@@ -6,7 +6,7 @@
 (def composer "\nC:AEOLIAN")
 (def meter "\nM:4/4")
 (def xxx-major-key "\nK:C")
-(def xxx-minor-key "\nK:Cmin")
+(def xxx-minor-key "\nK:Amin")
 (def note-length "\nL:1/8")
 
 (defn build-common-header [title key]
