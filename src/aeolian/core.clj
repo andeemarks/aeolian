@@ -16,23 +16,25 @@
 	(swap! composition-key (fn [f] :minor))
 	(str (h/build-minor-header metrics-file-name) "\n" midi/header))
 
-(defn build-header [metrics-file-name duplicate-metrics]
+(defn- duplication-percentage [duplicate-metrics]
 	(let [duplicate-lines (:duplicate-lines duplicate-metrics)
-			total-lines (if (zero? (:total-lines duplicate-metrics)) 1 (:total-lines duplicate-metrics))
-			duplication-percentage (float 
-									(* 	100 
-									(/ 	duplicate-lines total-lines)))]
-		(if (< duplication-percentage 10)
-			(build-header-for-major-key metrics-file-name)
-			(build-header-for-minor-key metrics-file-name))))
+				total-lines 		(if (zero? (:total-lines duplicate-metrics)) 1 (:total-lines duplicate-metrics))]
+		(float 
+			(* 	100 
+			(/ 	duplicate-lines total-lines)))))
+
+(defn build-header [metrics-file-name duplicate-metrics]
+	(if (< (duplication-percentage duplicate-metrics) 10)
+		(build-header-for-major-key metrics-file-name)
+		(build-header-for-minor-key metrics-file-name)))
 
 (defn notation-file-name [original-file-name]
 	(str original-file-name ".abc"))
 
 (defn- generate-notation-from [metrics-file-name duplicate-metrics]
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
-     	(let [notation-file-name (notation-file-name metrics-file-name)
-     				composition (composer/compose (line-seq rdr))]
+     	(let [notation-file-name 	(notation-file-name metrics-file-name)
+     				composition 				(composer/compose (line-seq rdr))]
  				(spit notation-file-name, (str (build-header metrics-file-name duplicate-metrics) composition))
      		(println (str "Generated " notation-file-name))))
 	)
