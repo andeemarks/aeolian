@@ -39,20 +39,18 @@
 	
 (defn map-file-change [current-source-file]
 	(if (not (= current-source-file (get-source-file)))
-		(abc/lyrics-for current-source-file)
-		nil))
+		(abc/lyrics-for current-source-file)))
 	
 (defn map-author-change [current-author]
 	(if (not (= current-author (get-author)))
-		(midi/instrument-command-for current-author)
-		nil))
+		(midi/instrument-command-for current-author)))
 
 (defn metric-to-note [metric]
 	(log/debug (str "Processing metric " metric))
-	(let [metric-components (parser/parse metric)
-		current-source-file 	(:source-file metric-components)
-		current-author 				(:author metric-components)
-		note-components 			(conj 
+	(let [metric-components 	(parser/parse metric)
+				current-source-file (:source-file metric-components)
+				current-author 			(:author metric-components)
+				note-components 		(conj 
 														'()
 														(map-line-length (:line-length metric-components))
 														(map-author-change current-author)
@@ -82,6 +80,5 @@
 		(apply str mapped-notes)))
 
 (defn compose [metrics]
-	(if (<= (count metrics) 0)
-		nil
+	(if (> (count metrics) 0)
 		(map-metrics metrics)))
