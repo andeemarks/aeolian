@@ -26,10 +26,10 @@
 
 (def notes-per-measure 8)
 
-(defn map-line-length [line-length]
+(defn build-note [line-length]
 	(n/pick-note-for-line-length line-length))
 
-(defn map-complexity [complexity]
+(defn build-tempo [complexity]
 	(if (> complexity 1) 
 		(abc/inline (t/tempo-for complexity))))
 
@@ -37,11 +37,11 @@
 	(if (not (nil? indentation?))
 		(midi/volume-boost)))
 	
-(defn map-file-change [current-source-file]
+(defn build-lyrics [current-source-file]
 	(if (not (= current-source-file (get-source-file)))
 		(abc/lyrics-for current-source-file)))
 	
-(defn map-author-change [current-author]
+(defn build-instrument [current-author]
 	(if (not (= current-author (get-author)))
 		(midi/instrument-command-for current-author)))
 
@@ -52,16 +52,16 @@
 				current-author 			(:author metric-components)
 				note-components 		(conj 
 														'()
-														(map-line-length (:line-length metric-components))
-														(map-author-change current-author)
-														(map-file-change current-source-file)
-														(map-complexity (:complexity metric-components)))
+														(build-note (:line-length metric-components))
+														(build-instrument current-author)
+														(build-lyrics current-source-file)
+														(build-tempo (:complexity metric-components)))
 		final-note 						(apply str (interpose " " (filter #(not (nil? %)) note-components)))]
 		(update-source-file current-source-file)
 		(update-author current-author)
 		final-note))
 
-(defn metrics-to-measure [metrics-in-measure]
+(defn metrics-to-measure [metrics-in-measure composition-key]
 	(let [measure 						(map #(metric-to-note %1) metrics-in-measure)
 				method-length 			(parser/find-longest-method-length-in metrics-in-measure)
 				accompanying-chord 	(n/pick-chord-for-method-length method-length)]
@@ -74,11 +74,11 @@
 		[(last metrics)]  ; value to pad out small partitions
 		metrics))
 
-(defn- map-metrics [metrics]
+(defn- map-metrics [metrics composition-key]
 	(let [metrics-in-measures (split-metrics-into-equal-measures metrics)
-				mapped-notes 				(map #(metrics-to-measure %1) metrics-in-measures)]
+				mapped-notes 				(map #(metrics-to-measure %1 composition-key) metrics-in-measures)]
 		(apply str mapped-notes)))
 
 (defn compose [metrics composition-key]
 	(if (> (count metrics) 0)
-		(map-metrics metrics)))
+		(map-metrics metrics composition-key)))

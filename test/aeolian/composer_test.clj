@@ -15,7 +15,7 @@
 
     (tabular
       (fact "longer lines are mapped to actual notes with longer lines at higher octaves"
-        ?expected-octave => (contains (c/map-line-length ?line-length)))
+        ?expected-octave => (contains (c/build-note ?line-length)))
         ?expected-octave    ?line-length
         n/major-octave-1    1
         n/major-octave-1    9
