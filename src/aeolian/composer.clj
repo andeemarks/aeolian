@@ -64,7 +64,7 @@
 (defn metrics-to-measure [metrics-in-measure composition-key]
 	(let [measure 						(map #(metric-to-note %1) metrics-in-measure)
 				method-length 			(parser/find-longest-method-length-in metrics-in-measure)
-				accompanying-chord 	(n/pick-chord-for-method-length method-length)]
+				accompanying-chord 	(n/pick-chord-for-method-length method-length composition-key)]
 		(abc/measure (str accompanying-chord (apply str measure)))))
 
 (defn- split-metrics-into-equal-measures [metrics]

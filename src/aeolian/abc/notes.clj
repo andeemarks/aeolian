@@ -8,7 +8,7 @@
 (def major-octave-4 (map #(str %1 "'") major-octave-3))
 (def major-octave-5 (map #(str %1 "'") major-octave-4))
 
-(defn pick-chord-for-method-length [method-length]
+(defn pick-chord-for-method-length [method-length composition-key]
 	(cond
 		(nil? method-length) "\"C\""
 	   	(<= 1 method-length 5) "\"C\""
