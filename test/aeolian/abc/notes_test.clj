@@ -22,4 +22,19 @@
 		39 		"A" k/major
 		40 		"B" k/major
 		400 	"B" k/major
-		4000 	"B" k/major)
+		4000 	"B" k/major
+		1 		"A"	k/minor
+		5 		"A" k/minor
+		6 		"B" k/minor
+		10 		"B" k/minor
+		11 		"C" k/minor
+		15 		"C" k/minor
+		16 		"D" k/minor
+		20 		"D" k/minor
+		21 		"E" k/minor
+		29 		"E" k/minor
+		30 		"F" k/minor
+		39 		"F" k/minor
+		40 		"G" k/minor
+		400 	"G" k/minor
+		4000 	"G" k/minor)

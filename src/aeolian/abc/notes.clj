@@ -1,4 +1,5 @@
-(ns aeolian.abc.notes)
+(ns aeolian.abc.notes
+	(:require [aeolian.abc.key :as k]))
 
 (def rest-note "z")
 (def major-raw-notes ["C" "E" "G" "B"])
@@ -8,17 +9,25 @@
 (def major-octave-4 (map #(str %1 "'") major-octave-3))
 (def major-octave-5 (map #(str %1 "'") major-octave-4))
 
+(def major-chords ["C" "D" "E" "F" "G" "A" "B"])
+(def minor-chords ["A" "B" "C" "D" "E" "F" "G"])
+
+(defn- chord [chord-index composition-key] 
+	(if (= k/major composition-key)
+		(str "\"" (nth major-chords chord-index) "\"")
+		(str "\"" (nth minor-chords chord-index) "\"")))
+
 (defn pick-chord-for-method-length [method-length composition-key]
 	(cond
-		(nil? method-length) "\"C\""
-	   	(<= 1 method-length 5) "\"C\""
-	   	(<= 6 method-length 10) "\"D\""
-	   	(<= 11 method-length 15) "\"E\""
-	   	(<= 16 method-length 20) "\"F\""
-	   	(<= 21 method-length 29) "\"G\""
-	   	(<= 30 method-length 39) "\"A\""
-	   	(<= 40 method-length) "\"B\""
-	   	:else "\"C\""))
+		(nil? method-length) (chord 0 composition-key)
+	   	(<= 1 method-length 5) (chord 0 composition-key)
+	   	(<= 6 method-length 10) (chord 1 composition-key)
+	   	(<= 11 method-length 15) (chord 2 composition-key)
+	   	(<= 16 method-length 20) (chord 3 composition-key)
+	   	(<= 21 method-length 29) (chord 4 composition-key)
+	   	(<= 30 method-length 39) (chord 5 composition-key)
+	   	(<= 40 method-length) (chord 6 composition-key)
+	   	:else (chord 0 composition-key)))
 
 (defn- pick-note-from-octave [octave line-length]
 	(nth octave (mod line-length (count octave))))
