@@ -79,6 +79,6 @@
 				mapped-notes 				(map #(metrics-to-measure %1) metrics-in-measures)]
 		(apply str mapped-notes)))
 
-(defn compose [metrics]
+(defn compose [metrics composition-key]
 	(if (> (count metrics) 0)
 		(map-metrics metrics)))

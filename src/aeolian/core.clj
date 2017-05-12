@@ -1,42 +1,25 @@
 (ns aeolian.core
 	(:require [aeolian.parser :as parser]
 						[aeolian.composer :as composer]
-						[aeolian.tempo :as t]
 						[aeolian.midi.core :as midi]
+						[taoensso.timbre :as log]
 						[aeolian.abc.header :as h]
+						[aeolian.abc.key :as k]
 						[clojure.java.io :as io]))
 
-(def composition-key (atom ""))
-
-(defn build-header-for-major-key [metrics-file-name]
-	(swap! composition-key (fn [f] :major))
+(defn build-header-for-key [metrics-file-name key]
 	(str (h/build-major-header metrics-file-name) "\n" midi/header))
-
-(defn build-header-for-minor-key [metrics-file-name]
-	(swap! composition-key (fn [f] :minor))
-	(str (h/build-minor-header metrics-file-name) "\n" midi/header))
-
-(defn- duplication-percentage [duplicate-metrics]
-	(let [duplicate-lines (:duplicate-lines duplicate-metrics)
-				total-lines 		(if (zero? (:total-lines duplicate-metrics)) 1 (:total-lines duplicate-metrics))]
-		(float 
-			(* 	100 
-			(/ 	duplicate-lines total-lines)))))
-
-(defn build-header [metrics-file-name duplicate-metrics]
-	(if (< (duplication-percentage duplicate-metrics) 10)
-		(build-header-for-major-key metrics-file-name)
-		(build-header-for-minor-key metrics-file-name)))
 
 (defn notation-file-name [original-file-name]
 	(str original-file-name ".abc"))
 
-(defn- generate-notation-from [metrics-file-name duplicate-metrics]
+(defn generate-notation-from [metrics-file-name duplicate-metrics]
 	(with-open [rdr (clojure.java.io/reader metrics-file-name)]
-     	(let [notation-file-name 	(notation-file-name metrics-file-name)
-     				composition 				(composer/compose (line-seq rdr))]
- 				(spit notation-file-name, (str (build-header metrics-file-name duplicate-metrics) composition))
-     		(println (str "Generated " notation-file-name))))
+   	(let [composition-key 		(k/determine-key duplicate-metrics)
+   				notation-file-name 	(notation-file-name metrics-file-name)
+   				composition 				(composer/compose (line-seq rdr) composition-key)]
+				(spit notation-file-name, (str (build-header-for-key metrics-file-name composition-key) composition))
+   		(log/info (str "Generated " notation-file-name))))
 	)
 
 (defn -main [& args]
@@ -44,5 +27,5 @@
 		(if (.exists (io/as-file metrics-file-name))
 			(let [duplicate-metrics (read-string (second args))]
 				(generate-notation-from metrics-file-name duplicate-metrics))
-			(println (str "Error: cannot find metrics file - " metrics-file-name)))
-		(println "Error: no metrics file supplied")))
+			(log/error (str "Error: cannot find metrics file - " metrics-file-name)))
+		(log/error "Error: no metrics file supplied")))

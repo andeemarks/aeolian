@@ -3,7 +3,9 @@
   (:require [aeolian.composer :as c]
             [clojure.string :as str]
             [aeolian.tempo :as t]
-            [aeolian.abc.notes :as n]))
+            [aeolian.abc.notes :as n]
+            [aeolian.abc.key :as k]
+            ))
 
 (facts "when processing metrics"
 
@@ -46,11 +48,11 @@
   (fact "all lines are used in composition"
     (c/compose ["/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"
                 "/home/amarks/Code/aeolian/resources/Notification.java#10 LL=70"
-                "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"]) => truthy )
+                "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"] k/minor) => truthy )
 
   (fact "file names are persisted"
-    (c/compose ["/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"])
+    (c/compose ["/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"] k/major)
     (c/get-source-file) => "Notification.java")
 
   (fact "no metrics means no composition"
-    (c/compose []) => nil ))
+    (c/compose [] k/major) => nil ))

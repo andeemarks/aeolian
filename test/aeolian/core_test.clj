@@ -1,21 +1,23 @@
 (ns aeolian.core-test
   (:use midje.sweet)
   (:require [aeolian.core :as core]
-  			[clojure.string :as str]))
+  					[me.raynes.fs :as fs]
+  					[clojure.string :as str]))
 
-(facts "duplication metrics dictate the key"
-	(fact "no code to check will produce a major key"
-    (core/build-header "foo.metrics" {:duplicate-lines 0 :total-lines 0}) => (contains "K:C"))
+(facts "generating notation"
+	(fact "fails if the supplied input file does not exist"
+		(fs/exists? "foo.metrics") => falsey
+		(core/generate-notation-from "foo.metrics" {:duplicate-lines 10 :total-lines 100}) => (throws java.io.FileNotFoundException))
 
-	(fact ">= 10% duplicate code will produce a minor key"
-		(core/build-header "foo.metrics" {:duplicate-lines 10 :total-lines 100}) => (contains "K:Amin")
-		(core/build-header "foo.metrics" {:duplicate-lines 50 :total-lines 500}) => (contains "K:Amin")
-		(core/build-header "foo.metrics" {:duplicate-lines 21 :total-lines 200}) => (contains "K:Amin"))
-
-	(fact "< 10% duplicate code will produce a major key"
-		(core/build-header "foo.metrics" {:duplicate-lines 9 :total-lines 100}) => (contains "K:C")
-		(core/build-header "foo.metrics" {:duplicate-lines 49 :total-lines 500}) => (contains "K:C")
-		(core/build-header "foo.metrics" {:duplicate-lines 19 :total-lines 200}) => (contains "K:C")))
+	(let [input-file-name (fs/temp-name "foo" ".metrics")
+				output-file-name (core/notation-file-name input-file-name)]
+		(against-background [	(before :facts (spit input-file-name "Foo.java#1 LL=30")) 
+													(after :facts (fs/delete input-file-name))]
+			(fact "succeeds if the supplied input file exists"
+				(fs/exists? output-file-name) => falsey
+				(fs/exists? input-file-name) => truthy
+				(core/generate-notation-from input-file-name {:duplicate-lines 10 :total-lines 100})
+				(fs/exists? output-file-name) => truthy))))
 
 (fact "generating notation file name is based on original-file-name"
 	(core/notation-file-name "foo") => "foo.abc")
