@@ -45,7 +45,7 @@
 	(if (not (= current-author (get-author)))
 		(midi/instrument-command-for current-author)))
 
-(defn metric-to-note [metric]
+(defn metric-to-note [metric composition-key]
 	(log/debug (str "Processing metric " metric))
 	(let [metric-components 	(parser/parse metric)
 				current-source-file (:source-file metric-components)
@@ -62,7 +62,7 @@
 		final-note))
 
 (defn metrics-to-measure [metrics-in-measure composition-key]
-	(let [measure 						(map #(metric-to-note %1) metrics-in-measure)
+	(let [measure 						(map #(metric-to-note %1 composition-key) metrics-in-measure)
 				method-length 			(parser/find-longest-method-length-in metrics-in-measure)
 				accompanying-chord 	(n/pick-chord-for-method-length method-length composition-key)]
 		(abc/measure (str accompanying-chord (apply str measure)))))

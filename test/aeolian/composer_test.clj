@@ -32,10 +32,10 @@
     )
 
   (fact "complexity > 1 is mapped to tempo"
-    (c/metric-to-note "Foo.java#1 LL=30 CC=1") =not=> (contains t/prefix)
-    (c/metric-to-note "Foo.java#1 LL=30 CC=10") => (contains t/prefix)
-    (c/metric-to-note "Foo.java#1 LL=30 CC=5") => (contains t/prefix)
-    (c/metric-to-note "Foo.java#1 LL=30 CC=3") => (contains t/prefix))
+    (c/metric-to-note "Foo.java#1 LL=30 CC=1" k/major) =not=> (contains t/prefix)
+    (c/metric-to-note "Foo.java#1 LL=30 CC=10" k/major) => (contains t/prefix)
+    (c/metric-to-note "Foo.java#1 LL=30 CC=5" k/major) => (contains t/prefix)
+    (c/metric-to-note "Foo.java#1 LL=30 CC=3" k/major) => (contains t/prefix))
 
   (future-fact "method-length is mapped to accompanying chord"
     (str/index-of (c/metrics-to-measure "Foo.java#1 LL=30 ML=1") t/prefix ) => falsey

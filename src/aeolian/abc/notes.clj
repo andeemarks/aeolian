@@ -9,6 +9,13 @@
 (def major-octave-4 (map #(str %1 "'") major-octave-3))
 (def major-octave-5 (map #(str %1 "'") major-octave-4))
 
+(def minor-raw-notes ["A" "C" "E" "G"])
+(def minor-octave-1 (map #(str %1 ",") minor-raw-notes))
+(def minor-octave-2 minor-raw-notes)
+(def minor-octave-3 (map clojure.string/lower-case minor-raw-notes))
+(def minor-octave-4 (map #(str %1 "'") minor-octave-3))
+(def minor-octave-5 (map #(str %1 "'") minor-octave-4))
+
 (def major-chords ["C" "D" "E" "F" "G" "A" "B"])
 (def minor-chords ["A" "B" "C" "D" "E" "F" "G"])
 
