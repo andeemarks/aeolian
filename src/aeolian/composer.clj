@@ -26,8 +26,8 @@
 
 (def notes-per-measure 8)
 
-(defn build-note [line-length]
-	(n/pick-note-for-line-length line-length))
+(defn build-note [line-length composition-key]
+	(n/pick-note-for-line-length line-length composition-key))
 
 (defn build-tempo [complexity]
 	(if (> complexity 1) 
@@ -52,7 +52,7 @@
 				current-author 			(:author metric-components)
 				note-components 		(conj 
 														'()
-														(build-note (:line-length metric-components))
+														(build-note (:line-length metric-components) composition-key)
 														(build-instrument current-author)
 														(build-lyrics current-source-file)
 														(build-tempo (:complexity metric-components)))

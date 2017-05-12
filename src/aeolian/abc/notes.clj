@@ -8,6 +8,7 @@
 (def major-octave-3 (map clojure.string/lower-case major-raw-notes))
 (def major-octave-4 (map #(str %1 "'") major-octave-3))
 (def major-octave-5 (map #(str %1 "'") major-octave-4))
+(def major-chords ["C" "D" "E" "F" "G" "A" "B"])
 
 (def minor-raw-notes ["A" "C" "E" "G"])
 (def minor-octave-1 (map #(str %1 ",") minor-raw-notes))
@@ -15,9 +16,8 @@
 (def minor-octave-3 (map clojure.string/lower-case minor-raw-notes))
 (def minor-octave-4 (map #(str %1 "'") minor-octave-3))
 (def minor-octave-5 (map #(str %1 "'") minor-octave-4))
-
-(def major-chords ["C" "D" "E" "F" "G" "A" "B"])
 (def minor-chords ["A" "B" "C" "D" "E" "F" "G"])
+
 
 (defn- chord [chord-index composition-key] 
 	(if (= k/major composition-key)
@@ -39,10 +39,17 @@
 (defn- pick-note-from-octave [octave line-length]
 	(nth octave (mod line-length (count octave))))
 
-(defn pick-note-for-line-length [line-length]
-	(cond
-		(< line-length 10) (pick-note-from-octave major-octave-1 line-length)
-	   	(<= 10 line-length 39) (pick-note-from-octave major-octave-2 line-length) 
-	   	(<= 40 line-length 79) (pick-note-from-octave major-octave-3 line-length)
-	   	(<= 80 line-length 99) (pick-note-from-octave major-octave-4 line-length)
-	   	(<= 100 line-length) (pick-note-from-octave major-octave-5 line-length)))
+(defn pick-note-for-line-length [line-length composition-key]
+	(if (= k/major composition-key)
+		(cond
+			(< line-length 10) (pick-note-from-octave major-octave-1 line-length)
+		   	(<= 10 line-length 39) (pick-note-from-octave major-octave-2 line-length) 
+		   	(<= 40 line-length 79) (pick-note-from-octave major-octave-3 line-length)
+		   	(<= 80 line-length 99) (pick-note-from-octave major-octave-4 line-length)
+		   	(<= 100 line-length) (pick-note-from-octave major-octave-5 line-length))
+		(cond
+			(< line-length 10) (pick-note-from-octave minor-octave-1 line-length)
+		   	(<= 10 line-length 39) (pick-note-from-octave minor-octave-2 line-length) 
+		   	(<= 40 line-length 79) (pick-note-from-octave minor-octave-3 line-length)
+		   	(<= 80 line-length 99) (pick-note-from-octave minor-octave-4 line-length)
+		   	(<= 100 line-length) (pick-note-from-octave minor-octave-5 line-length))))
