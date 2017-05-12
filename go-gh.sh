@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -o pipefail
+
 if [[ $# -lt 2 ]]; then
     >&2 echo "Usage: go-gh.sh <github-user> <github-repo>"
     exit 1
