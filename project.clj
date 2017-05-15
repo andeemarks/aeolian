@@ -16,5 +16,6 @@
           [com.jakemccrary/lein-test-refresh "0.20.0"]
           [me.raynes/fs "1.4.6"]
           [lein-midje "3.2.1"]
+          [clansi "1.0.0"]
           [com.taoensso/timbre "4.10.0"]
   				[midje "1.8.3" :exclusions [org.clojure/clojure]]]}})

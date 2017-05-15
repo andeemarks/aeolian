@@ -5,6 +5,7 @@
             [taoensso.timbre :as log]
             [aeolian.abc.header :as h]
             [aeolian.abc.key :as k]
+            [clansi :as ansi]
             [clojure.java.io :as io]))
 
 (defn build-header-for-key [metrics-file-name key]
@@ -21,14 +22,16 @@
       (spit notation-file-name, (str (build-header-for-key metrics-file-name composition-key) composition))
       (log/info (str "Generated " notation-file-name)))))
 
+(defn- banner-line [text & [args]] (println (ansi/style text args)))
+
 (defn -main [& args]
-	(println "                      lll iii     ")            
-	(println "  aa aa   eee   oooo  lll       aa aa nn nnn  ")            
-	(println " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn ")            
-	(println "aa  aaa eeeee  oo  oo lll iii aa  aaa nn   nn ")            
-	(println " aaa aa  eeeee  oooo  lll iii  aaa aa nn   nn ")            
+	(banner-line "                      lll iii                 " :bg-blue)
+	(banner-line "  aa aa   eee   oooo  lll       aa aa nn nnn  " :bg-green)
+	(banner-line " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn " :bg-cyan)
+	(banner-line "aa  aaa eeeee  oo  oo lll iii aa  aaa nn   nn " :bg-green)
+	(banner-line " aaa aa  eeeee  oooo  lll iii  aaa aa nn   nn " :bg-blue)
 	(println "")
-	                                                               
+
   (if-let [metrics-file-name (first args)]
     (if (.exists (io/as-file metrics-file-name))
       (let [duplicate-metrics (read-string (second args))]
