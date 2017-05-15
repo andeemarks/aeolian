@@ -6,11 +6,14 @@
   :main aeolian.core
   :jvm-opts ^:replace []
   :dependencies [	[org.clojure/clojure "1.8.0"]]
+  :plugins
+    [
+      [lein-cljfmt "0.5.6"]]
   :profiles 
   	{:dev 
   		{:dependencies 
   			[
-          [com.jakemccrary/lein-test-refresh "0.19.0"]
+          [com.jakemccrary/lein-test-refresh "0.20.0"]
           [me.raynes/fs "1.4.6"]
           [lein-midje "3.2.1"]
           [com.taoensso/timbre "4.10.0"]

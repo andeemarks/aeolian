@@ -5,8 +5,8 @@
 (def starting-tempo (str prefix default-tempo))
 
 (defn generate [complexity]
-	(+ (* 20 complexity) default-tempo))
+  (+ (* 20 complexity) default-tempo))
 
 (defn tempo-for [complexity]
-	(str prefix (generate complexity)))
+  (str prefix (generate complexity)))
 

@@ -21,13 +21,13 @@
 (def instruments [flute voice tuba trumpet cello guitar accordian])
 
 (defn instrument-for [filename]
-	(nth instruments 
-		(mod 
-			(apply + (map int filename)) 
-			(count instruments))))
+  (nth instruments
+       (mod
+        (apply + (map int filename))
+        (count instruments))))
 
 (defn instrument-command-for [filename]
-	(str "[I: MIDI program " (instrument-for filename) "]"))
+  (str "[I: MIDI program " (instrument-for filename) "]"))
 
 (defn volume-boost []
-	(str "[I: MIDI volinc +50]"))
+  (str "[I: MIDI volinc +50]"))
