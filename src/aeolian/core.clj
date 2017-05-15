@@ -22,6 +22,13 @@
       (log/info (str "Generated " notation-file-name)))))
 
 (defn -main [& args]
+	(println "                      lll iii     ")            
+	(println "  aa aa   eee   oooo  lll       aa aa nn nnn  ")            
+	(println " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn ")            
+	(println "aa  aaa eeeee  oo  oo lll iii aa  aaa nn   nn ")            
+	(println " aaa aa  eeeee  oooo  lll iii  aaa aa nn   nn ")            
+	(println "")
+	                                                               
   (if-let [metrics-file-name (first args)]
     (if (.exists (io/as-file metrics-file-name))
       (let [duplicate-metrics (read-string (second args))]
