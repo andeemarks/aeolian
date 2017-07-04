@@ -18,11 +18,11 @@
          20 	"F"    k/major
          21 	"G"    k/major
          29 	"G"    k/major
-         30 	"A"    k/major
-         39 	"A"    k/major
-         40 	"B"    k/major
-         400 	"B"    k/major
-         4000 "B"    k/major
+         30 	"A+"    k/major
+         39 	"A+"    k/major
+         40 	"B+"    k/major
+         400 	"B+"    k/major
+         4000 "B+"    k/major
          1 		"Cmin" k/minor
          5 		"Cmin" k/minor
          6 		"Ddim" k/minor
@@ -33,8 +33,8 @@
          20 	"Fmin" k/minor
          21 	"Gmin" k/minor
          29 	"Gmin" k/minor
-         30 	"Ab"   k/minor
-         39 	"Ab"   k/minor
-         40 	"Bb"   k/minor
-         400 	"Bb"   k/minor
-         4000 "Bb"   k/minor)
+         30 	"Ab+"   k/minor
+         39 	"Ab+"   k/minor
+         40 	"Bb+"   k/minor
+         400 	"Bb+"   k/minor
+         4000 "Bb+"   k/minor)

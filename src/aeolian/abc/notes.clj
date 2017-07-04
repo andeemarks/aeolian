@@ -16,7 +16,7 @@
 (def minor-octave-3 (map clojure.string/lower-case minor-raw-notes))
 (def minor-octave-4 (map #(str %1 "'") minor-octave-3))
 (def minor-octave-5 (map #(str %1 "'") minor-octave-4))
-(def minor-chords ["Cmin" "Ddim" "Eb" "Fmin" "Gmin" "A+" "B+"])
+(def minor-chords ["Cmin" "Ddim" "Eb" "Fmin" "Gmin" "Ab+" "Bb+"])
 
 (defn- chord [chord-index composition-key]
   (if (= k/major composition-key)
