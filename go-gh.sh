@@ -46,17 +46,18 @@ git clone -q https://github.com/$GITHUB_USER/$GITHUB_REPO.git
 
 cd $BIN_DIR
 
+SOURCE_FILE_RE=".*.java"
 
 # Git blame each file to get author and commit SHA
 echo -e "\033[33mFind commit history for each Java file...\033[0m"
 pushd $WORK_DIR/$GITHUB_REPO >/dev/null
-find . -regex ".*[^Test]\.java" | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " TS=" $4}' > ${WORK_DIR}/blames.txt
+find . -regex $SOURCE_FILE_RE | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " TS=" $4}' > ${WORK_DIR}/blames.txt
 popd >/dev/null
 
 echo -e "\033[34mGenerating Checkstyle duplication metrics...\033[0m"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CHECKSTYLEDIR=$DIR/resources
-java -jar $CHECKSTYLEDIR/simian-2.4.0.jar -threshold=10 -excludes="**/test/**/*.java" $WORK_DIR/$GITHUB_REPO/**/*.java | tail -3 | head -2 > ${WORK_DIR}/duplication.txt
+java -jar $CHECKSTYLEDIR/simian-2.4.0.jar -threshold=4 -failOnDuplication- -excludes="**/test/**/*.java" $WORK_DIR/**/*.java | tail -3 | head -2 > ${WORK_DIR}/duplication.txt
 DUPLICATESTATS=`cat ${WORK_DIR}/duplication.txt`
 TOTALDUPLINESRE='Found ([0-9]+).*'
 TOTALLINESRE='Processed a total of ([0-9]+).*'
@@ -67,7 +68,7 @@ TOTALLINES=${BASH_REMATCH[1]}
 
 # Run each non Test source file through go.sh
 echo -e "\033[33mRunning metrics on all Java files...\033[0m"
-find $WORK_DIR -regex ".*[^Test]\.java" -exec ./go.sh '{}' $WORK_DIR \;
+find $WORK_DIR -regex $SOURCE_FILE_RE -exec ./go.sh '{}' $WORK_DIR \;
 
 UBERMETRICSFILE=${WORK_DIR}/${GITHUB_REPO}.metrics
 echo -e "\033[33mBuilding uber metrics file...\033[0m"
