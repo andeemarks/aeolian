@@ -46,7 +46,7 @@ git clone -q https://github.com/$GITHUB_USER/$GITHUB_REPO.git
 
 cd $BIN_DIR
 
-SOURCE_FILE_RE=".*.java"
+SOURCE_FILE_RE=".*[^Test]\.java"
 
 # Git blame each file to get author and commit SHA
 echo -e "\033[33mFind commit history for each Java file...\033[0m"
