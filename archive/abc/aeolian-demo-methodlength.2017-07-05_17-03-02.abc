@@ -1,0 +1,54 @@
+
+X:1
+T:/home/amarks/Code/aeolian/tmp.pBxTXcBn11/aeolian-demo-methodlength.metrics.history
+C:AEOLIAN
+M:4/4
+L:1/8
+Q:1/4=120
+K:C
+%%MIDI gchord c
+| "C"
+w: QueryAnalyzer.java
+ [I: MIDI program 73] G,gbbbbbg |
+| "C"G,cG,egecg |
+| "C"EB,Gg'Cb'cc |
+| "C"cgcccgcg |
+| "C"ggcccgcc |
+| "C"bE,EE,B,b'g'e'' |
+| "C"bG,Gg''b''c''e''b'' |
+| "C"GG,Gb''e'b''G,G |
+| "Em"e''c''c''B,[Q:1/4=180] bccc'' |
+| "Em"bcE,e'EbCb |
+| "Dm"E,E,bbE,eEe |
+| "Dm"eGE,eEeeG |
+| "Em"E,cGcc'BE,[Q:1/4=160] e |
+| "Em"Ebge'e'cEb |
+| "Dm"GE,bEbbGE, |
+| "Dm"bEebGE,bE |
+| "F"egGE,[Q:1/4=200] gEcC |
+| "F"cEbbcEbB |
+| "Em"EEeGE,[Q:1/4=180] bEc |
+| "Em"CcEegb''Eg |
+| "Dm"GE,cEgeGE, |
+| "Em"[Q:1/4=160] cEecegc'E |
+| "Dm"gGE,[Q:1/4=160] gEggb |
+| "Dm"cEcGE,bEe |
+| "Dm"bGE,eEebG |
+| "B+"E,[Q:1/4=380] bEbbgBB |
+| "B+"eggeEcbE |
+| "B+"geEEeceg |
+| "B+"be''g''gEECE |
+| "B+"gbCEEg'Ee |
+| "B+"eCGb''GCb''c |
+| "B+"EECbggcE |
+| "Dm"Ee''EGE,gEe' |
+| "Em"gGE,eEbgb'' |
+| "Em"cc'b''cgGE,[Q:1/4=200] e'' |
+| "Em"cgeegEEg |
+| "F"E,bE,[Q:1/4=200] b'EGCG |
+| "F"CbbcbGCG |
+| "Dm"EE,E,[Q:1/4=160] bCEeE, |
+| "C"BE,EGBbBE |
+| "C"E,E,B,e''B,eeb |
+| "C"b''eE,Bb'BcC |
+| "C"E,E,E,E, |
