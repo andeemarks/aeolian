@@ -1,0 +1,17 @@
+
+X:1
+T:/home/amarks/Code/aeolian/tmp.W2dc9wCUbN/aeolian-demo-instruments.metrics.history
+C:AEOLIAN
+M:4/4
+L:1/8
+Q:1/4=120
+K:C
+%%MIDI gchord c
+| "C"
+w: ExecBowerMojo.java
+ [I: MIDI program 26] G,eG,gbgG,g |
+| "C"G,gcbgEB,B, |
+| "C"gB,[I: MIDI program 21] b[I: MIDI program 26] bg[I: MIDI program 4] g'[I: MIDI program 26] B,b |
+| "C"B,cB[I: MIDI program 42] B,BB,eG |
+| "Em"[Q:1/4=180] [I: MIDI program 26] E[I: MIDI program 58] ecg[I: MIDI program 4] b[I: MIDI program 26] G[I: MIDI program 58] c[I: MIDI program 26] E, |
+| "Em"[I: MIDI program 42] BbE,[I: MIDI program 58] e[I: MIDI program 26] E,E,E, |
