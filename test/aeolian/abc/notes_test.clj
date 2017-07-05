@@ -10,10 +10,10 @@
          ?length ?expected-chord ?key
          1 		"C"	   k/major
          5 		"C"    k/major
-         6 		"Dmin" k/major
-         10 	"Dmin" k/major
-         11 	"Emin" k/major
-         15 	"Emin" k/major
+         6 		"Dm" k/major
+         10 	"Dm" k/major
+         11 	"Em" k/major
+         15 	"Em" k/major
          16 	"F"    k/major
          20 	"F"    k/major
          21 	"G"    k/major
@@ -23,16 +23,16 @@
          40 	"B+"    k/major
          400 	"B+"    k/major
          4000 "B+"    k/major
-         1 		"Cmin" k/minor
-         5 		"Cmin" k/minor
+         1 		"Cm" k/minor
+         5 		"Cm" k/minor
          6 		"Ddim" k/minor
          10 	"Ddim" k/minor
          11 	"Eb"   k/minor
          15 	"Eb"   k/minor
-         16 	"Fmin" k/minor
-         20 	"Fmin" k/minor
-         21 	"Gmin" k/minor
-         29 	"Gmin" k/minor
+         16 	"Fm" k/minor
+         20 	"Fm" k/minor
+         21 	"Gm" k/minor
+         29 	"Gm" k/minor
          30 	"Ab+"   k/minor
          39 	"Ab+"   k/minor
          40 	"Bb+"   k/minor
