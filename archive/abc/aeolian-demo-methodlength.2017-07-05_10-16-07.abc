@@ -1,0 +1,33 @@
+
+X:1
+T:/home/amarks/Code/aeolian/tmp.rilK4BI7qs/aeolian-demo-methodlength.metrics.history
+C:AEOLIAN
+M:4/4
+L:1/8
+Q:1/4=120
+K:C
+%%MIDI gchord c
+| "C"
+w: ObservableAmb.java
+ [I: MIDI program 73] B,bG,g''bG,eG, |
+| "C"b''c''e'B,bgcg'' |
+| "A+"BbE,[Q:1/4=280] EGcbG |
+| "C"GcEeCe''BE |
+| "C"gb''gCEeEB |
+| "C"bcBECBE,E |
+| "C"cBGECBE,b |
+| "C"GE,cegeGb |
+| "F"EeE,[Q:1/4=200] ceCbe |
+| "C"EgEbcBEc |
+| "F"EE,[Q:1/4=220] BEEecE |
+| "C"eebEECEE |
+| "Dm"EGE,[Q:1/4=180] EBEBe |
+| "C"CEEE,EEGE, |
+| "C"E,b''bBCeCb' |
+| "C"EBEE,EbgE, |
+| "Em"[Q:1/4=180] EEGECcBE |
+| "Em"CCEEE,[Q:1/4=180] EgG |
+| "C"GCcBGCeE |
+| "Dm"EE,[Q:1/4=180] EGGCCc |
+| "C"BcEEE,BbE, |
+| "C"E,E,E, |
