@@ -10,13 +10,20 @@
 (log/set-level! :info)
 
 (def source-file (atom ""))
+(def method-length (atom 0))
 (def author (atom ""))
+
+(defn get-method-length []
+  @method-length)
 
 (defn get-source-file []
   @source-file)
 
 (defn get-author []
   @author)
+
+(defn update-method-length [new-method-length]
+  (swap! method-length (fn [f] new-method-length)))
 
 (defn update-source-file [new-source-file]
   (swap! source-file (fn [f] new-source-file)))
@@ -62,9 +69,10 @@
     final-note))
 
 (defn metrics-to-measure [metrics-in-measure composition-key]
-  (let [measure 						(map #(metric-to-note %1 composition-key) metrics-in-measure)
-        method-length 			(parser/find-longest-method-length-in metrics-in-measure)
-        accompanying-chord 	(n/pick-chord-for-method-length method-length composition-key)]
+  (let [measure 						  (map #(metric-to-note %1 composition-key) metrics-in-measure)
+        current-method-length (parser/find-longest-method-length-in metrics-in-measure)
+        accompanying-chord 	  (n/pick-chord-for-method-length current-method-length composition-key (get-method-length))]
+    (update-method-length (or current-method-length (get-method-length)))
     (abc/measure (str accompanying-chord (apply str measure)))))
 
 (defn- split-metrics-into-equal-measures [metrics]

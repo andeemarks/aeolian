@@ -23,9 +23,9 @@
     (str "\"" (nth major-chords chord-index) "\"")
     (str "\"" (nth minor-chords chord-index) "\"")))
 
-(defn pick-chord-for-method-length [method-length composition-key]
+(defn pick-chord-for-method-length [method-length composition-key current-method-length]
   (cond
-    (nil? method-length) (chord 0 composition-key)
+    (nil? method-length) (pick-chord-for-method-length (or current-method-length 0) composition-key nil)
     (<= 1 method-length 5) (chord 0 composition-key)
     (<= 6 method-length 10) (chord 1 composition-key)
     (<= 11 method-length 15) (chord 2 composition-key)
