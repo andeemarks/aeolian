@@ -27,14 +27,14 @@
          5 		"Cm" k/minor
          6 		"Ddim" k/minor
          10 	"Ddim" k/minor
-         11 	"Eb"   k/minor
-         15 	"Eb"   k/minor
+         11 	"_E"   k/minor
+         15 	"_E"   k/minor
          16 	"Fm" k/minor
          20 	"Fm" k/minor
          21 	"Gm" k/minor
          29 	"Gm" k/minor
-         30 	"Ab+"   k/minor
-         39 	"Ab+"   k/minor
-         40 	"Bb+"   k/minor
-         400 	"Bb+"   k/minor
-         4000 "Bb+"   k/minor)
+         30 	"_A+"   k/minor
+         39 	"_A+"   k/minor
+         40 	"_B+"   k/minor
+         400 	"_B+"   k/minor
+         4000 "_B+"   k/minor)
