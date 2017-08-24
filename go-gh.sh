@@ -101,4 +101,4 @@ function cleanup {
 }
 
 # register the cleanup function to be called on the EXIT signal
-# trap cleanup EXIT
+trap cleanup EXIT
