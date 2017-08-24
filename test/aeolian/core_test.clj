@@ -4,6 +4,10 @@
             [me.raynes.fs :as fs]
             [clojure.string :as str]))
 
+(defn- teardown [input-file-name]
+  (fs/delete input-file-name)
+  (fs/delete (str input-file-name ".abc")))
+
 (facts "generating notation"
        (fact "fails if the supplied input file does not exist"
              (fs/exists? "foo.metrics") => falsey
@@ -12,7 +16,7 @@
        (let [input-file-name (fs/temp-name "foo" ".metrics")
              output-file-name (core/notation-file-name input-file-name)]
          (against-background [(before :facts (spit input-file-name "Foo.java#1 LL=30"))
-                              (after :facts (fs/delete input-file-name))]
+                              (after :facts (teardown input-file-name))]
                              (fact "succeeds if the supplied input file exists"
                                    (fs/exists? output-file-name) => falsey
                                    (fs/exists? input-file-name) => truthy
