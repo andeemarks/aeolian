@@ -39,16 +39,18 @@
   (nth octave (mod line-length (count octave))))
 
 (defn pick-note-for-line-length [line-length composition-key]
-  (if (= k/major composition-key)
-    (cond
-      (< line-length 10) (pick-note-from-octave major-octave-1 line-length)
-      (<= 10 line-length 39) (pick-note-from-octave major-octave-2 line-length)
-      (<= 40 line-length 79) (pick-note-from-octave major-octave-3 line-length)
-      (<= 80 line-length 99) (pick-note-from-octave major-octave-4 line-length)
-      (<= 100 line-length) (pick-note-from-octave major-octave-5 line-length))
-    (cond
-      (< line-length 10) (pick-note-from-octave minor-octave-1 line-length)
-      (<= 10 line-length 39) (pick-note-from-octave minor-octave-2 line-length)
-      (<= 40 line-length 79) (pick-note-from-octave minor-octave-3 line-length)
-      (<= 80 line-length 99) (pick-note-from-octave minor-octave-4 line-length)
-      (<= 100 line-length) (pick-note-from-octave minor-octave-5 line-length))))
+  (if (= 0 line-length)
+    rest-note
+    (if (= k/major composition-key)
+      (cond
+        (< line-length 10) (pick-note-from-octave major-octave-1 line-length)
+        (<= 10 line-length 39) (pick-note-from-octave major-octave-2 line-length)
+        (<= 40 line-length 79) (pick-note-from-octave major-octave-3 line-length)
+        (<= 80 line-length 99) (pick-note-from-octave major-octave-4 line-length)
+        (<= 100 line-length) (pick-note-from-octave major-octave-5 line-length))
+      (cond
+        (< line-length 10) (pick-note-from-octave minor-octave-1 line-length)
+        (<= 10 line-length 39) (pick-note-from-octave minor-octave-2 line-length)
+        (<= 40 line-length 79) (pick-note-from-octave minor-octave-3 line-length)
+        (<= 80 line-length 99) (pick-note-from-octave minor-octave-4 line-length)
+        (<= 100 line-length) (pick-note-from-octave minor-octave-5 line-length)))))

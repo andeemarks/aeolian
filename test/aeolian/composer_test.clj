@@ -9,8 +9,8 @@
 (facts "when processing metrics"
 
        (facts "line length is mapped to note"
-              (future-fact "empty lines are mapped to rests"
-                           (c/metric-to-note "Foo.java#1 LL=0" k/major) => n/rest-note)
+              (fact "empty lines are mapped to rests"
+                           (c/metric-to-note "Foo.java#1 LL=0" k/major) => (contains n/rest-note))
 
               (tabular
                (fact "longer lines are mapped to actual notes with longer lines at higher octaves"
