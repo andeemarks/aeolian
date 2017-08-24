@@ -35,22 +35,23 @@
     (<= 40 method-length) (chord 6 composition-key)
     :else (chord 0 composition-key)))
 
-(defn- pick-note-from-octave [octave line-length]
-  (nth octave (mod line-length (count octave))))
+(defn- octave-idx-to-octave-name [octave-prefix octave-idx]
+  (intern 'aeolian.abc.notes (symbol (str octave-prefix octave-idx))))
+
+(defn- key-to-octave [octave-idx composition-key]
+  (if (= k/major composition-key)
+    (var-get (octave-idx-to-octave-name "major-octave-" octave-idx))
+    (var-get (octave-idx-to-octave-name "minor-octave-" octave-idx))))
+
+(defn- pick-note-from-octave [octave-idx line-length composition-key]
+  (let [octave (key-to-octave octave-idx composition-key)]
+    (nth octave (mod line-length (count octave)))))
 
 (defn pick-note-for-line-length [line-length composition-key]
-  (if (= 0 line-length)
-    rest-note
-    (if (= k/major composition-key)
-      (cond
-        (< line-length 10) (pick-note-from-octave major-octave-1 line-length)
-        (<= 10 line-length 39) (pick-note-from-octave major-octave-2 line-length)
-        (<= 40 line-length 79) (pick-note-from-octave major-octave-3 line-length)
-        (<= 80 line-length 99) (pick-note-from-octave major-octave-4 line-length)
-        (<= 100 line-length) (pick-note-from-octave major-octave-5 line-length))
-      (cond
-        (< line-length 10) (pick-note-from-octave minor-octave-1 line-length)
-        (<= 10 line-length 39) (pick-note-from-octave minor-octave-2 line-length)
-        (<= 40 line-length 79) (pick-note-from-octave minor-octave-3 line-length)
-        (<= 80 line-length 99) (pick-note-from-octave minor-octave-4 line-length)
-        (<= 100 line-length) (pick-note-from-octave minor-octave-5 line-length)))))
+  (cond
+    (= 0 line-length) rest-note
+    (<= 1 line-length 9) (pick-note-from-octave 1 line-length composition-key)
+    (<= 10 line-length 39) (pick-note-from-octave 2 line-length composition-key)
+    (<= 40 line-length 79) (pick-note-from-octave 3 line-length composition-key)
+    (<= 80 line-length 99) (pick-note-from-octave 4 line-length composition-key)
+    (<= 100 line-length) (pick-note-from-octave 5 line-length composition-key)))
