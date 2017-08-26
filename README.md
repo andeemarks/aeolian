@@ -24,20 +24,20 @@ Aeolian was presented to the [YOW West conference in May 2017][12].  The slides 
 
 Currently, Aeolian maps the following source code metrics to aspects of the generated music:
 
-Metric 						| Affects... 										| By... 
----------------------------	| ------------------------------------------------- | --- 
-[Line length][5] 			| Note and octave selection 						| Longer lines -> higher pitched notes 
-[Cyclomatic Complexity][4]	| Tempo 											| Higher complexity -> faster tempo 
-[Method Length][13]			| Accompanying chord 								| A chord based around first, third, fifth or seventh of key 
-[Duplication][6] 			| Key (Major or Minor) 								| Duplication >= 10% -> minor key 
-[Git commit author][7] 		| MIDI instrument (from 7 available instruments) 	| New instrument for each author change 
-Source file name 			| Karaoke lyrics (if MIDI file is played through a player that supports the KAR format) | New filename lyric for each source file change 
+Metric 						| Affects... 										| By...
+---------------------------	| ------------------------------------------------- | ---
+[Line length][5] 			| Note and octave selection 						| Longer lines -> higher pitched notes
+[Cyclomatic Complexity][4]	| Tempo 											| Higher complexity -> faster tempo
+[Method Length][13]			| Accompanying chord 								| A chord based around first, third, fifth or seventh of key
+[Duplication][6] 			| Key (Major or Minor) 								| Duplication >= 10% -> minor key
+[Git commit author][7] 		| MIDI instrument (from 7 available instruments) 	| New instrument for each author change
+Source file name 			| Karaoke lyrics (if MIDI file is played through a player that supports the KAR format) | New filename lyric for each source file change
 
 Because there is one note played for each line of code processed, a larger source file will produce a longer song.  Likewise, more complex code will result in faster passages in the song, whilst less complex code will result in slower passages.
 
-All generated songs use a default tempo of 140bpm and all notes played are eighth notes. 
+All generated songs use a default tempo of 140bpm and all notes played are eighth notes.
 
-Note: there are still lots of dimensions to code quality and song composition and structure which haven't been covered by Aeolian.  I give this to you as a starting point to build out more complex audio representations of code quality for your own edification. 
+Note: there are still lots of dimensions to code quality and song composition and structure which haven't been covered by Aeolian.  I give this to you as a starting point to build out more complex audio representations of code quality for your own edification.
 
 ## Usage
 
@@ -69,12 +69,12 @@ This script will perform a number of actions:
 
 	The output from this stage is a file called ```blames.txt``` in the $WORK_DIR.  The fields in this file are:
 
-	Field 					| Position 	| Prefix
-	----------------------- | ---------	| ---
-	Source file 			| 1 		| None
-	Line number 			| 2 		| #
-	Git commit author 		| 3 		| AU=
-	Git commit timestamp 	| 4 		| TS=
+Field 					| Position 	| Prefix
+----------------| ---------	| ---
+Source file 		| 1 		| None
+Line number 		| 2 		| #
+Git commit author 		| 3 		| AU=
+Git commit timestamp 	| 4 		| TS=
 
 1. _Generate the metrics._
 
@@ -108,7 +108,7 @@ This script will perform a number of actions:
 	Field 					| Position 	| Prefix
 	----------------------- | -------- 	| ---
 	Source file 			| 1 		| None
-	Line number 			| 2 		| # 
+	Line number 			| 2 		| #
 	Line length 			| N/A 		| LL=
 	Cyclomatic Complexity 	| N/A 		| CC=
 	Method length 			| N/A 		| ML=
@@ -167,7 +167,7 @@ This script will perform a number of actions:
 	Sequence: /home/amarks/Code/aeolian/tmp.YtpN0tR5yG/grunt-maven-plugin.metrics.history
 	Text: @I/home/amarks/Code/aeolian/tmp.YtpN0tR5yG/grunt-maven-plugin.metrics.history
 	Text: @IAEOLIAN
-	...	
+	...
 	Playing time: ~160 seconds
 	Notes cut: 0
 	Notes lost totally: 0
