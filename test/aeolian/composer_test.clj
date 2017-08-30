@@ -16,27 +16,15 @@
                (fact "longer lines are mapped to actual notes with longer lines at higher octaves"
                      ?expected-octave => (contains (c/build-note ?line-length ?composition-key)))
                ?expected-octave    ?line-length  ?composition-key
-               n/major-octave-1    1             k/major
                n/major-octave-1    9             k/major
-               n/major-octave-2    10            k/major
                n/major-octave-2    39            k/major
-               n/major-octave-3    40            k/major
                n/major-octave-3    79            k/major
-               n/major-octave-4    80            k/major
                n/major-octave-4    99            k/major
-               n/major-octave-5    100           k/major
-               n/major-octave-5    200           k/major
                n/major-octave-5    2000          k/major
-               n/minor-octave-1    1             k/minor
                n/minor-octave-1    9             k/minor
-               n/minor-octave-2    10            k/minor
                n/minor-octave-2    39            k/minor
-               n/minor-octave-3    40            k/minor
                n/minor-octave-3    79            k/minor
-               n/minor-octave-4    80            k/minor
                n/minor-octave-4    99            k/minor
-               n/minor-octave-5    100           k/minor
-               n/minor-octave-5    200           k/minor
                n/minor-octave-5    2000          k/minor))
 
        (fact "complexity > 1 is mapped to tempo"

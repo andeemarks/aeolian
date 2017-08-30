@@ -54,24 +54,24 @@
 
 (defn metric-to-note [metric composition-key]
   (log/debug (str "Processing metric " metric))
-  (let [metric-components 	(parser/parse metric)
+  (let [metric-components   (parser/parse metric)
         current-source-file (:source-file metric-components)
-        current-author 			(:author metric-components)
-        note-components 		(conj
-                           '()
-                           (build-note (:line-length metric-components) composition-key)
-                           (build-instrument current-author)
-                           (build-lyrics current-source-file)
-                           (build-tempo (:complexity metric-components)))
-        final-note 						(apply str (interpose " " (filter #(not (nil? %)) note-components)))]
+        current-author       (:author metric-components)
+        note-components     (conj
+                             '()
+                             (build-note (:line-length metric-components) composition-key)
+                             (build-instrument current-author)
+                             (build-lyrics current-source-file)
+                             (build-tempo (:complexity metric-components)))
+        final-note             (apply str (interpose " " (filter #(not (nil? %)) note-components)))]
     (update-source-file current-source-file)
     (update-author current-author)
     final-note))
 
 (defn metrics-to-measure [metrics-in-measure composition-key]
-  (let [measure 						  (map #(metric-to-note %1 composition-key) metrics-in-measure)
+  (let [measure               (map #(metric-to-note %1 composition-key) metrics-in-measure)
         current-method-length (parser/find-longest-method-length-in metrics-in-measure)
-        accompanying-chord 	  (n/pick-chord-for-method-length current-method-length composition-key (get-method-length))]
+        accompanying-chord     (n/pick-chord-for-method-length current-method-length composition-key (get-method-length))]
     (update-method-length (or current-method-length (get-method-length)))
     (abc/measure (str accompanying-chord (apply str measure)))))
 
@@ -84,7 +84,7 @@
 
 (defn- map-metrics [metrics composition-key]
   (let [metrics-in-measures (split-metrics-into-equal-measures metrics)
-        mapped-notes 				(map #(metrics-to-measure %1 composition-key) metrics-in-measures)]
+        mapped-notes         (map #(metrics-to-measure %1 composition-key) metrics-in-measures)]
     (apply str mapped-notes)))
 
 (defn compose [metrics composition-key]
