@@ -13,15 +13,6 @@
 (def method-length (atom 0))
 (def author (atom ""))
 
-(defn get-method-length []
-  @method-length)
-
-(defn get-source-file []
-  @source-file)
-
-(defn get-author []
-  @author)
-
 (defn update-method-length [new-method-length]
   (swap! method-length (fn [f] new-method-length)))
 
@@ -45,11 +36,11 @@
     (midi/volume-boost)))
 
 (defn build-lyrics [current-source-file]
-  (if (not (= current-source-file (get-source-file)))
+  (if (not (= current-source-file @source-file))
     (abc/lyrics-for current-source-file)))
 
 (defn build-instrument [current-author]
-  (if (not (= current-author (get-author)))
+  (if (not (= current-author @author))
     (midi/instrument-command-for current-author)))
 
 (defn metric-to-note [metric composition-key]
@@ -71,8 +62,8 @@
 (defn metrics-to-measure [metrics-in-measure composition-key]
   (let [measure               (map #(metric-to-note %1 composition-key) metrics-in-measure)
         current-method-length (parser/find-longest-method-length-in metrics-in-measure)
-        accompanying-chord     (n/pick-chord-for-method-length current-method-length composition-key (get-method-length))]
-    (update-method-length (or current-method-length (get-method-length)))
+        accompanying-chord     (n/pick-chord-for-method-length current-method-length composition-key @method-length)]
+    (update-method-length (or current-method-length @method-length))
     (abc/measure (str accompanying-chord (apply str measure)))))
 
 (defn- split-metrics-into-equal-measures [metrics]
