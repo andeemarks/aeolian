@@ -7,7 +7,6 @@
             [aeolian.abc.key :as k]))
 
 (facts "when processing metrics"
-
        (facts "line length is mapped to note"
               (fact "empty lines are mapped to rests"
                            (c/metric-to-note "Foo.java#1 LL=0" k/major) => (contains n/rest-note))
@@ -27,17 +26,20 @@
                n/minor-octave-4    99            k/minor
                n/minor-octave-5    2000          k/minor))
 
+       (future-fact "changes to git author produces a change in instrument")
+       (future-fact "changes to source file name produces a change in lyrics")
+
        (fact "complexity > 1 is mapped to tempo"
              (c/metric-to-note "Foo.java#1 LL=30 CC=1" k/major) =not=> (contains t/prefix)
              (c/metric-to-note "Foo.java#1 LL=30 CC=10" k/major) => (contains t/prefix)
              (c/metric-to-note "Foo.java#1 LL=30 CC=5" k/major) => (contains t/prefix)
              (c/metric-to-note "Foo.java#1 LL=30 CC=3" k/major) => (contains t/prefix))
 
-       (future-fact "method-length is mapped to accompanying chord"
-                    (str/index-of (c/metrics-to-measure "Foo.java#1 LL=30 ML=1") t/prefix) => falsey
-                    (str/index-of (c/metrics-to-measure "Foo.java#1 LL=30 ML=10") t/prefix) => truthy
-                    (str/index-of (c/metrics-to-measure "Foo.java#1 LL=30 ML=5") t/prefix) => truthy
-                    (str/index-of (c/metrics-to-measure "Foo.java#1 LL=30 ML=3") t/prefix) => truthy))
+       (fact "method-length is mapped to accompanying chord"
+             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=1"] k/major) "\"C\"") => truthy
+             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=10"] k/major) "\"Dm\"") => truthy
+             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=5"] k/minor) "\"Cm\"") => truthy
+             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=11"] k/minor) "\"_E\"") => truthy))
 
 (facts "when opening metrics files"
        (fact "all lines are used in composition"
