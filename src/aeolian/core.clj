@@ -16,21 +16,21 @@
 
 (defn generate-notation-from [metrics-file-name duplicate-metrics]
   (with-open [rdr (clojure.java.io/reader metrics-file-name)]
-    (let [composition-key 		(k/determine-key duplicate-metrics)
-          notation-file-name 	(notation-file-name metrics-file-name)
-          composition 				(composer/compose (line-seq rdr) composition-key)]
+    (let [composition-key     (k/determine-key duplicate-metrics)
+          notation-file-name   (notation-file-name metrics-file-name)
+          composition         (composer/compose (line-seq rdr) composition-key)]
       (spit notation-file-name, (str (build-header-for-key metrics-file-name composition-key) composition))
       (log/info (str "Generated " notation-file-name)))))
 
 (defn- banner-line [text & [args]] (println (ansi/style text args)))
 
 (defn -main [& args]
-	(banner-line "                      lll iii                 " :bg-blue)
-	(banner-line "  aa aa   eee   oooo  lll       aa aa nn nnn  " :bg-green)
-	(banner-line " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn " :bg-cyan)
-	(banner-line "aa  aaa eeeee  oo  oo lll iii aa  aaa nn   nn " :bg-green)
-	(banner-line " aaa aa  eeeee  oooo  lll iii  aaa aa nn   nn " :bg-blue)
-	(println "")
+  (banner-line "                      lll iii                 " :bg-blue)
+  (banner-line "  aa aa   eee   oooo  lll       aa aa nn nnn  " :bg-green)
+  (banner-line " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn " :bg-cyan)
+  (banner-line "aa  aaa eeeee  oo  oo lll iii aa  aaa nn   nn " :bg-green)
+  (banner-line " aaa aa  eeeee  oooo  lll iii  aaa aa nn   nn " :bg-blue)
+  (println "")
 
   (if-let [metrics-file-name (first args)]
     (if (.exists (io/as-file metrics-file-name))

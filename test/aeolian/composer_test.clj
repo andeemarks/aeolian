@@ -9,7 +9,7 @@
 (facts "when processing metrics"
        (facts "line length is mapped to note"
               (fact "empty lines are mapped to rests"
-                           (c/metric-to-note "Foo.java#1 LL=0" k/major) => (contains n/rest-note))
+                           (c/metric-to-note "Foo.java#1 LL=0" k/major anything anything anything) => (contains n/rest-note))
 
               (tabular
                (fact "longer lines are mapped to actual notes with longer lines at higher octaves"
@@ -30,10 +30,10 @@
        (future-fact "changes to source file name produces a change in lyrics")
 
        (fact "complexity > 1 is mapped to tempo"
-             (c/metric-to-note "Foo.java#1 LL=30 CC=1" k/major) =not=> (contains t/prefix)
-             (c/metric-to-note "Foo.java#1 LL=30 CC=10" k/major) => (contains t/prefix)
-             (c/metric-to-note "Foo.java#1 LL=30 CC=5" k/major) => (contains t/prefix)
-             (c/metric-to-note "Foo.java#1 LL=30 CC=3" k/major) => (contains t/prefix))
+             (c/metric-to-note "Foo.java#1 LL=30 CC=1" k/major anything anything anything) =not=> (contains t/prefix)
+             (c/metric-to-note "Foo.java#1 LL=30 CC=10" k/major anything anything anything) => (contains t/prefix)
+             (c/metric-to-note "Foo.java#1 LL=30 CC=5" k/major anything anything anything) => (contains t/prefix)
+             (c/metric-to-note "Foo.java#1 LL=30 CC=3" k/major anything anything anything) => (contains t/prefix))
 
        (fact "method-length is mapped to accompanying chord"
              (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=1"] k/major) "\"C\"") => truthy
