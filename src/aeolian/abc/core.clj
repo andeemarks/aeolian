@@ -8,3 +8,7 @@
 
 (defn lyrics-for [lyric]
   (str "\nw: " lyric "\n"))
+
+(defn note [note instrument lyrics tempo]
+  (let [note-components (conj '() note instrument lyrics tempo)]
+    (apply str (interpose " " (filter #(not (nil? %)) note-components)))))

@@ -47,14 +47,12 @@
   (log/debug (str "Processing metric " metric))
   (let [metric-components   (parser/parse metric)
         current-source-file (:source-file metric-components)
-        current-author       (:author metric-components)
-        note-components     (conj
-                             '()
+        current-author      (:author metric-components)
+        final-note          (abc/note
                              (build-note (:line-length metric-components) composition-key)
                              (build-instrument current-author)
                              (build-lyrics current-source-file)
-                             (build-tempo (:complexity metric-components)))
-        final-note             (apply str (interpose " " (filter #(not (nil? %)) note-components)))]
+                             (build-tempo (:complexity metric-components)))]
     (update-source-file current-source-file)
     (update-author current-author)
     {:note final-note :author current-author :source-file current-source-file}))
