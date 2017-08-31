@@ -3,8 +3,8 @@
 (defn inline [command]
   (str "[" command "]"))
 
-(defn measure [command]
-  (str "| " command " |\n"))
+(defn measure [chord notes]
+  (str "| " chord (apply str notes) " |\n"))
 
 (defn lyrics-for [lyric]
   (str "\nw: " lyric "\n"))

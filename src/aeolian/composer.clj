@@ -64,7 +64,7 @@
         current-method-length (parser/find-longest-method-length-in metrics-in-measure)
         accompanying-chord     (n/pick-chord-for-method-length current-method-length composition-key @method-length)]
     (update-method-length (or current-method-length @method-length))
-    (abc/measure (str accompanying-chord (apply str (map #(:note %) note-context))))))
+    (abc/measure accompanying-chord (map #(:note %) note-context))))
 
 (defn- split-metrics-into-equal-measures [metrics]
   (partition
