@@ -57,14 +57,14 @@
         final-note             (apply str (interpose " " (filter #(not (nil? %)) note-components)))]
     (update-source-file current-source-file)
     (update-author current-author)
-    final-note))
+    {:note final-note :author current-author :source-file current-source-file}))
 
 (defn metrics-to-measure [metrics-in-measure composition-key]
-  (let [measure               (map #(metric-to-note %1 composition-key @source-file @method-length @author) metrics-in-measure)
+  (let [note-context               (map #(metric-to-note %1 composition-key @source-file @method-length @author) metrics-in-measure)
         current-method-length (parser/find-longest-method-length-in metrics-in-measure)
         accompanying-chord     (n/pick-chord-for-method-length current-method-length composition-key @method-length)]
     (update-method-length (or current-method-length @method-length))
-    (abc/measure (str accompanying-chord (apply str measure)))))
+    (abc/measure (str accompanying-chord (apply str (map #(:note %) note-context))))))
 
 (defn- split-metrics-into-equal-measures [metrics]
   (partition
