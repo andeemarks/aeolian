@@ -37,11 +37,13 @@
              (notes-in-measure "Foo.java#1 LL=30 CC=5") => (contains t/prefix)
              (notes-in-measure "Foo.java#1 LL=30 CC=3") => (contains t/prefix))
 
+       (defn- measure-for [metrics key] (c/metrics-to-measure [metrics] key "" "" 1))
+
        (fact "method-length is mapped to accompanying chord"
-             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=1"] k/major "" "" 1) "\"C\"") => truthy
-             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=10"] k/major "" "" 1) "\"Dm\"") => truthy
-             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=5"] k/minor "" "" 1) "\"Cm\"") => truthy
-             (str/index-of (c/metrics-to-measure ["Foo.java#1 LL=30 ML=11"] k/minor "" "" 1) "\"_E\"") => truthy))
+             (measure-for "Foo.java#1 LL=30 ML=1" k/major) => (contains "\"C\"")
+             (measure-for "Foo.java#1 LL=30 ML=10" k/major) => (contains "\"Dm\"")
+             (measure-for "Foo.java#1 LL=30 ML=5" k/minor) => (contains "\"Cm\"")
+             (measure-for "Foo.java#1 LL=30 ML=11" k/minor) => (contains "\"_E\"")))
 
 (facts "when opening metrics files"
        (fact "all lines are used in composition"
