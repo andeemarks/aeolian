@@ -1,4 +1,7 @@
-(ns aeolian.parser)
+(ns aeolian.parser
+            (:require [taoensso.timbre :as log]))
+
+(log/set-level! :info)
 
 (defn- metric-line-to-bits [metric]
   (clojure.string/split metric #"\s+"))
