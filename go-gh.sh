@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 function cleanup {
   rm -rf "$WORK_DIR"
@@ -101,6 +101,7 @@ function play-midi() {
 
 set -e
 set -o pipefail
+set -o nounset
 
 check-usage $@
 check-deps

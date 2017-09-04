@@ -1,25 +1,4 @@
-#!/bin/bash
-
-# register the cleanup function to be called on the EXIT signal
-
-function cleanup {
-	rm -f ${COMBINEDMETRICSFILE}.tmp
-	rm -f ${COMBINEDMETRICSFILE}.tmp2
-	rm -f ${COMPLEXITYMETRICS}
-	rm -f ${LINELENGTHMETRICS}
-	rm -f ${METHODLENGTHMETRICS}
-	rm -f ${INDENTATIONMETRICS}
-	rm -f *.bak
-	
-  	echo -e "\033[34mDeleted temp metrics files\033[0m"
-}
-
-trap cleanup EXIT
-
-if [[ $# -eq 0 ]]; then
-    >&2 echo "Usage: go.sh <source-file.java> <output-dir>"
-    exit 1
-fi
+#!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 CHECKSTYLEDIR=$DIR/resources
@@ -34,7 +13,26 @@ LINELENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.line-length.metrics
 METHODLENGTHMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.method-length.metrics
 INDENTATIONMETRICS=${OUTPUTDIR}/${RAWSOURCECLASSNAME}.indentation.metrics
 
-if [[ -r $SOURCEFILE ]]; then
+function cleanup {
+	rm -f ${COMBINEDMETRICSFILE}.tmp
+	rm -f ${COMBINEDMETRICSFILE}.tmp2
+	rm -f ${COMPLEXITYMETRICS}
+	rm -f ${LINELENGTHMETRICS}
+	rm -f ${METHODLENGTHMETRICS}
+	rm -f ${INDENTATIONMETRICS}
+	rm -f *.bak
+
+  	echo -e "\033[34mDeleted temp metrics files\033[0m"
+}
+
+function check-usage() {
+	if [[ $# -eq 0 ]]; then
+	    >&2 echo "Usage: go.sh <source-file.java> <output-dir>"
+	    exit 1
+	fi
+}
+
+function collect-checkstyle-metrics() {
 	echo -e "\033[1;34mProcessing ${RAWSOURCECLASSNAME}...\033[0m"
 	echo -e "\033[34mGenerating Checkstyle cyclomatic complexity metrics...\033[0m"
 	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
@@ -48,8 +46,21 @@ if [[ -r $SOURCEFILE ]]; then
 	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > ${COMBINEDMETRICSFILE}.tmp
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp) <(sort -k 1b,1 ${INDENTATIONMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}.tmp2
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp2) <(sort -k 1b,1 ${METHODLENGTHMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}
+}
+
+# set -e
+set -o pipefail
+set -o nounset
+
+check-usage $@
+collect-checkstyle-metrics
+
+if [[ -r $SOURCEFILE ]]; then
+	collect-checkstyle-metrics
 	exit 0
 else
-    >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
-    exit 1
+  >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
+  exit 1
 fi
+
+trap cleanup EXIT
