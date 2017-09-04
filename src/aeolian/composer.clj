@@ -23,19 +23,16 @@
     (midi/volume-boost)))
 
 (defn build-lyrics [current-source-file source-file]
-  (if (not (= current-source-file source-file))
-    (abc/lyrics-for current-source-file)))
+  (abc/lyrics-for current-source-file))
 
-(defn build-instrument [current-author author]
-  (if (not (= current-author author))
-    (midi/instrument-command-for current-author)))
+(defn build-instrument [current-author]
+  (midi/instrument-command-for current-author))
 
-(defn build-measure [measure-lines-metrics composition-key source-file author method-length]
+(defn build-measure [measure-lines-metrics composition-key source-file method-length]
  (loop [measure {}
         remaining-line-metrics measure-lines-metrics
         current-source-file source-file
-        current-method-length method-length
-        current-author author]
+        current-method-length method-length]
      (if (empty? remaining-line-metrics)
        measure
        (let [
@@ -43,19 +40,18 @@
              metric-components (parser/parse (first remaining-line-metrics))
              final-note          (abc/note
                                   (build-note (:line-length metric-components) composition-key)
-                                  (build-instrument current-author author)
+                                  (build-instrument (:author metric-components))
                                   (build-lyrics current-source-file source-file)
                                   (build-tempo (:complexity metric-components)))]
 
         (recur
-         {:notes (conj (:notes measure) final-note) :author current-author :source-file current-source-file :method-length current-method-length}
+         {:notes (conj (:notes measure) final-note) :source-file current-source-file :method-length current-method-length}
          (rest remaining-line-metrics)
          (:source-file metric-components)
-         (:method-length metric-components)
-         (:author metric-components))))))
+         (:method-length metric-components))))))
 
-(defn metrics-to-measure [metrics-in-measure composition-key source-file author method-length]
- (let [measure               (build-measure metrics-in-measure composition-key source-file author method-length)
+(defn metrics-to-measure [metrics-in-measure composition-key source-file method-length]
+ (let [measure               (build-measure metrics-in-measure composition-key source-file method-length)
        current-method-length (parser/find-longest-method-length-in metrics-in-measure)
        accompanying-chord    (n/pick-chord-for-method-length current-method-length composition-key (:method-length measure))]
    (abc/measure accompanying-chord (:notes measure))))
@@ -69,7 +65,7 @@
 
 (defn- map-metrics [metrics composition-key]
   (let [metrics-in-measures (split-metrics-into-equal-measures metrics)
-        mapped-notes         (map #(metrics-to-measure %1 composition-key "" "" 1) metrics-in-measures)]
+        mapped-notes         (map #(metrics-to-measure %1 composition-key "" 1) metrics-in-measures)]
     (apply str mapped-notes)))
 
 (defn compose [metrics composition-key]
