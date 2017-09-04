@@ -53,7 +53,6 @@ set -o pipefail
 set -o nounset
 
 check-usage $@
-collect-checkstyle-metrics
 
 if [[ -r $SOURCEFILE ]]; then
 	collect-checkstyle-metrics
