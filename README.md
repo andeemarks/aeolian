@@ -1,5 +1,7 @@
 # Aeolian
 
+[![CircleCI](https://circleci.com/gh/andeemarks/aeolian.svg?style=svg)](https://circleci.com/gh/andeemarks/aeolian) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A (mostly) Clojure console application that processes Java source code through [Checkstyle][10] (producing source code quality metrics) and creates a musical representation of these metrics using [ABC Notation][1] and ultimately [MIDI][3].
 
 The name Aeolian (apart from being a Greek musical mode) refers to a leading company in the production of [player pianos][2], which takes punched paper as input and drives a mechanical piano.
