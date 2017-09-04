@@ -24,6 +24,14 @@
 
 (defn- banner-line [text & [args]] (println (ansi/style text args)))
 
+(defn- banner []
+  (banner-line "                      lll iii                 " :bg-blue)
+  (banner-line "  aa aa   eee   oooo  lll       aa aa nn nnn  " :bg-green)
+  (banner-line " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn " :bg-cyan)
+  (banner-line "aa  aaa eeeee  oo  oo lll iii aa  aaa nn   nn " :bg-green)
+  (banner-line " aaa aa  eeeee  oooo  lll iii  aaa aa nn   nn " :bg-blue)
+  (println ""))
+
 (defn -main
   "Command line entry point for Aeolian.
 
@@ -41,12 +49,7 @@
   `lein run repo.metrics {:duplicate-lines 533 :total-lines 15}`
   "
   [& args]
-  (banner-line "                      lll iii                 " :bg-blue)
-  (banner-line "  aa aa   eee   oooo  lll       aa aa nn nnn  " :bg-green)
-  (banner-line " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn " :bg-cyan)
-  (banner-line "aa  aaa eeeee  oo  oo lll iii aa  aaa nn   nn " :bg-green)
-  (banner-line " aaa aa  eeeee  oooo  lll iii  aaa aa nn   nn " :bg-blue)
-  (println "")
+  (banner)
 
   (if-let [metrics-file-name (first args)]
     (if (.exists (io/as-file metrics-file-name))

@@ -38,7 +38,8 @@
         current-author author]
      (if (empty? remaining-line-metrics)
        measure
-       (let [_ (log/info measure)
+       (let [
+            ;  _ (log/info measure)
              metric-components (parser/parse (first remaining-line-metrics))
              final-note          (abc/note
                                   (build-note (:line-length metric-components) composition-key)
