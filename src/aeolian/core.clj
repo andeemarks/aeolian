@@ -1,16 +1,14 @@
 (ns aeolian.core
-  (:require [aeolian.parser :as parser]
-            [aeolian.composer :as composer]
+  (:require [aeolian.composer :as composer]
             [aeolian.midi.core :as midi]
             [taoensso.timbre :as log]
             [aeolian.abc.header :as h]
             [aeolian.abc.key :as k]
             [aeolian.banner :as banner]
-            [clansi :as ansi]
             [clojure.java.io :as io]))
 
-(defn build-header-for-key [metrics-file-name key]
-  (str (h/build-major-header metrics-file-name) "\n" midi/header))
+(defn build-header [metrics-file-name key]
+  (str (h/build-common-header metrics-file-name key) "\n" midi/header))
 
 (defn notation-file-name [original-file-name]
   (str original-file-name ".abc"))
@@ -23,7 +21,7 @@
   (with-open [rdr (clojure.java.io/reader input-file-name)]
     (let [composition-key     (k/determine-key duplicate-metrics)
           composition         (composer/compose (line-seq rdr) composition-key)]
-      (spit output-file-name, (str (build-header-for-key input-file-name composition-key) composition))
+      (spit output-file-name  (str (build-header input-file-name composition-key) composition))
       (log/info "Generated " output-file-name))))
 
 (defn -main
