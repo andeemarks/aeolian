@@ -5,6 +5,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main aeolian.core
   :jvm-opts ^:replace []
+  :codox {:output-path "docs"
+          :metadata {:doc/format :markdown}
+          :source-uri "https://github.com/andeemarks/aeolian/blob/master/{filepath}#L{line}"}
   :dependencies [  [org.clojure/clojure "1.8.0"][proto-repl "0.3.1"] [org.clojure/tools.namespace "0.2.11"]]
   :plugins
     [

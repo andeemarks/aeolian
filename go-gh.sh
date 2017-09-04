@@ -42,7 +42,6 @@ BIN_DIR=$DIR
 echo -e "\033[33mCloning repo to $WORK_DIR...\033[0m"
 cd $WORK_DIR
 git clone -q https://github.com/$GITHUB_USER/$GITHUB_REPO.git
-# git clone -q https://github.com/ReactiveX/RxJava.git
 
 cd $BIN_DIR
 
@@ -63,7 +62,7 @@ TOTALDUPLINESRE='Found ([0-9]+).*'
 TOTALLINESRE='Processed a total of ([0-9]+).*'
 [[ "${DUPLICATESTATS}" =~ ${TOTALDUPLINESRE} ]]
 TOTALDUPLINES=${BASH_REMATCH[1]}
-[[ "${DUPLICATESTATS}" =~ ${TOTALLINESRE} ]] 
+[[ "${DUPLICATESTATS}" =~ ${TOTALLINESRE} ]]
 TOTALLINES=${BASH_REMATCH[1]}
 
 # Run each non Test source file through go.sh

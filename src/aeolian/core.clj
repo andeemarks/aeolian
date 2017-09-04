@@ -24,7 +24,23 @@
 
 (defn- banner-line [text & [args]] (println (ansi/style text args)))
 
-(defn -main [& args]
+(defn -main
+  "Command line entry point for Aeolian.
+
+  Usage:
+
+  `lein run [metrics-file] [duplication-metrics]`
+
+  where:
+
+  * `metrics-file` is the name of the file containing all the generated metrics for the repository being processed.
+  * `duplication-metrics` is a Clojure hash of the form `{:duplicate-lines n1 :total-lines n2}` with `n1` and `n2` being non-negative integers and `n1` >= `n2`
+
+  Example:
+
+  `lein run repo.metrics {:duplicate-lines 533 :total-lines 15}`
+  "
+  [& args]
   (banner-line "                      lll iii                 " :bg-blue)
   (banner-line "  aa aa   eee   oooo  lll       aa aa nn nnn  " :bg-green)
   (banner-line " aa aaa ee   e oo  oo lll iii  aa aaa nnn  nn " :bg-cyan)
