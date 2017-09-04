@@ -1,5 +1,5 @@
 (ns aeolian.abc.header
-  (:require [aeolian.tempo :as t]))
+  (:require [aeolian.abc.tempo :as t]))
 
 (def reference "\nX:1")
 (def title-prefix "\nT:")

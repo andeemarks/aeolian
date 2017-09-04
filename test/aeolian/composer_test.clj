@@ -2,7 +2,7 @@
   (:use midje.sweet)
   (:require [aeolian.composer :as c]
             [clojure.string :as str]
-            [aeolian.tempo :as t]
+            [aeolian.abc.tempo :as t]
             [aeolian.abc.notes :as n]
             [aeolian.abc.key :as k]))
 

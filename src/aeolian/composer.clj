@@ -1,7 +1,7 @@
 (ns aeolian.composer
   (:require [aeolian.parser :as parser]
-            [aeolian.tempo :as t]
             [aeolian.midi.core :as midi]
+            [aeolian.abc.tempo :as t]
             [aeolian.abc.notes :as n]
             [aeolian.abc.core :as abc]
             [taoensso.timbre :as log]
