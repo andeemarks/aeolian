@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-CHECKSTYLEDIR=$DIR/resources
+CHECKSTYLEDIR=${DIR}/resources
 SOURCEFILE=$1
 TEMPDIR="/tmp"
 OUTPUTDIR=${2:-$TEMPDIR}
@@ -34,14 +34,14 @@ function check-usage() {
 
 function collect-checkstyle-metrics() {
 	echo -e "\033[1;34mProcessing ${RAWSOURCECLASSNAME}...\033[0m"
-	echo -e "\033[34mGenerating Checkstyle cyclomatic complexity metrics...\033[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-complexity.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
-	echo -e "\033[34mGenerating Checkstyle line length metrics...\033[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-linelength.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d LL=%d\n", $1, $2, $3 }' > ${LINELENGTHMETRICS}
-	echo -e "\033[34mGenerating Checkstyle method length metrics...\033[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-methodlength.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d ML=%d\n", $1, $2, $4 }' > ${METHODLENGTHMETRICS}
-	echo -e "\033[34mGenerating Checkstyle indentation metrics...\033[0m"
-	java -jar $CHECKSTYLEDIR/checkstyle-7.4-all.jar -c $CHECKSTYLEDIR/checkstyle-indentation.xml $SOURCEFILE | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d IND\n", $1, $2 }' > ${INDENTATIONMETRICS}
+	echo -e "\033[34m\Generating Checkstyle cyclomatic complexity metrics...\033[0m"
+	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-complexity.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{{printf "%s#%d CC=%d\n", $1, $2, $4 }}' > ${COMPLEXITYMETRICS}
+	echo -e "\033[34m |Generating Checkstyle line length metrics...\033[0m"
+	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-linelength.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d LL=%d\n", $1, $2, $3 }' > ${LINELENGTHMETRICS}
+	echo -e "\033[34m |Generating Checkstyle method length metrics...\033[0m"
+	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-methodlength.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d ML=%d\n", $1, $2, $4 }' > ${METHODLENGTHMETRICS}
+	echo -e "\033[34m/Generating Checkstyle indentation metrics...\033[0m"
+	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-indentation.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d IND\n", $1, $2 }' > ${INDENTATIONMETRICS}
 	# echo -e "\033[34mMerging all metrics...\033[0m"
 	join -a 1 <(sort -k 1b,1 ${LINELENGTHMETRICS}) <(sort -k 1b,1 ${COMPLEXITYMETRICS}) > ${COMBINEDMETRICSFILE}.tmp
 	join -a 1 <(sort -k 1b,1 ${COMBINEDMETRICSFILE}.tmp) <(sort -k 1b,1 ${INDENTATIONMETRICS}) | sort -V > ${COMBINEDMETRICSFILE}.tmp2
@@ -54,11 +54,11 @@ set -o nounset
 
 check-usage $@
 
-if [[ -r $SOURCEFILE ]]; then
+if [[ -r ${SOURCEFILE} ]]; then
 	collect-checkstyle-metrics
 	exit 0
 else
-  >&2 echo "Error: $SOURCEFILE does not exist or cannot be read"
+  >&2 echo "Error: ${SOURCEFILE} does not exist or cannot be read"
   exit 1
 fi
 
