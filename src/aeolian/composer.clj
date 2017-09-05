@@ -46,7 +46,7 @@
 
         (recur
          {:notes (conj (:notes measure) final-note) :source-file current-source-file :method-length current-method-length}
-         (rest remaining-line-metrics)
+         (next remaining-line-metrics)
          (:source-file metric-components)
          (:method-length metric-components))))))
 
