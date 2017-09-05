@@ -33,7 +33,7 @@
         remaining-line-metrics measure-lines-metrics
         current-source-file source-file
         current-method-length method-length]
-     (if (empty? remaining-line-metrics)
+     (if (not remaining-line-metrics)
        measure
        (let [
             ;  _ (log/info measure)
