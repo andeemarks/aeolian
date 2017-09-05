@@ -29,7 +29,12 @@
 (defn build-instrument [current-author]
   (midi/instrument-command-for current-author))
 
-(defn build-measure [measure-lines-metrics composition-key method-length]
+(s/defschema ^:const Measure
+  {:notes [s/Str]
+   :method-length (s/maybe s/Num)})
+
+(s/defn build-measure :- Measure
+ [measure-lines-metrics composition-key method-length]
  (loop [measure {}
         remaining-line-metrics measure-lines-metrics
         current-method-length method-length]

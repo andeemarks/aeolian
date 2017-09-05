@@ -57,7 +57,7 @@
                                    (map #(method-length-from-metric %1) metrics))]
     (last (sort all-method-lengths))))
 
-(def ^:const ParsedMetricLine
+(s/defschema ^:const ParsedMetricLine
   "A schema for a single line of parsed metrics"
   {:author (s/maybe s/Str)
    :line-length s/Num
@@ -69,7 +69,8 @@
 
 (defn- validate-metric [] (s/validator ParsedMetricLine))
 
-(defn parse [metric]
+(s/defn parse :- ParsedMetricLine
+ [metric]
  (let [parsed-metric
        {:author (author-from-metric metric)
         :line-length (line-length-from-metric metric)
