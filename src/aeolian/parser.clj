@@ -67,6 +67,8 @@
    :complexity s/Num
    :timestamp (s/maybe s/Num)})
 
+(defn- validate-metric [] (s/validator ParsedMetricLine))
+
 (defn parse [metric]
  (let [parsed-metric
        {:author (author-from-metric metric)
@@ -76,4 +78,4 @@
         :indentation? (indentation-from-metric metric)
         :complexity (complexity-from-metric metric)
         :timestamp (timestamp-from-metric metric)}]
-   (s/validate ParsedMetricLine parsed-metric)))
+   ((validate-metric) parsed-metric)))
