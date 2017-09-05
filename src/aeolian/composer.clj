@@ -5,6 +5,7 @@
             [aeolian.abc.notes :as n]
             [aeolian.abc.core :as abc]
             [taoensso.timbre :as log]
+            [schema.core :as s]
             [aeolian.abc.header :as h]))
 
 (log/set-level! :info)

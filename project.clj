@@ -9,10 +9,14 @@
           :metadata {:doc/format :markdown}
           :source-paths ["src"]
           :source-uri "https://github.com/andeemarks/aeolian/blob/master/{filepath}#L{line}"}
-  :dependencies [  [org.clojure/clojure "1.8.0"][proto-repl "0.3.1"] [org.clojure/tools.namespace "0.2.11"]]
+  :dependencies [
+                 [org.clojure/clojure "1.8.0"]
+                 [proto-repl "0.3.1"]
+                 [prismatic/schema "1.1.6"]
+                 [org.clojure/tools.namespace "0.2.11"]]
   :plugins
     [
-      [lein-cljfmt "0.5.6"]]
+     [lein-cljfmt "0.5.6"]]
   :profiles
     {:dev
        {:source-paths ["dev" "src" "test"]

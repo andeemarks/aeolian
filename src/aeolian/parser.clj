@@ -1,5 +1,7 @@
 (ns aeolian.parser
-            (:require [taoensso.timbre :as log]))
+            (:require
+             [taoensso.timbre :as log]
+             [schema.core :as s]))
 
 (log/set-level! :info)
 
@@ -32,7 +34,7 @@
 
 (defn- indentation-from-metric [metric]
   (check-valid-line-number metric)
-  (re-find #"IND(\s*)" metric))
+  (second (re-find #"IND(\s*)" metric)))
 
 (defn- author-from-metric [metric]
   (check-valid-line-number metric)
@@ -40,7 +42,10 @@
 
 (defn- timestamp-from-metric [metric]
   (check-valid-line-number metric)
-  (second (re-find #"TS=(\d+)" metric)))
+  (let [timestamp (second (re-find #"TS=(\d+)" metric))]
+    (if (not (nil? timestamp))
+      (Integer/parseInt timestamp)
+      nil)))
 
 (defn- line-length-from-metric [metric]
   (check-valid-line-number metric)
@@ -52,11 +57,23 @@
                                    (map #(method-length-from-metric %1) metrics))]
     (last (sort all-method-lengths))))
 
+(def ^:const ParsedMetricLine
+  "A schema for a single line of parsed metrics"
+  {:author (s/maybe s/Str)
+   :line-length s/Num
+   :source-file s/Str
+   :method-length (s/maybe s/Num)
+   :indentation?  (s/maybe s/Str)
+   :complexity s/Num
+   :timestamp (s/maybe s/Num)})
+
 (defn parse [metric]
-  {:author (author-from-metric metric)
-   :line-length (line-length-from-metric metric)
-   :source-file (source-file-from-metric metric)
-   :method-length (method-length-from-metric metric)
-   :indentation? (indentation-from-metric metric)
-   :complexity (complexity-from-metric metric)
-   :timestamp (timestamp-from-metric metric)})
+ (let [parsed-metric
+       {:author (author-from-metric metric)
+        :line-length (line-length-from-metric metric)
+        :source-file (source-file-from-metric metric)
+        :method-length (method-length-from-metric metric)
+        :indentation? (indentation-from-metric metric)
+        :complexity (complexity-from-metric metric)
+        :timestamp (timestamp-from-metric metric)}]
+   (s/validate ParsedMetricLine parsed-metric)))
