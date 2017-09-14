@@ -26,7 +26,21 @@
                n/minor-octave-4    99            k/minor
                n/minor-octave-5    2000          k/minor))
 
-       (future-fact "changes to git author produces a change in instrument")
+       (facts "when processing git authors"
+        (fact "a single author uses the same instrument"
+          (let [metrics-for-same-author (c/metrics-to-measure ["Notification.java#1 AU=foo LL=3"
+                                                               "Notification.java#10 AU=foo LL=70"
+                                                               "Notification.java#100 AU=foo LL=99"] k/major 1)
+                instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-same-author)]
+            (count (distinct instrument-commands)) => 1))
+
+        (fact "multiple authors produces a change in instrument"
+          (let [metrics-for-n-authors (c/metrics-to-measure ["Notification.java#1 AU=foo LL=3"
+                                                             "Notification.java#10 AU=foo LL=70"
+                                                             "Notification.java#100 AU=bar LL=99"] k/major 1)
+                instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-n-authors)]
+            (count (distinct instrument-commands)) => 2)))
+
        (future-fact "changes to source file name produces a change in lyrics")
 
        (defn- notes-in-measure [metrics]  (first (:notes (c/build-measure [metrics] k/major 1))))
