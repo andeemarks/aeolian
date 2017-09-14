@@ -10,7 +10,6 @@
 
 (facts "when processing metrics"
        (fact "a method length metric can be found amongst a collection of metrics"
-             (c/find-longest-method-length-in []) => nil
              (c/find-longest-method-length-in [(dissoc metric :method-length)]) => nil
              (c/find-longest-method-length-in [metric]) => 1
              (c/find-longest-method-length-in [(dissoc metric :method-length) (assoc metric :method-length 3)]) => 3

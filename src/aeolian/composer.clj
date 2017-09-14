@@ -26,12 +26,9 @@
    :timestamp (s/maybe s/Num)})
 
 (defn find-longest-method-length-in [metrics]
-  (let [all-method-lengths (remove nil?
-                                   (map #(:method-length %1) metrics))]
-    (last (sort all-method-lengths))))
+  (:method-length (apply max-key #(or (:method-length %) 0) metrics)))
 
-(defn build-note [line-length composition-key]
-  (n/pick-note-for-line-length line-length composition-key))
+(defn build-note [line-length composition-key] (n/pick-note-for-line-length line-length composition-key))
 
 (defn build-tempo [complexity]
   (if (> complexity 1)
@@ -41,11 +38,9 @@
   (if (not (nil? indentation?))
     (midi/volume-boost)))
 
-(defn build-lyrics [current-source-file]
-  (abc/lyrics-for current-source-file))
+(defn build-lyrics [current-source-file] (abc/lyrics-for current-source-file))
 
-(defn build-instrument [current-author]
-  (midi/instrument-command-for current-author))
+(defn build-instrument [current-author] (midi/instrument-command-for current-author))
 
 (s/defn build-measure :- Measure
  [measure-lines-metrics :- [ParsedMetricLine] 
@@ -56,15 +51,12 @@
         current-method-length method-length]
      (if (not remaining-line-metrics)
        measure
-       (let [
-            ;  _ (log/info measure)
-             metric-components (first remaining-line-metrics)
+       (let [metric-components (first remaining-line-metrics)
              final-note          (abc/note
                                   (build-note (:line-length metric-components) composition-key)
                                   (build-instrument (:author metric-components))
                                   (build-lyrics (:source-file metric-components))
                                   (build-tempo (:complexity metric-components)))]
-
         (recur
          {:notes (conj (:notes measure) final-note) :method-length current-method-length}
          (next remaining-line-metrics)
@@ -82,11 +74,7 @@
 (s/defn split-metrics-into-equal-measures 
   :- [[ParsedMetricLine]] 
   [metrics :- [ParsedMetricLine]]
-  (partition
-   notes-per-measure ; size of each partition
-   notes-per-measure ; index to start next partition
-   [(last metrics)]  ; value to pad out small partitions
-   metrics))
+  (partition notes-per-measure notes-per-measure [(last metrics)] metrics))
 
 (s/defn map-metrics 
   [metrics :- [ParsedMetricLine] 
