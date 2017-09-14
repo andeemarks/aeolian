@@ -11,6 +11,20 @@
 
 (def notes-per-measure 8)
 
+(s/defschema ^:const Measure
+  {:notes [s/Str]
+   :method-length (s/maybe s/Num)})
+
+(s/defschema ^:const ParsedMetricLine
+  "A schema for a single line of parsed metrics"
+  {:author (s/maybe s/Str)
+   :line-length s/Num
+   :source-file s/Str
+   :method-length (s/maybe s/Num)
+   :indentation?  (s/maybe s/Str)
+   :complexity s/Num
+   :timestamp (s/maybe s/Num)})
+
 (defn find-longest-method-length-in [metrics]
   (let [all-method-lengths (remove nil?
                                    (map #(:method-length %1) metrics))]
@@ -33,12 +47,10 @@
 (defn build-instrument [current-author]
   (midi/instrument-command-for current-author))
 
-(s/defschema ^:const Measure
-  {:notes [s/Str]
-   :method-length (s/maybe s/Num)})
-
 (s/defn build-measure :- Measure
- [measure-lines-metrics composition-key method-length]
+ [measure-lines-metrics :- [ParsedMetricLine] 
+  composition-key 
+  method-length]
  (loop [measure {}
         remaining-line-metrics measure-lines-metrics
         current-method-length method-length]
@@ -58,24 +70,31 @@
          (next remaining-line-metrics)
          (:method-length metric-components))))))
 
-(defn metrics-to-measure [metrics-in-measure composition-key method-length]
+(s/defn metrics-to-measure 
+  [metrics-in-measure :- [ParsedMetricLine] 
+   composition-key 
+   method-length]
  (let [measure               (build-measure metrics-in-measure composition-key method-length)
        current-method-length (find-longest-method-length-in metrics-in-measure)
        accompanying-chord    (n/pick-chord-for-method-length current-method-length composition-key (:method-length measure))]
    (abc/measure accompanying-chord (:notes measure))))
 
-(defn- split-metrics-into-equal-measures [metrics]
+(s/defn split-metrics-into-equal-measures 
+  :- [[ParsedMetricLine]] 
+  [metrics :- [ParsedMetricLine]]
   (partition
    notes-per-measure ; size of each partition
    notes-per-measure ; index to start next partition
    [(last metrics)]  ; value to pad out small partitions
    metrics))
 
-(defn- map-metrics [metrics composition-key]
+(s/defn map-metrics 
+  [metrics :- [ParsedMetricLine] 
+   composition-key]
   (let [metrics-in-measures (split-metrics-into-equal-measures metrics)
         mapped-notes         (map #(metrics-to-measure %1 composition-key 1) metrics-in-measures)]
     (apply str mapped-notes)))
 
-(defn compose [metrics composition-key]
+(s/defn compose [metrics :- [ParsedMetricLine] composition-key]
   (if (> (count metrics) 0)
     (map-metrics metrics composition-key)))

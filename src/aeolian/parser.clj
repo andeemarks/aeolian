@@ -1,7 +1,6 @@
 (ns aeolian.parser
             (:require
-             [taoensso.timbre :as log]
-             [schema.core :as s]))
+             [taoensso.timbre :as log]))
 
 (log/set-level! :info)
 
@@ -52,19 +51,7 @@
   (let [line-length (second (re-find #"LL=(\w+)" metric))]
     (Integer/parseInt line-length)))
 
-(s/defschema ^:const ParsedMetricLine
-  "A schema for a single line of parsed metrics"
-  {:author (s/maybe s/Str)
-   :line-length s/Num
-   :source-file s/Str
-   :method-length (s/maybe s/Num)
-   :indentation?  (s/maybe s/Str)
-   :complexity s/Num
-   :timestamp (s/maybe s/Num)})
-
-(defn- validate-metric [] (s/validator ParsedMetricLine))
-
-(s/defn parse :- ParsedMetricLine
+(defn parse
  [metric]
  (let [parsed-metric
        {:author (author-from-metric metric)
@@ -74,4 +61,4 @@
         :indentation? (indentation-from-metric metric)
         :complexity (complexity-from-metric metric)
         :timestamp (timestamp-from-metric metric)}]
-   ((validate-metric) parsed-metric)))
+        parsed-metric))
