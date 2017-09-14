@@ -41,7 +41,20 @@
                 instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-n-authors)]
             (count (distinct instrument-commands)) => 2)))
 
-       (future-fact "changes to source file name produces a change in lyrics")
+       (facts "when processing source files"
+        (fact "a single source file uses the same lyric"
+          (let [metrics-for-same-file (c/metrics-to-measure ["Notification.java#1 LL=3"
+                                                               "Notification.java#10 LL=70"
+                                                               "Notification.java#100 LL=99"] k/major 1)
+                lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
+            (count (distinct lyric-commands)) => 1))
+
+        (fact "multiple source files produce a change in lyrics"
+          (let [metrics-for-same-file (c/metrics-to-measure ["Foo.java#1 LL=3"
+                                                               "Bar.java#10 LL=70"
+                                                               "Blech.java#100 LL=99"] k/major 1)
+                lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
+            (count (distinct lyric-commands)) => 3)))
 
        (defn- notes-in-measure [metrics]  (first (:notes (c/build-measure [metrics] k/major 1))))
 
