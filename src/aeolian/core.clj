@@ -1,6 +1,7 @@
 (ns aeolian.core
   (:require [aeolian.composer :as composer]
             [aeolian.midi.core :as midi]
+            [aeolian.parser :as parser]
             [taoensso.timbre :as log]
             [aeolian.abc.header :as h]
             [aeolian.abc.key :as k]
@@ -20,7 +21,8 @@
   [input-file-name output-file-name duplicate-metrics]
   (with-open [rdr (clojure.java.io/reader input-file-name)]
     (let [composition-key     (k/determine-key duplicate-metrics)
-          composition         (composer/compose (line-seq rdr) composition-key)]
+          parsed-metrics      (map #(parser/parse %) (line-seq rdr))
+          composition         (composer/compose parsed-metrics composition-key)]
       (spit output-file-name  (str (build-header input-file-name composition-key) composition))
       (log/info "Generated " output-file-name))))
 

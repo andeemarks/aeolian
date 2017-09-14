@@ -5,11 +5,11 @@
 (facts "When parsing metric lines"
        (fact "a method length metric can be found amongst a collection of metrics"
              (parser/find-longest-method-length-in []) => nil
-             (parser/find-longest-method-length-in ["Foo.java#1 LL=1"]) => nil
-             (parser/find-longest-method-length-in ["Foo.java#1 LL=30 ML=1"]) => 1
-             (parser/find-longest-method-length-in ["Foo.java#1 LL=30" "Foo.java#1 LL=30 ML=3"]) => 3
-             (parser/find-longest-method-length-in ["Foo.java#1 LL=30 ML=3" "Foo.java#1 LL=30 ML=2"]) => 3
-             (parser/find-longest-method-length-in ["Foo.java#1 LL=30 ML=3" "Foo.java#1 LL=30"]) => 3))
+             (parser/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0}]) => nil
+             (parser/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 1}]) => 1
+             (parser/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0} {:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 3}]) => 3
+             (parser/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 3} {:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 2}]) => 3
+             (parser/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 3} {:source-file "Foo.java" :complexity 0 :line-length 0}]) => 3))
 
 (facts "When parsing a metric line"
        (fact "the commit author can be found"

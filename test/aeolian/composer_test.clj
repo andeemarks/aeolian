@@ -9,7 +9,7 @@
 (facts "when processing metrics"
        (facts "line length is mapped to note"
               (fact "empty lines are mapped to rests"
-                (str/index-of (:notes (c/build-measure ["Foo.java#1 LL=0"] k/major 1)) n/rest-note) => truthy)
+                (str/index-of (:notes (c/build-measure [{:source-file "Foo.java" :complexity 0 :line-length 0}] k/major 1)) n/rest-note) => truthy)
 
               (tabular
                (fact "longer lines are mapped to actual notes with longer lines at higher octaves"
@@ -28,55 +28,56 @@
 
        (facts "when processing git authors"
         (fact "a single author uses the same instrument"
-          (let [metrics-for-same-author (c/metrics-to-measure ["Notification.java#1 AU=foo LL=3"
-                                                               "Notification.java#10 AU=foo LL=70"
-                                                               "Notification.java#100 AU=foo LL=99"] k/major 1)
+          (let [metrics-for-same-author (c/metrics-to-measure [{:source-file "Notification.java" :complexity 0 :author "foo" :line-length 3}
+                                                                {:source-file "Notification.java" :complexity 0 :author "foo" :line-length 70}
+                                                                {:source-file "Notification.java" :complexity 0 :author "foo" :line-length 99}] 
+                                                                k/major 1)
                 instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-same-author)]
             (count (distinct instrument-commands)) => 1))
 
         (fact "multiple authors produces a change in instrument"
-          (let [metrics-for-n-authors (c/metrics-to-measure ["Notification.java#1 AU=foo LL=3"
-                                                             "Notification.java#10 AU=foo LL=70"
-                                                             "Notification.java#100 AU=bar LL=99"] k/major 1)
+          (let [metrics-for-n-authors (c/metrics-to-measure [{:source-file "Notification.java" :complexity 0 :author "foo" :line-length 3}
+                                                                {:source-file "Notification.java" :complexity 0 :author "foo" :line-length 70}
+                                                                {:source-file "Notification.java" :complexity 0 :author "bar" :line-length 99}] k/major 1)
                 instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-n-authors)]
             (count (distinct instrument-commands)) => 2)))
 
        (facts "when processing source files"
         (fact "a single source file uses the same lyric"
-          (let [metrics-for-same-file (c/metrics-to-measure ["Notification.java#1 LL=3"
-                                                               "Notification.java#10 LL=70"
-                                                               "Notification.java#100 LL=99"] k/major 1)
+          (let [metrics-for-same-file (c/metrics-to-measure [{:source-file "Notification.java" :complexity 0 :author "foo" :line-length 3}
+                                                                {:source-file "Notification.java" :complexity 0 :author "foo" :line-length 70}
+                                                                {:source-file "Notification.java" :complexity 0 :author "foo" :line-length 99}] k/major 1)
                 lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
             (count (distinct lyric-commands)) => 1))
 
         (fact "multiple source files produce a change in lyrics"
-          (let [metrics-for-same-file (c/metrics-to-measure ["Foo.java#1 LL=3"
-                                                               "Bar.java#10 LL=70"
-                                                               "Blech.java#100 LL=99"] k/major 1)
+          (let [metrics-for-same-file (c/metrics-to-measure [{:source-file "Foo.java" :complexity 0 :author "foo" :line-length 3}
+                                                                {:source-file "Bar.java" :complexity 0 :author "foo" :line-length 70}
+                                                                {:source-file "Blech.java" :complexity 0 :author "foo" :line-length 99}] k/major 1)
                 lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
             (count (distinct lyric-commands)) => 3)))
 
        (defn- notes-in-measure [metrics]  (first (:notes (c/build-measure [metrics] k/major 1))))
 
        (fact "complexity > 1 is mapped to tempo"
-             (notes-in-measure "Foo.java#1 LL=30 CC=1") =not=> (contains t/prefix)
-             (notes-in-measure "Foo.java#1 LL=30 CC=10") => (contains t/prefix)
-             (notes-in-measure "Foo.java#1 LL=30 CC=5") => (contains t/prefix)
-             (notes-in-measure "Foo.java#1 LL=30 CC=3") => (contains t/prefix))
+             (notes-in-measure {:source-file "Foo.java" :complexity 1 :author "foo" :line-length 3}) =not=> (contains t/prefix)
+             (notes-in-measure {:source-file "Foo.java" :complexity 10 :author "foo" :line-length 3}) => (contains t/prefix)
+             (notes-in-measure {:source-file "Foo.java" :complexity 5 :author "foo" :line-length 3}) => (contains t/prefix)
+             (notes-in-measure {:source-file "Foo.java" :complexity 3 :author "foo" :line-length 3}) => (contains t/prefix))
 
        (defn- measure-for [metrics key] (c/metrics-to-measure [metrics] key 1))
 
        (fact "method-length is mapped to accompanying chord"
-             (measure-for "Foo.java#1 LL=30 ML=1" k/major) => (contains "\"C\"")
-             (measure-for "Foo.java#1 LL=30 ML=10" k/major) => (contains "\"Dm\"")
-             (measure-for "Foo.java#1 LL=30 ML=5" k/minor) => (contains "\"Cm\"")
-             (measure-for "Foo.java#1 LL=30 ML=11" k/minor) => (contains "\"_E\"")))
+             (measure-for {:source-file "Foo.java" :complexity 0 :author "foo" :line-length 3 :method-length 1} k/major) => (contains "\"C\"")
+             (measure-for {:source-file "Foo.java" :complexity 0 :author "foo" :line-length 3 :method-length 10} k/major) => (contains "\"Dm\"")
+             (measure-for {:source-file "Foo.java" :complexity 0 :author "foo" :line-length 3 :method-length 5} k/minor) => (contains "\"Cm\"")
+             (measure-for {:source-file "Foo.java" :complexity 0 :author "foo" :line-length 3 :method-length 11} k/minor) => (contains "\"_E\"")))
 
 (facts "when opening metrics files"
        (fact "all lines are used in composition"
-             (c/compose ["/home/amarks/Code/aeolian/resources/Notification.java#1 LL=3"
-                         "/home/amarks/Code/aeolian/resources/Notification.java#10 LL=70"
-                         "/home/amarks/Code/aeolian/resources/Notification.java#100 LL=99"] k/minor) => truthy)
+             (c/compose [{:source-file "Foo.java" :line-length 3 :complexity 4}
+                         {:source-file "Foo.java" :line-length 70 :complexity 10}
+                         {:source-file "Foo.java" :line-length 99 :complexity 1}] k/minor) => truthy)
 
        (fact "no metrics means no composition"
              (c/compose [] k/major) => nil))

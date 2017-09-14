@@ -1,6 +1,6 @@
 (ns aeolian.composer
-  (:require [aeolian.parser :as parser]
-            [aeolian.midi.core :as midi]
+  (:require [aeolian.midi.core :as midi]
+            [aeolian.parser :as parser]
             [aeolian.abc.tempo :as t]
             [aeolian.abc.notes :as n]
             [aeolian.abc.core :as abc]
@@ -42,7 +42,7 @@
        measure
        (let [
             ;  _ (log/info measure)
-             metric-components (parser/parse (first remaining-line-metrics))
+             metric-components (first remaining-line-metrics)
              final-note          (abc/note
                                   (build-note (:line-length metric-components) composition-key)
                                   (build-instrument (:author metric-components))

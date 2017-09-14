@@ -54,7 +54,7 @@
 
 (defn find-longest-method-length-in [metrics]
   (let [all-method-lengths (remove nil?
-                                   (map #(method-length-from-metric %1) metrics))]
+                                   (map #(:method-length %1) metrics))]
     (last (sort all-method-lengths))))
 
 (s/defschema ^:const ParsedMetricLine
