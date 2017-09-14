@@ -12,48 +12,38 @@
     (Integer/parseInt (last (clojure.string/split file-line-id #"#")))))
 
 (defn- source-file-from-metric [metric]
-  (check-valid-line-number metric)
-  (let [source-file (second (re-find #"(\w+)\.java\#\d+" metric))]
-    (if (not (nil? source-file))
-      (str source-file ".java"))))
+  (if-let [source-file (second (re-find #"([\w.]+)\#\d+" metric))]
+    source-file))
 
 (defn- complexity-from-metric [metric]
-  (check-valid-line-number metric)
-  (let [complexity (second (re-find #"CC=(\w+)" metric))]
-    (if (not (nil? complexity))
-      (Integer/parseInt complexity)
-      0)))
+  (if-let [complexity (second (re-find #"CC=(\w+)" metric))]
+    (Integer/parseInt complexity)
+    0))
 
 (defn- method-length-from-metric [metric]
-  (check-valid-line-number metric)
-  (let [method-length (second (re-find #"ML=(\w+)" metric))]
-    (if (not (nil? method-length))
-      (Integer/parseInt method-length)
-      nil)))
+  (if-let [method-length (second (re-find #"ML=(\w+)" metric))]
+    (Integer/parseInt method-length)
+    nil))
 
 (defn- indentation-from-metric [metric]
-  (check-valid-line-number metric)
   (second (re-find #"IND(\s*)" metric)))
 
 (defn- author-from-metric [metric]
-  (check-valid-line-number metric)
   (second (re-find #"AU=(\S*)\s" metric)))
 
 (defn- timestamp-from-metric [metric]
-  (check-valid-line-number metric)
-  (let [timestamp (second (re-find #"TS=(\d+)" metric))]
-    (if (not (nil? timestamp))
-      (Integer/parseInt timestamp)
-      nil)))
+  (if-let [timestamp (second (re-find #"TS=(\d+)" metric))]
+    (Integer/parseInt timestamp)
+    nil))
 
 (defn- line-length-from-metric [metric]
-  (check-valid-line-number metric)
   (let [line-length (second (re-find #"LL=(\w+)" metric))]
     (Integer/parseInt line-length)))
 
 (defn parse
- [metric]
- (let [parsed-metric
+  [metric]
+  (check-valid-line-number metric)
+  (let [parsed-metric
        {:author (author-from-metric metric)
         :line-length (line-length-from-metric metric)
         :source-file (source-file-from-metric metric)

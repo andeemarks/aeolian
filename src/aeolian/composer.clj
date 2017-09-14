@@ -9,7 +9,7 @@
 
 (log/set-level! :info)
 
-(def notes-per-measure 8)
+(def ^:const notes-per-measure 8)
 
 (s/defschema ^:const Measure
   {:notes [s/Str]
@@ -28,7 +28,7 @@
 (defn find-longest-method-length-in [metrics]
   (:method-length (apply max-key #(or (:method-length %) 0) metrics)))
 
-(defn build-note [line-length composition-key] (n/pick-note-for-line-length line-length composition-key))
+(defn build-note [line-length composition-key] (n/note-for-line-length line-length composition-key))
 
 (defn build-tempo [complexity]
   (if (> complexity 1)
@@ -68,11 +68,10 @@
    method-length]
  (let [measure               (build-measure metrics-in-measure composition-key method-length)
        current-method-length (find-longest-method-length-in metrics-in-measure)
-       accompanying-chord    (n/pick-chord-for-method-length current-method-length composition-key (:method-length measure))]
+       accompanying-chord    (n/chord-for-method-length current-method-length composition-key (:method-length measure))]
    (abc/measure accompanying-chord (:notes measure))))
 
-(s/defn split-metrics-into-equal-measures 
-  :- [[ParsedMetricLine]] 
+(s/defn split-metrics-into-equal-measures :- [[ParsedMetricLine]]
   [metrics :- [ParsedMetricLine]]
   (partition notes-per-measure notes-per-measure [(last metrics)] metrics))
 

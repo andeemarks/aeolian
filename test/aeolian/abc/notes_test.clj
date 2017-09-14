@@ -6,11 +6,11 @@
 
 (facts "line length is mapped to note"
   (fact "empty lines are mapped to rests"
-        (pick-note-for-line-length 0 k/major) => rest-note)
+        (note-for-line-length 0 k/major) => rest-note)
 
  (tabular
   (fact "longer lines are mapped to actual notes with longer lines at higher octaves"
-        ?expected-note => (contains (pick-note-for-line-length ?line-length ?composition-key)))
+        ?expected-note => (contains (note-for-line-length ?line-length ?composition-key)))
   ?expected-note    ?line-length  ?composition-key
   major-octave-1    1             k/major
   major-octave-1    9             k/major
@@ -37,7 +37,7 @@
 
 (tabular "accompanying chords"
   (fact "increase in pitch along with method length within the corresponding key"
-    (pick-chord-for-method-length ?method-length ?key ?current-method-length) => (contains ?expected-chord))
+    (chord-for-method-length ?method-length ?key ?current-method-length) => (contains ?expected-chord))
   ?method-length  ?key      ?current-method-length ?expected-chord
   1               k/major   1 "C"
   5               k/major   1 "C"
