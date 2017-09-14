@@ -1,6 +1,5 @@
 (ns aeolian.composer
   (:require [aeolian.midi.core :as midi]
-            [aeolian.parser :as parser]
             [aeolian.abc.tempo :as t]
             [aeolian.abc.notes :as n]
             [aeolian.abc.core :as abc]
@@ -11,6 +10,11 @@
 (log/set-level! :info)
 
 (def notes-per-measure 8)
+
+(defn find-longest-method-length-in [metrics]
+  (let [all-method-lengths (remove nil?
+                                   (map #(:method-length %1) metrics))]
+    (last (sort all-method-lengths))))
 
 (defn build-note [line-length composition-key]
   (n/pick-note-for-line-length line-length composition-key))
@@ -56,7 +60,7 @@
 
 (defn metrics-to-measure [metrics-in-measure composition-key method-length]
  (let [measure               (build-measure metrics-in-measure composition-key method-length)
-       current-method-length (parser/find-longest-method-length-in metrics-in-measure)
+       current-method-length (find-longest-method-length-in metrics-in-measure)
        accompanying-chord    (n/pick-chord-for-method-length current-method-length composition-key (:method-length measure))]
    (abc/measure accompanying-chord (:notes measure))))
 

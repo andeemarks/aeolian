@@ -52,11 +52,6 @@
   (let [line-length (second (re-find #"LL=(\w+)" metric))]
     (Integer/parseInt line-length)))
 
-(defn find-longest-method-length-in [metrics]
-  (let [all-method-lengths (remove nil?
-                                   (map #(:method-length %1) metrics))]
-    (last (sort all-method-lengths))))
-
 (s/defschema ^:const ParsedMetricLine
   "A schema for a single line of parsed metrics"
   {:author (s/maybe s/Str)

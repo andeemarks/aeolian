@@ -7,6 +7,14 @@
             [aeolian.abc.key :as k]))
 
 (facts "when processing metrics"
+       (fact "a method length metric can be found amongst a collection of metrics"
+             (c/find-longest-method-length-in []) => nil
+             (c/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0}]) => nil
+             (c/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 1}]) => 1
+             (c/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0} {:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 3}]) => 3
+             (c/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 3} {:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 2}]) => 3
+             (c/find-longest-method-length-in [{:source-file "Foo.java" :complexity 0 :line-length 0 :method-length 3} {:source-file "Foo.java" :complexity 0 :line-length 0}]) => 3)
+
        (facts "line length is mapped to note"
               (fact "empty lines are mapped to rests"
                 (str/index-of (:notes (c/build-measure [{:source-file "Foo.java" :complexity 0 :line-length 0}] k/major 1)) n/rest-note) => truthy)
