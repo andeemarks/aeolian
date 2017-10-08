@@ -1,4 +1,4 @@
-(defproject aeolian "0.1.0-SNAPSHOT"
+(defproject aeolian "0.1.0"
   :description "AEOLIAN - Audio-ising code quality"
   :url "https://github.com/andeemarks/aeolian"
   :license {:name "Eclipse Public License"
@@ -29,7 +29,7 @@
              [me.raynes/fs "1.4.6"]
              [lein-midje "3.2.1"]
              [midje "1.8.3" :exclusions [org.clojure/clojure]]]}}
-  :release-tasks [["uberjar"] ["assemble"]]
+  ; :release-tasks [["uberjar"] ["assemble"]]
   :assemble 
     {:filesets {"" [["go.sh"]["go-gh.sh"]["gen-abc-prod.sh" :as "gen-abc.sh"]["README.md"]["LICENSE"]]
                 "resources" [["resources/*"]]}
