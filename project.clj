@@ -18,7 +18,7 @@
                  [com.taoensso/timbre "4.10.0"]
                  [org.clojure/tools.namespace "0.2.11"]]
   :plugins
-    [[lein-tar "3.3.0"][lein-cljfmt "0.5.6"]]
+    [[lein-cljfmt "0.5.6"]]
   :profiles
     {:dev
        {:source-paths ["dev" "src" "test"]
@@ -27,4 +27,12 @@
              [com.jakemccrary/lein-test-refresh "0.20.0"]
              [me.raynes/fs "1.4.6"]
              [lein-midje "3.2.1"]
-             [midje "1.8.3" :exclusions [org.clojure/clojure]]]}})
+             [midje "1.8.3" :exclusions [org.clojure/clojure]]]}}
+  :release-tasks [["uberjar"] ["assemble"]]
+  :assemble 
+    {:filesets {"" [["*.sh"]["README.md"]["LICENSE"]]
+                "resources" [["resources/*"]]}
+     :jar {:dest "" :uberjar true}
+     :archive {:format :tgz}}   
+)
+             

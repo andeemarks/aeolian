@@ -89,6 +89,8 @@ function generate-midi() {
 
   MIDIARCHIVEDIR=${DIR}/archive/midi
   ABCARCHIVEDIR=${DIR}/archive/abc
+  mkdir -p ${MIDIARCHIVEDIR}
+  mkdir -p ${ABCARCHIVEDIR}
   echo -e "\033[33mArchiving generated files...\033[0m"
   cp ${MIDIFILE} ${MIDIARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).mid
   cp ${ABCFILE} ${ABCARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).abc
