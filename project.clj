@@ -19,6 +19,7 @@
                  [org.clojure/tools.namespace "0.2.11"]]
   :plugins
     [[lein-cljfmt "0.5.6"]]
+  :uberjar-name "aeolian-standalone.jar"
   :profiles
     {:dev
        {:source-paths ["dev" "src" "test"]
@@ -32,6 +33,7 @@
   :assemble 
     {:filesets {"" [["*.sh"]["README.md"]["LICENSE"]]
                 "resources" [["resources/*"]]}
+     :replacements {:uberjarname ""}
      :jar {:dest "" :uberjar true}
      :archive {:format :tgz}}   
 )

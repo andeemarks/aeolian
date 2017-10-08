@@ -81,6 +81,11 @@ function generate-abc() {
   lein run ${UBERMETRICSFILE}.history "{:duplicate-lines ${TOTALDUPLINES} :total-lines ${TOTALLINES}}"
 }
 
+function generate-abc-prod() {
+  echo -e "\033[33mGenerating ABC notation...\033[0m"
+  java -jar aeolian-standalone.jar ${UBERMETRICSFILE}.history "{:duplicate-lines ${TOTALDUPLINES} :total-lines ${TOTALLINES}}"
+}
+
 function generate-midi() {
   ABCFILE=${UBERMETRICSFILE}.history.abc
   MIDIFILE=${UBERMETRICSFILE}.mid
