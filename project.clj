@@ -31,7 +31,7 @@
              [midje "1.8.3" :exclusions [org.clojure/clojure]]]}}
   :release-tasks [["uberjar"] ["assemble"]]
   :assemble 
-    {:filesets {"" [["*.sh"]["README.md"]["LICENSE"]]
+    {:filesets {"" [["go.sh"]["go-gh.sh"]["gen-abc-prod.sh" :as "gen-abc.sh"]["README.md"]["LICENSE"]]
                 "resources" [["resources/*"]]}
      :replacements {:uberjarname ""}
      :jar {:dest "" :uberjar true}
