@@ -14,7 +14,7 @@
                  [org.clojure/clojure "1.8.0"]
                  [proto-repl "0.3.1"]
                  [clansi "1.0.0"]
-                 [prismatic/schema "1.1.7"]
+                 [prismatic/schema "1.1.6"]
                  [com.taoensso/timbre "4.10.0"]
                  [org.clojure/tools.namespace "0.2.11"]]
   :plugins
