@@ -41,6 +41,7 @@
     (midi/volume-boost)))
 
 (defn build-note-length [metric-type] 
+  (println metric-type)
   (case metric-type
         :regular ""
         :method "2"
@@ -63,6 +64,7 @@
        (let [metric-components (first remaining-line-metrics)
              final-note          (abc/note
                                   (build-note (:line-length metric-components) composition-key)
+                                  (build-note-length (:type metric-components))
                                   (build-instrument (:author metric-components))
                                   (build-lyrics (:source-file metric-components))
                                   (build-tempo (:complexity metric-components)))]

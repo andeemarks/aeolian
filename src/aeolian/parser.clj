@@ -41,9 +41,10 @@
     (Integer/parseInt line-length)))
 
 (defn- type-from-metric [metric]
-  (if-let [method-length (second (re-find #"ML=(\w+)" metric))]
-    :method
-    :regular))
+  (cond 
+    (second (re-find #"FL=(\w+)" metric)) :file
+    (second (re-find #"ML=(\w+)" metric)) :method
+    :else :regular))
 
 (defn parse
   [metric]
