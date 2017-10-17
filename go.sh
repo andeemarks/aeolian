@@ -45,9 +45,9 @@ function collect-checkstyle-metrics() {
 	echo -e "\033[34m |Generating Checkstyle method length metrics...\033[0m"
 	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-methodlength.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d ML=%d\n", $1, $2, $4 }' > ${METHODLENGTHMETRICS}
 	echo -e "\033[34m |Generating Checkstyle file length metrics...\033[0m"
-	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-filelength.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d FL=%d\n", $1, $2, $4 }' > ${FILELENGTHMETRICS}
+	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-filelength.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d FL=%d\n", $1, $2, $3 }' > ${FILELENGTHMETRICS}
 	echo -e "\033[34m |Generating Checkstyle method count metrics...\033[0m"
-	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-methodcount.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d MC=%d\n", $1, $2, $4 }' > ${METHODCOUNTMETRICS}
+	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-methodcount.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d MC=%d\n", $1, $2, $3 }' > ${METHODCOUNTMETRICS}
 	echo -e "\033[34m/Generating Checkstyle indentation metrics...\033[0m"
 	java -jar ${CHECKSTYLEDIR}/checkstyle-7.4-all.jar -c ${CHECKSTYLEDIR}/checkstyle-indentation.xml ${SOURCEFILE} | grep "[ERROR]" | awk '{print $2 " " $3}' | awk -F: '{printf "%s#%d IND\n", $1, $2 }' > ${INDENTATIONMETRICS}
 	# echo -e "\033[34mMerging all metrics...\033[0m"
