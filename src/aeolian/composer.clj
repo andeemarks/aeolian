@@ -41,7 +41,7 @@
     (midi/volume-boost)))
 
 (defn build-note-length [metric-type] 
-  (println metric-type)
+  ; (println metric-type)
   (case metric-type
         :regular ""
         :method "2"

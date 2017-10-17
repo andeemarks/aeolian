@@ -10,5 +10,5 @@
   (str "\nw: " lyric "\n"))
 
 (defn note [note length instrument lyrics tempo]
-  (let [note-components (list note instrument lyrics tempo)]
+  (let [note-components (list (str note length) instrument lyrics tempo)]
     (apply str (interpose " " (remove nil? note-components)))))
