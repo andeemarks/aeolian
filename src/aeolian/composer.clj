@@ -24,6 +24,7 @@
    :method-length (s/maybe s/Num)
    :indentation?  (s/maybe s/Str)
    :complexity s/Num
+   :type s/Keyword
    :timestamp (s/maybe s/Num)})
 
 (defn find-longest-method-length-in [metrics]
@@ -38,6 +39,13 @@
 (defn map-indentation [indentation?]
   (if (not (nil? indentation?))
     (midi/volume-boost)))
+
+(defn build-note-length [metric-type] 
+  (case metric-type
+        :regular ""
+        :method "2"
+        :class "4"
+        :file "8"))
 
 (defn build-lyrics [current-source-file] (abc/lyrics-for current-source-file))
 

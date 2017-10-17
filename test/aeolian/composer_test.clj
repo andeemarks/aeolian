@@ -6,7 +6,7 @@
             [aeolian.abc.notes :as n]
             [aeolian.abc.key :as k]))
 
-(def metric {:source-file "Foo.java" :author "Foo" :complexity 0 :line-length 0 :method-length 1 :indentation? "2" :timestamp 0})
+(def metric {:type :regular :source-file "Foo.java" :author "Foo" :complexity 0 :line-length 0 :method-length 1 :indentation? "2" :timestamp 0})
 
 (facts "when processing metrics"
        (fact "a method length metric can be found amongst a collection of metrics"
@@ -15,6 +15,18 @@
              (c/find-longest-method-length-in [(dissoc metric :method-length) (assoc metric :method-length 3)]) => 3
              (c/find-longest-method-length-in [(assoc metric :method-length 3) (assoc metric :method-length 2)]) => 3
              (c/find-longest-method-length-in [(assoc metric :method-length 3) (dissoc metric :method-length)]) => 3)
+
+       (facts "line type is mapped to note length"
+        (fact "unknown line types are considered errors"
+          (c/build-note-length :foo) => (throws IllegalArgumentException))
+        (fact "regular line is mapped to a default length note"
+          (c/build-note-length :regular) => "")
+        (fact "method declaration is twice the length of a regular line note"
+          (c/build-note-length :method) => "2")
+        (fact "class declaration is twice the length of a method declaration note"
+          (c/build-note-length :class) => "4")
+        (fact "class file is twice the length of a class declaration line note"
+          (c/build-note-length :file) => "8"))
 
        (facts "line length is mapped to note"
               (fact "empty lines are mapped to rests"

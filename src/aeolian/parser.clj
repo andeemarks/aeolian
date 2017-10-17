@@ -50,5 +50,6 @@
         :method-length (method-length-from-metric metric)
         :indentation? (indentation-from-metric metric)
         :complexity (complexity-from-metric metric)
+        :type :regular
         :timestamp (timestamp-from-metric metric)}]
         parsed-metric))
