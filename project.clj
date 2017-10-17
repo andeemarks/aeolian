@@ -23,6 +23,7 @@
   :profiles
     {:dev
        {:source-paths ["dev" "src" "test"]
+        :plugins [[lein-midje "3.2.1"]]
         :dependencies [
                        [com.jakemccrary/lein-test-refresh "0.21.1"]
                        [me.raynes/fs "1.4.6"]
