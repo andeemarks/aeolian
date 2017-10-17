@@ -2,6 +2,6 @@ version: 2
 jobs:
    build:
      steps:
-		- checkout
+        - checkout
       	- run: lein deps
-	    - run: lein test
+        - run: lein test
