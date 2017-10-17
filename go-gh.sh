@@ -114,7 +114,7 @@ GITHUB_REPO=$2
 
 echo -e "\033[33mChecking GitHub for repo '$GITHUB_REPO' for user '$GITHUB_USER'...\033[0m"
 
-WORK_DIR=`mktemp -d -p "$DIR"`
+WORK_DIR=`mktemp -d -p "$DIR/target"`
 BIN_DIR=$DIR
 SOURCE_FILE_RE=".*[^Test]\.java"
 

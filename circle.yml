@@ -1,1 +1,7 @@
 version: 2
+jobs:
+   build:
+     steps:
+		- checkout
+      	- run: lein deps
+	    - run: lein test
