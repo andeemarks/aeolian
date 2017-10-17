@@ -39,11 +39,11 @@
               (fact "becomes :method when a method length metric is found"
                     (:type (parser/parse "/Notification.java#190 LL=13 ML=16")) => :method)
 
-              (future-fact "becomes :class when a class declaration line is found"
-                           (:type (parser/parse "/Notification.java#190 LL=13 ML=16")) => :class)
+              (fact "becomes :class when a class declaration line is found"
+                           (:type (parser/parse "/Notification.java#190 LL=13 MC=9")) => :class)
 
-              (future-fact "becomes :file when a file declaration line is found"
-                           (:type (parser/parse "/Notification.java#190 LL=13 ML=16")) => :file))
+              (fact "becomes :file when a file declaration line is found"
+                           (:type (parser/parse "/Notification.java#190 LL=13 FL=169")) => :file))
 
        (facts "the method length"
               (fact "can be found"
