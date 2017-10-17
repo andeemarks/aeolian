@@ -4,7 +4,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :main aeolian.core
-  :aot  [aeolian.core]
+  :aot  [aeolian.core schema.core schema.spec.leaf schema.spec.core schema.spec.variant schema.spec.collection]
   :jvm-opts ^:replace []
   :codox {:output-path "docs"
           :metadata {:doc/format :markdown}
