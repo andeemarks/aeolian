@@ -1,4 +1,5 @@
 (ns aeolian.composer
+  (:gen-class)
   (:require [aeolian.midi.core :as midi]
             [aeolian.abc.tempo :as t]
             [aeolian.abc.notes :as n]
