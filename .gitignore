@@ -11,6 +11,8 @@ pom.xml.asc
 .lein-repl-history
 .nrepl-port
 
+archive
+
 hs_err_pid85826.log
 
 *.DS_Store
