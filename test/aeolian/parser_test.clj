@@ -34,8 +34,15 @@
 
        (facts "the metric-type"
         (fact "defaults to :regular"
-          (:type (parser/parse "/Notification.java#190 LL=13")) => :regular))
-       
+          (:type (parser/parse "/Notification.java#190 LL=13")) => :regular)
+        (fact "becomes :method when a method length metric is found"
+          (:type (parser/parse "/Notification.java#190 LL=13 ML=16")) => :method)
+        (future-fact "becomes :class when a class declaration line is found"
+          (:type (parser/parse "/Notification.java#190 LL=13 ML=16")) => :class)
+        (future-fact "becomes :file when a file declaration line is found"
+          (:type (parser/parse "/Notification.java#190 LL=13 ML=16")) => :file))
+        
+
        (facts "the method length"
               (fact "can be found"
                     (:method-length (parser/parse "/Notification.java#190 ML=16 LL=98")) => 16)

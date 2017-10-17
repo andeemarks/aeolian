@@ -40,6 +40,11 @@
   (let [line-length (second (re-find #"LL=(\w+)" metric))]
     (Integer/parseInt line-length)))
 
+(defn- type-from-metric [metric]
+  (if-let [method-length (second (re-find #"ML=(\w+)" metric))]
+    :method
+    :regular))
+
 (defn parse
   [metric]
   (check-valid-line-number metric)
@@ -50,6 +55,6 @@
         :method-length (method-length-from-metric metric)
         :indentation? (indentation-from-metric metric)
         :complexity (complexity-from-metric metric)
-        :type :regular
+        :type (type-from-metric metric)
         :timestamp (timestamp-from-metric metric)}]
         parsed-metric))
