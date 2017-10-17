@@ -43,6 +43,7 @@
 (defn- type-from-metric [metric]
   (cond 
     (second (re-find #"FL=(\w+)" metric)) :file
+    (second (re-find #"MC=(\w+)" metric)) :class
     (second (re-find #"ML=(\w+)" metric)) :method
     :else :regular))
 
