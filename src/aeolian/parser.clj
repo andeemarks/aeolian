@@ -1,6 +1,6 @@
 (ns aeolian.parser
-            (:require
-             [taoensso.timbre :as log]))
+  (:require
+   [taoensso.timbre :as log]))
 
 (log/set-level! :info)
 
@@ -41,7 +41,7 @@
     (Integer/parseInt line-length)))
 
 (defn- type-from-metric [metric]
-  (cond 
+  (cond
     (second (re-find #"FL=(\w+)" metric)) :file
     (second (re-find #"MC=(\w+)" metric)) :class
     (second (re-find #"ML=(\w+)" metric)) :method
@@ -51,12 +51,12 @@
   [metric]
   (check-valid-line-number metric)
   (let [parsed-metric
-       {:author (author-from-metric metric)
-        :line-length (line-length-from-metric metric)
-        :source-file (source-file-from-metric metric)
-        :method-length (method-length-from-metric metric)
-        :indentation? (indentation-from-metric metric)
-        :complexity (complexity-from-metric metric)
-        :type (type-from-metric metric)
-        :timestamp (timestamp-from-metric metric)}]
-        parsed-metric))
+        {:author (author-from-metric metric)
+         :line-length (line-length-from-metric metric)
+         :source-file (source-file-from-metric metric)
+         :method-length (method-length-from-metric metric)
+         :indentation? (indentation-from-metric metric)
+         :complexity (complexity-from-metric metric)
+         :type (type-from-metric metric)
+         :timestamp (timestamp-from-metric metric)}]
+    parsed-metric))

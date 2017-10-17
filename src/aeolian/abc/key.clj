@@ -8,7 +8,7 @@
         total-lines     (if (zero? (:total-lines duplicate-metrics)) 1 (:total-lines duplicate-metrics))]
     (float
      (*   100
-         (/   duplicate-lines total-lines)))))
+          (/   duplicate-lines total-lines)))))
 
 (defn determine-key [duplicate-metrics]
   (if (< (duplication-percentage duplicate-metrics) 10)

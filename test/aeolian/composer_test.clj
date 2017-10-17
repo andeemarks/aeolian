@@ -17,20 +17,20 @@
              (c/find-longest-method-length-in [(assoc metric :method-length 3) (dissoc metric :method-length)]) => 3)
 
        (facts "line type is mapped to note length"
-        (fact "unknown line types are considered errors"
-          (c/build-note-length :foo) => (throws IllegalArgumentException))
-        (fact "regular line is mapped to a default length note"
-          (c/build-note-length :regular) => "")
-        (fact "method declaration is twice the length of a regular line note"
-          (c/build-note-length :method) => "2")
-        (fact "class declaration is twice the length of a method declaration note"
-          (c/build-note-length :class) => "4")
-        (fact "class file is twice the length of a class declaration line note"
-          (c/build-note-length :file) => "8"))
+              (fact "unknown line types are considered errors"
+                    (c/build-note-length :foo) => (throws IllegalArgumentException))
+              (fact "regular line is mapped to a default length note"
+                    (c/build-note-length :regular) => "")
+              (fact "method declaration is twice the length of a regular line note"
+                    (c/build-note-length :method) => "2")
+              (fact "class declaration is twice the length of a method declaration note"
+                    (c/build-note-length :class) => "4")
+              (fact "class file is twice the length of a class declaration line note"
+                    (c/build-note-length :file) => "8"))
 
        (facts "line length is mapped to note"
               (fact "empty lines are mapped to rests"
-                (str/index-of (:notes (c/build-measure [metric] k/major 1)) n/rest-note) => truthy)
+                    (str/index-of (:notes (c/build-measure [metric] k/major 1)) n/rest-note) => truthy)
 
               (tabular
                (fact "longer lines are mapped to actual notes with longer lines at higher octaves"
@@ -48,35 +48,35 @@
                n/minor-octave-5    2000          k/minor))
 
        (facts "when processing git authors"
-        (fact "a single author uses the same instrument"
-          (let [metrics-for-same-author (c/metrics-to-measure [metric
-                                                                (assoc metric :line-length 70)
-                                                                (assoc metric :line-length 99)] 
-                                                                k/major 1)
-                instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-same-author)]
-            (count (distinct instrument-commands)) => 1))
+              (fact "a single author uses the same instrument"
+                    (let [metrics-for-same-author (c/metrics-to-measure [metric
+                                                                         (assoc metric :line-length 70)
+                                                                         (assoc metric :line-length 99)]
+                                                                        k/major 1)
+                          instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-same-author)]
+                      (count (distinct instrument-commands)) => 1))
 
-        (fact "multiple authors produces a change in instrument"
-          (let [metrics-for-n-authors (c/metrics-to-measure [metric
-                                                            metric
-                                                                (assoc metric :author "foo")] k/major 1)
-                instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-n-authors)]
-            (count (distinct instrument-commands)) => 2)))
+              (fact "multiple authors produces a change in instrument"
+                    (let [metrics-for-n-authors (c/metrics-to-measure [metric
+                                                                       metric
+                                                                       (assoc metric :author "foo")] k/major 1)
+                          instrument-commands (re-seq #"\[I: MIDI program \d+\]" metrics-for-n-authors)]
+                      (count (distinct instrument-commands)) => 2)))
 
        (facts "when processing source files"
-        (fact "a single source file uses the same lyric"
-          (let [metrics-for-same-file (c/metrics-to-measure [metric
-                                                              metric
-                                                              metric] k/major 1)
-                lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
-            (count (distinct lyric-commands)) => 1))
+              (fact "a single source file uses the same lyric"
+                    (let [metrics-for-same-file (c/metrics-to-measure [metric
+                                                                       metric
+                                                                       metric] k/major 1)
+                          lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
+                      (count (distinct lyric-commands)) => 1))
 
-        (fact "multiple source files produce a change in lyrics"
-          (let [metrics-for-same-file (c/metrics-to-measure [(assoc metric :source-file "Foo.java")
-                                                              (assoc metric :source-file "Bar.java")
-                                                              (assoc metric :source-file "Blech.java")] k/major 1)
-                lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
-            (count (distinct lyric-commands)) => 3)))
+              (fact "multiple source files produce a change in lyrics"
+                    (let [metrics-for-same-file (c/metrics-to-measure [(assoc metric :source-file "Foo.java")
+                                                                       (assoc metric :source-file "Bar.java")
+                                                                       (assoc metric :source-file "Blech.java")] k/major 1)
+                          lyric-commands (re-seq #"w: [\w.]+" metrics-for-same-file)]
+                      (count (distinct lyric-commands)) => 3)))
 
        (defn- notes-in-measure [metrics]  (first (:notes (c/build-measure [metrics] k/major 1))))
 

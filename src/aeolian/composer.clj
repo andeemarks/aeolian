@@ -40,54 +40,54 @@
   (if (not (nil? indentation?))
     (midi/volume-boost)))
 
-(defn build-note-length [metric-type] 
+(defn build-note-length [metric-type]
   ; (println metric-type)
   (case metric-type
-        :regular ""
-        :method "2"
-        :class "4"
-        :file "8"))
+    :regular ""
+    :method "2"
+    :class "4"
+    :file "8"))
 
 (defn build-lyrics [current-source-file] (abc/lyrics-for current-source-file))
 
 (defn build-instrument [current-author] (midi/instrument-command-for current-author))
 
 (s/defn build-measure :- Measure
- [measure-lines-metrics :- [ParsedMetricLine] 
-  composition-key 
-  method-length]
- (loop [measure {}
-        remaining-line-metrics measure-lines-metrics
-        current-method-length method-length]
-     (if (not remaining-line-metrics)
-       measure
-       (let [metric-components (first remaining-line-metrics)
-             final-note          (abc/note
-                                  (build-note (:line-length metric-components) composition-key)
-                                  (build-note-length (:type metric-components))
-                                  (build-instrument (:author metric-components))
-                                  (build-lyrics (:source-file metric-components))
-                                  (build-tempo (:complexity metric-components)))]
+  [measure-lines-metrics :- [ParsedMetricLine]
+   composition-key
+   method-length]
+  (loop [measure {}
+         remaining-line-metrics measure-lines-metrics
+         current-method-length method-length]
+    (if (not remaining-line-metrics)
+      measure
+      (let [metric-components (first remaining-line-metrics)
+            final-note          (abc/note
+                                 (build-note (:line-length metric-components) composition-key)
+                                 (build-note-length (:type metric-components))
+                                 (build-instrument (:author metric-components))
+                                 (build-lyrics (:source-file metric-components))
+                                 (build-tempo (:complexity metric-components)))]
         (recur
          {:notes (conj (:notes measure) final-note) :method-length current-method-length}
          (next remaining-line-metrics)
          (:method-length metric-components))))))
 
-(s/defn metrics-to-measure 
-  [metrics-in-measure :- [ParsedMetricLine] 
-   composition-key 
+(s/defn metrics-to-measure
+  [metrics-in-measure :- [ParsedMetricLine]
+   composition-key
    method-length]
- (let [measure               (build-measure metrics-in-measure composition-key method-length)
-       current-method-length (find-longest-method-length-in metrics-in-measure)
-       accompanying-chord    (n/chord-for-method-length current-method-length composition-key (:method-length measure))]
-   (abc/measure accompanying-chord (:notes measure))))
+  (let [measure               (build-measure metrics-in-measure composition-key method-length)
+        current-method-length (find-longest-method-length-in metrics-in-measure)
+        accompanying-chord    (n/chord-for-method-length current-method-length composition-key (:method-length measure))]
+    (abc/measure accompanying-chord (:notes measure))))
 
 (s/defn split-metrics-into-equal-measures :- [[ParsedMetricLine]]
   [metrics :- [ParsedMetricLine]]
   (partition notes-per-measure notes-per-measure [(last metrics)] metrics))
 
-(s/defn map-metrics 
-  [metrics :- [ParsedMetricLine] 
+(s/defn map-metrics
+  [metrics :- [ParsedMetricLine]
    composition-key]
   (let [metrics-in-measures (split-metrics-into-equal-measures metrics)
         mapped-notes         (map #(metrics-to-measure %1 composition-key 1) metrics-in-measures)]
