@@ -27,7 +27,7 @@ function check-usage() {
 function collect-checkstyle-metrics() {
 	echo -e "\033[1;34mProcessing ${RAWSOURCECLASSNAME}...\033[0m"
 	echo -e "\033[34m\Generating Checkstyle metrics...\033[0m"
-	java  -Doutput.file=${COMBINEDMETRICSFILE} -classpath ${CHECKSTYLEDIR}/edn-listener.jar:${CHECKSTYLEDIR}/checkstyle-7.4-all.jar com.puppycrawl.tools.checkstyle.Main -c ${CHECKSTYLEDIR}/checkstyle-all.xml ${SOURCEFILE}
+	java  -Doutput.file=${COMBINEDMETRICSFILE} -classpath ${CHECKSTYLEDIR}/edn-listener.jar:${CHECKSTYLEDIR}/checkstyle-7.4-all.jar com.puppycrawl.tools.checkstyle.Main -c ${CHECKSTYLEDIR}/checkstyle-all.xml ${SOURCEFILE} > /dev/null
 	sed -i 's/com.puppycrawl.tools.checkstyle.checks.sizes.LineLengthCheck/line-length/g' ${COMBINEDMETRICSFILE}
 	sed -i 's/com.puppycrawl.tools.checkstyle.checks.sizes.MethodLengthCheck/method-length/g' ${COMBINEDMETRICSFILE}
 	sed -i 's/com.puppycrawl.tools.checkstyle.checks.metrics.CyclomaticComplexityCheck/complexity/g' ${COMBINEDMETRICSFILE}
