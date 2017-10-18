@@ -12,18 +12,16 @@
     :else :regular))
 
 (defn- convert [raw-metric]
-  {
-    :line-length (. Integer parseInt (:line-length raw-metric))
-    :source-file (:source-file raw-metric)
-    :author (:author raw-metric)
-    :method-length (. Integer parseInt (or (:method-length raw-metric) "0"))
-    :method-count (. Integer parseInt (or (:method-count raw-metric) "0"))
-    :file-length (. Integer parseInt (or (:file-length raw-metric) "0"))
-    :timestamp (:timestamp raw-metric)
-    :line (:line raw-metric)
-    :indentation-violation? (or (:indentation-violation? raw-metric) false)
-    :complexity (. Integer parseInt (or (:complexity raw-metric) "0"))
-    })
+  {:line-length (. Integer parseInt (:line-length raw-metric))
+   :source-file (:source-file raw-metric)
+   :author (:author raw-metric)
+   :method-length (. Integer parseInt (or (:method-length raw-metric) "0"))
+   :method-count (. Integer parseInt (or (:method-count raw-metric) "0"))
+   :file-length (. Integer parseInt (or (:file-length raw-metric) "0"))
+   :timestamp (:timestamp raw-metric)
+   :line (:line raw-metric)
+   :indentation-violation? (or (:indentation-violation? raw-metric) false)
+   :complexity (. Integer parseInt (or (:complexity raw-metric) "0"))})
 
 (defn parse [metric]
   (let [raw-metric (read-string metric)

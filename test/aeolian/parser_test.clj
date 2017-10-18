@@ -14,11 +14,11 @@
                     (:line-length (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\"}")) => 13))
 
        (facts "indentation errors"
-        (fact "can be found"
-             (:indentation-violation? (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"23\" :indentation-violation? true}")) => true)
+              (fact "can be found"
+                    (:indentation-violation? (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"23\" :indentation-violation? true}")) => true)
 
-        (fact "defaults to false"
-             (:indentation-violation? (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"23\"}")) => false))
+              (fact "defaults to false"
+                    (:indentation-violation? (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"23\"}")) => false))
 
        (fact "the source file can be found"
              (:source-file (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"10\"}")) => "/Notification.java")
@@ -59,10 +59,10 @@
                     (:type (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\" :method-length \"16\"}")) => :method)
 
               (fact "becomes :class when a class declaration line is found"
-                           (:type (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\" :method-count \"9\"}")) => :class)
+                    (:type (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\" :method-count \"9\"}")) => :class)
 
               (fact "becomes :source-file when a file declaration line is found"
-                           (:type (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\" :file-length \"169\"}")) => :file))
+                    (:type (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\" :file-length \"169\"}")) => :file))
 
        (facts "the method length"
               (fact "can be found"
