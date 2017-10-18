@@ -6,7 +6,7 @@
             [aeolian.abc.notes :as n]
             [aeolian.abc.key :as k]))
 
-(def metric {:type :regular :source-file "Foo.java" :author "Foo" :complexity 0 :line-length 0 :method-length 1 :indentation? "2" :timestamp 0})
+(def metric {:type :regular :source-file "Foo.java" :author "Foo" :complexity 0 :line-length 0 :method-length 1 :line 34 :method-count 0 :file-length 0 :indentation-violation? false :timestamp 0})
 
 (facts "when processing metrics"
        (fact "a method length metric can be found amongst a collection of metrics"

@@ -72,8 +72,9 @@ function join-all-metrics() {
   cat $WORK_DIR/*.metrics.all > ${UBERMETRICSFILE}
 
   echo -e "\033[33mJoining metrics file with Git commit history...\033[0m"
-  join -a 1 <(sort -k 1b,1 ${WORK_DIR}/blames.txt) <(sort -k 1b,1 ${UBERMETRICSFILE}) | sort -V > ${UBERMETRICSFILE}.history
-  sed -i.bak '/LL=/!d' ${UBERMETRICSFILE}.history
+  # join -a 1 <(sort -k 1b,1 ${WORK_DIR}/blames.txt) <(sort -k 1b,1 ${UBERMETRICSFILE}) | sort -V > ${UBERMETRICSFILE}.history
+  # sed -i.bak '/LL=/!d' ${UBERMETRICSFILE}.history
+  cp ${UBERMETRICSFILE} ${UBERMETRICSFILE}.history
 }
 
 function generate-abc() {

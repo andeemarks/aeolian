@@ -20,9 +20,12 @@
   "A schema for a single line of parsed metrics"
   {:author (s/maybe s/Str)
    :line-length s/Num
+   :line s/Num
    :source-file s/Str
    :method-length (s/maybe s/Num)
-   :indentation?  (s/maybe s/Str)
+   :method-count (s/maybe s/Num)
+   :file-length (s/maybe s/Num)
+   :indentation-violation? s/Bool
    :complexity s/Num
    :type s/Keyword
    :timestamp (s/maybe s/Num)})

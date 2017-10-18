@@ -15,7 +15,7 @@
 
        (let [input-file-name (fs/temp-name "foo" ".metrics")
              output-file-name (core/notation-file-name input-file-name)]
-         (against-background [(before :facts (spit input-file-name "Foo.java#1 LL=30"))
+         (against-background [(before :facts (spit input-file-name "{:source-file \"Foo.java\" :line 1 :indentation-violation? true :line-length \"30\"}"))
                               (after :facts (teardown input-file-name))]
                              (fact "succeeds if the supplied input file exists"
                                    (fs/exists? output-file-name) => falsey
