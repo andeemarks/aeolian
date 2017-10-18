@@ -86,20 +86,22 @@ function generate-midi() {
   ABCFILE=${UBERMETRICSFILE}.history.abc
   MIDIFILE=${UBERMETRICSFILE}.mid
   echo -e "\033[33mGenerating MIDI...\033[0m"
-  abc2midi ${ABCFILE} -s -o ${MIDIFILE}
+  abc2midi ${ABCFILE} -s -o ${MIDIFILE} > /dev/null
 
   MIDIARCHIVEDIR=${DIR}/archive/midi
   ABCARCHIVEDIR=${DIR}/archive/abc
   mkdir -p ${MIDIARCHIVEDIR}
   mkdir -p ${ABCARCHIVEDIR}
   echo -e "\033[33mArchiving generated files...\033[0m"
-  cp ${MIDIFILE} ${MIDIARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).mid
-  cp ${ABCFILE} ${ABCARCHIVEDIR}/${GITHUB_REPO}.$( date +"%Y-%m-%d_%H-%M-%S" ).abc
+  TIMESTAMP=$( date +"%Y-%m-%d_%H-%M-%S" )
+  cp ${MIDIFILE} ${MIDIARCHIVEDIR}/${GITHUB_REPO}.${TIMESTAMP}.mid
+  cp ${ABCFILE} ${ABCARCHIVEDIR}/${GITHUB_REPO}.${TIMESTAMP}.abc
 }
 
 function play-midi() {
   echo -e "\033[33mPlaying MIDI...\033[0m"
-  timidity ${MIDIFILE}
+  timidity ${MIDIFILE} > /dev/null
+  echo -e "\033[33mTo play again: timidity ${MIDIARCHIVEDIR}/${GITHUB_REPO}.${TIMESTAMP}.mid > /dev/null\033[0m"
 }
 
 set -e
