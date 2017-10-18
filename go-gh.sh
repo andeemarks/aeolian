@@ -43,7 +43,7 @@ function clone-repo() {
 function collect-commit-info() {
   echo -e "\033[33mFind commit history for each Java file...\033[0m"
   pushd $WORK_DIR/$GITHUB_REPO >/dev/null
-  find . -regex $SOURCE_FILE_RE | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print PREFIX $2 "#"$6 " AU=" $3 " TS=" $4}' > ${WORK_DIR}/blames.txt
+  find . -regex $SOURCE_FILE_RE | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print "{:source-file \"" PREFIX $2 "#"$6 "\" :author \"" $3 "\" :timestamp \"" $4 "\"}"}' > ${WORK_DIR}/blames.txt
   popd >/dev/null
 }
 
