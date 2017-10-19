@@ -11,7 +11,13 @@
 
        (facts "the line length"
               (fact "can be found"
-                    (:line-length (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\"}")) => 13))
+                    (:line-length (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"13\"}")) => 13)
+
+              (fact "can include non-numeric chars"
+                    (:line-length (parser/parse "{:source-file \"/Notification.java\" :line 190 :line-length \"1,371\"}")) => 1371)
+
+              (fact "defaults to 0"
+                    (:line-length (parser/parse "{:source-file \"/Notification.java\" :line 190 }")) => 0))
 
        (facts "indentation errors"
               (fact "can be found"

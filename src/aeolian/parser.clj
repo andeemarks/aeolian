@@ -1,4 +1,5 @@
 (ns aeolian.parser
+  (import java.text.NumberFormat)
   (:require
    [taoensso.timbre :as log]))
 
@@ -11,8 +12,12 @@
     (:method-length metric) :method
     :else :regular))
 
+(defn- convert-line-length [line-length]
+  (let [formatter (NumberFormat/getInstance)]
+    (. formatter parse (or line-length "0"))))
+
 (defn- convert [raw-metric]
-  {:line-length (. Integer parseInt (:line-length raw-metric))
+  {:line-length (convert-line-length (:line-length raw-metric))
    :source-file (:source-file raw-metric)
    :author (:author raw-metric)
    :method-length (. Integer parseInt (or (:method-length raw-metric) "0"))
@@ -24,7 +29,11 @@
    :complexity (. Integer parseInt (or (:complexity raw-metric) "0"))})
 
 (defn parse [metric]
-  (let [raw-metric (read-string metric)
+  (try
+    (let [raw-metric (read-string metric)
         metric-type {:type (type-from-metric raw-metric)}
         default-values {:indentation-violation? false :timestamp nil :method-length nil :complexity 0 :author ""}]
-    (merge default-values metric-type (convert raw-metric))))
+      (merge default-values metric-type (convert raw-metric)))
+     (catch Exception e 
+      (println (str "Parsing error on line: " metric))
+      (throw e))))
