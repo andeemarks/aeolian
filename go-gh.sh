@@ -43,7 +43,7 @@ function clone-repo() {
 function collect-commit-info() {
   echo -e "\033[33mFind commit history for each Java file...\033[0m"
   pushd $WORK_DIR/$GITHUB_REPO >/dev/null
-  find . -regex $SOURCE_FILE_RE | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print "{:source-file \"" PREFIX $2 "#"$6 "\" :author \"" $3 "\" :timestamp \"" $4 "\"}"}' > ${WORK_DIR}/blames.txt
+  find . -regex $SOURCE_FILE_RE | xargs -n1 git blame -f -t -e | awk -v PREFIX=${WORK_DIR}/${GITHUB_REPO}/ -F "[ ()]+" '{print "{ :source-file \"" PREFIX $2 "#"$6 "\" :author \"" $3 "\" :timestamp " $4 " }" }' > ${WORK_DIR}/blames.txt
   popd >/dev/null
 }
 
@@ -72,9 +72,8 @@ function join-all-metrics() {
   cat $WORK_DIR/*.metrics.all > ${UBERMETRICSFILE}
 
   echo -e "\033[33mJoining metrics file with Git commit history...\033[0m"
-  # join -a 1 <(sort -k 1b,1 ${WORK_DIR}/blames.txt) <(sort -k 1b,1 ${UBERMETRICSFILE}) | sort -V > ${UBERMETRICSFILE}.history
-  # sed -i.bak '/LL=/!d' ${UBERMETRICSFILE}.history
-  cp ${UBERMETRICSFILE} ${UBERMETRICSFILE}.history
+  join -j 3 -a 2 <(sort -k 1b,3 ${WORK_DIR}/blames.txt) <(sort -k 1b,3 ${UBERMETRICSFILE}) | sort -V | cut -d " " -f1,2,3,8,9,10 --complement > ${UBERMETRICSFILE}.history
+  sed -i 's/^/{/' ${UBERMETRICSFILE}.history
 }
 
 function generate-abc() {
