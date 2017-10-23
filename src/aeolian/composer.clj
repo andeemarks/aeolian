@@ -3,6 +3,7 @@
   (:require [aeolian.midi.core :as midi]
             [aeolian.abc.tempo :as t]
             [aeolian.abc.notes :as n]
+            [aeolian.abc.notelength :as length]
             [aeolian.abc.core :as abc]
             [taoensso.timbre :as log]
             [schema.core :as s]
@@ -46,10 +47,10 @@
 (defn build-note-length [metric-type]
   ; (println metric-type)
   (case metric-type
-    :regular ""
-    :method "2"
-    :class "4"
-    :file "8"))
+    :regular length/whole
+    :method length/half
+    :class length/quarter
+    :file length/eighth))
 
 (defn build-lyrics [current-source-file] (abc/lyrics-for current-source-file))
 
