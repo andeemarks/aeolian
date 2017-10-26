@@ -1,4 +1,4 @@
-(ns aeolian.abc.notes
+(ns aeolian.abc.notepitch
   (:require [aeolian.abc.key :as k]))
 
 (def ^:const rest-note "z")
@@ -8,7 +8,6 @@
 (def ^:const major-octave-3 (map clojure.string/lower-case major-raw-notes))
 (def ^:const major-octave-4 (map #(str %1 "'") major-octave-3))
 (def ^:const major-octave-5 (map #(str %1 "'") major-octave-4))
-(def ^:const major-chords ["C" "Dm" "Em" "F" "G" "A+" "B+"])
 
 (def ^:const minor-raw-notes ["C" "^D" "G" "^A"])
 (def ^:const minor-octave-1 (map #(str %1 ",") minor-raw-notes))
@@ -16,27 +15,9 @@
 (def ^:const minor-octave-3 (map clojure.string/lower-case minor-raw-notes))
 (def ^:const minor-octave-4 (map #(str %1 "'") minor-octave-3))
 (def ^:const minor-octave-5 (map #(str %1 "'") minor-octave-4))
-(def ^:const minor-chords ["Cm" "Ddim" "_E" "Fm" "Gm" "_A+" "_B+"])
-
-(defn- chord [chord-index composition-key]
-  (if (= k/major composition-key)
-    (str "\"" (nth major-chords chord-index) "\"")
-    (str "\"" (nth minor-chords chord-index) "\"")))
-
-(defn chord-for-method-length [method-length composition-key current-method-length]
-  (cond
-    (nil? method-length) (chord-for-method-length (or current-method-length 0) composition-key nil)
-    (<= 1 method-length 5) (chord 0 composition-key)
-    (<= 6 method-length 10) (chord 1 composition-key)
-    (<= 11 method-length 15) (chord 2 composition-key)
-    (<= 16 method-length 20) (chord 3 composition-key)
-    (<= 21 method-length 29) (chord 4 composition-key)
-    (<= 30 method-length 39) (chord 5 composition-key)
-    (<= 40 method-length) (chord 6 composition-key)
-    :else (chord 0 composition-key)))
 
 (defn- octave-idx-to-octave-name [octave-prefix octave-idx]
-  (intern 'aeolian.abc.notes (symbol (str octave-prefix octave-idx))))
+  (intern 'aeolian.abc.notepitch (symbol (str octave-prefix octave-idx))))
 
 (defn- key-to-octave [octave-idx composition-key]
   (if (= k/major composition-key)

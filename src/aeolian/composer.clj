@@ -2,7 +2,8 @@
   (:gen-class)
   (:require [aeolian.midi.core :as midi]
             [aeolian.abc.tempo :as t]
-            [aeolian.abc.notes :as n]
+            [aeolian.abc.notepitch :as pitch]
+            [aeolian.abc.chord :as chord]
             [aeolian.abc.notelength :as length]
             [aeolian.abc.core :as abc]
             [taoensso.timbre :as log]
@@ -34,7 +35,7 @@
 (defn find-longest-method-length-in [metrics]
   (:method-length (apply max-key #(or (:method-length %) 0) metrics)))
 
-(defn build-note [line-length composition-key] (n/note-for-line-length line-length composition-key))
+(defn build-note [line-length composition-key] (pitch/note-for-line-length line-length composition-key))
 
 (defn build-tempo [complexity]
   (if (> complexity 1)
@@ -83,7 +84,7 @@
    method-length]
   (let [measure               (build-measure metrics-in-measure composition-key method-length)
         current-method-length (find-longest-method-length-in metrics-in-measure)
-        accompanying-chord    (n/chord-for-method-length current-method-length composition-key (:method-length measure))]
+        accompanying-chord    (chord/chord-for-method-length current-method-length composition-key (:method-length measure))]
     (abc/measure accompanying-chord (:notes measure))))
 
 (s/defn split-metrics-into-equal-measures :- [[ParsedMetricLine]]
