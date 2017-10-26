@@ -1,7 +1,7 @@
 (ns aeolian.abc.chord
   (:require [aeolian.abc.key :as k]))
 
-(def ^:const major-chords ["C" "Dm" "Em" "F" "G" "A+" "B+"])
+(def ^:const major-chords ["C" "Dm" "Em" "F" "G" "Am" "Bdim"])
 (def ^:const minor-chords ["Cm" "Ddim" "_E" "Fm" "Gm" "_A+" "_B+"])
 
 (defn- chord [chord-index composition-key]
