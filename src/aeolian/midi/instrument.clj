@@ -1,4 +1,4 @@
-(ns aeolian.midi.core)
+(ns aeolian.midi.instrument)
 
 (def hi-hat "42")
 (def clap "39")

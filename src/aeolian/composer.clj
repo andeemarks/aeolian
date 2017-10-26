@@ -1,6 +1,6 @@
 (ns aeolian.composer
   (:gen-class)
-  (:require [aeolian.midi.core :as midi]
+  (:require [aeolian.midi.instrument :as midi]
             [aeolian.abc.tempo :as t]
             [aeolian.abc.notepitch :as pitch]
             [aeolian.abc.chord :as chord]

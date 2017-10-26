@@ -1,7 +1,7 @@
 (ns aeolian.core
   (:gen-class)
   (:require [aeolian.composer :as composer]
-            [aeolian.midi.core :as midi]
+            [aeolian.midi.instrument :as midi]
             [aeolian.parser :as parser]
             [taoensso.timbre :as log]
             [schema.core :as s]
