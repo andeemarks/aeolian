@@ -31,9 +31,9 @@
 (defn parse [metric]
   (try
     (let [raw-metric (read-string metric)
-        metric-type {:type (type-from-metric raw-metric)}
-        default-values {:indentation-violation? false :timestamp nil :method-length nil :complexity 0 :author ""}]
+          metric-type {:type (type-from-metric raw-metric)}
+          default-values {:indentation-violation? false :timestamp nil :method-length nil :complexity 0 :author ""}]
       (merge default-values metric-type (convert raw-metric)))
-     (catch Exception e 
+    (catch Exception e
       (println (str "Parsing error on line: " metric))
       (throw e))))
