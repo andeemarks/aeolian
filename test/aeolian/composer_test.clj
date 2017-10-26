@@ -3,7 +3,7 @@
   (:require [aeolian.composer :as c]
             [clojure.string :as str]
             [aeolian.abc.tempo :as t]
-            [aeolian.abc.notes :as n]
+            [aeolian.abc.notepitch :as n]
             [aeolian.abc.key :as k]))
 
 (def metric {:type :regular :source-file "Foo.java" :author "Foo" :complexity 0 :line-length 0 :method-length 1 :line 34 :method-count 0 :file-length 0 :indentation-violation? false :timestamp 0})
