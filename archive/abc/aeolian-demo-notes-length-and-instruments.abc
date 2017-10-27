@@ -1,0 +1,166 @@
+
+X:1
+T:/home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes.metrics.history
+C:AEOLIAN
+M:4/4
+L:1/8
+Q:1/4=120
+K:Amin
+%%MIDI chordvol 50
+%%MIDI channel 1
+%%MIDI drum dd2d2ddd2d2d 59 51 51 59 59 51 51 59 100 50 50 100 100 50 50 100
+%%MIDI drumon
+%%MIDI gchord c
+| "Cm"^a'' [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G, [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G, [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^a [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+g'' [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G, [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^a [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^A,8 [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"c' [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^A, [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^d' [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+c'' [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"g [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+c [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^A, [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^d4 [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^d' [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+c' [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+c [I: MIDI program 13] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"^A [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^A [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+C [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^a [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 73] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"^D [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+C2 [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D4, [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G2 [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D2, [I: MIDI program 35] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"c' [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+C2 [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D, [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+C8 [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^d [I: MIDI program 42] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"^D, [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^d'' [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+c'' [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+C2 [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D, [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+c'' [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"^a4 [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D4, [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G2 [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+G [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D4 [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+C2 [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 58] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
+| "Cm"^D [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D2 [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D, [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+c4 [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^A8 [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+^D2 [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+z [I: MIDI program 26] 
+w: /home/amarks/code/aeolian/target/tmp.4QjfXIzFRn/aeolian-demo-notes/ImmediateThinScheduler.java
+ |
