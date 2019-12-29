@@ -2,6 +2,7 @@
 /lib
 /classes
 /checkouts
+/.vscode
 pom.xml
 pom.xml.asc
 *.class
@@ -24,3 +25,4 @@ hs_err_pid85826.log
 tmp.*
 
 combined-metrics.txt
+go-gh.sh
