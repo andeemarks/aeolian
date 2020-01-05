@@ -164,8 +164,7 @@ This script will perform a number of actions:
    ALSA pcm 'default' set buffer size 32768, period size 8192 bytes
    Playing /home/amarks/Code/aeolian/tmp.YtpN0tR5yG/grunt-maven-plugin.metrics.mid
    MIDI file: /home/amarks/Code/aeolian/tmp.YtpN0tR5yG/grunt-maven-plugin.metrics.mid
-   Format: 1  Tracks: 3  Divisions: 480
-   Text: @KMIDI KARAOKE FILE
+   ...
    Sequence: /home/amarks/Code/aeolian/tmp.YtpN0tR5yG/grunt-maven-plugin.metrics.history
    Text: @I/home/amarks/Code/aeolian/tmp.YtpN0tR5yG/grunt-maven-plugin.metrics.history
    Text: @IAEOLIAN
