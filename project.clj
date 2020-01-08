@@ -11,12 +11,12 @@
           :source-paths ["src"]
           :source-uri "https://github.com/andeemarks/aeolian/blob/master/{filepath}#L{line}"}
   :dependencies [
-                 [org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojure "1.10.1"]
                  [proto-repl "0.3.1"]
                  [clansi "1.0.0"]
-                 [prismatic/schema "1.1.6"]
+                 [prismatic/schema "1.1.12"]
                  [com.taoensso/timbre "4.10.0"]
-                 [org.clojure/tools.namespace "0.2.11"]]
+                 [org.clojure/tools.namespace "0.3.1"]]
   :plugins
     [[lein-cljfmt "0.5.6"]]
   :uberjar-name "aeolian-standalone.jar"
@@ -25,7 +25,7 @@
        {:source-paths ["dev" "src" "test"]
         :plugins [[lein-midje "3.2.1"]]
         :dependencies [
-                       [com.jakemccrary/lein-test-refresh "0.21.1"]
+                       [com.jakemccrary/lein-test-refresh "0.24.1"]
                        [me.raynes/fs "1.4.6"]
                        [lein-midje "3.2.2"]
                        [midje "1.9.9" :exclusions [org.clojure/clojure]]]}}
