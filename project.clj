@@ -27,8 +27,8 @@
         :dependencies [
                        [com.jakemccrary/lein-test-refresh "0.21.1"]
                        [me.raynes/fs "1.4.6"]
-                       [lein-midje "3.2.1"]
-                       [midje "1.8.3" :exclusions [org.clojure/clojure]]]}}
+                       [lein-midje "3.2.2"]
+                       [midje "1.9.9" :exclusions [org.clojure/clojure]]]}}
   :lein-release {:build-uberjar true :deploy-via :lein-install}
   :assemble 
     {:filesets {"" [["go.sh"]["go-gh.sh"]["gen-abc-prod.sh" :as "gen-abc.sh"]["README.md"]["LICENSE"]]
