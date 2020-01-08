@@ -52,7 +52,6 @@ Assuming you have a Github repo you want to point Aeolian at, then start with th
 This script will perform a number of actions:
 
 1. _Clone the repo locally._
-
 	The repo will appear in a temporary directory underneath the Aeolian install dir (hereafter known as the $WORK_DIR).  For example:
 
 	```
@@ -60,9 +59,7 @@ This script will perform a number of actions:
 	Checking GitHub for repo 'grunt-maven-plugin' for user 'allegro'...
 	Cloning repo to /home/amarks/Code/aeolian/tmp.YtpN0tR5yG...
 	```
-
 1. _Find the commit history for all the source files._
-
 	Sample terminal output:
 
 	```
@@ -71,12 +68,12 @@ This script will perform a number of actions:
 
 	The output from this stage is a file called ```blames.txt``` in the $WORK_DIR.  The fields in this file are:
 
-Field 					| Position 	| Prefix
-----------------| ---------	| ---
-Source file 		| 1 		| None
-Line number 		| 2 		| #
-Git commit author 		| 3 		| AU=
-Git commit timestamp 	| 4 		| TS=
+	Field 					| Position 	| Prefix
+	----------------| ---------	| ---
+	Source file 		| 1 		| None
+	Line number 		| 2 		| #
+	Git commit author 		| 3 		| AU=
+	Git commit timestamp 	| 4 		| TS=
 
 1. _Generate the metrics._
 
