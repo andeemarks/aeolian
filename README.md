@@ -1,6 +1,6 @@
 # Aeolian
 
-[![CircleCI](https://circleci.com/gh/andeemarks/aeolian.svg?style=svg)](https://circleci.com/gh/andeemarks/aeolian) [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
+[![Build Status](https://travis-ci.org/andeemarks/aeolian.svg?branch=master)](https://travis-ci.org/andeemarks/aeolian) [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)
 
 A (mostly) Clojure console application that processes Java source code through [Checkstyle][10] (producing source code quality metrics) and creates a musical representation of these metrics using [ABC Notation][1] and ultimately [MIDI][3].
 
