@@ -179,6 +179,6 @@ Git commit timestamp 	| 4 		| TS=
 
 ## License
 
-Copyright © 2015-2017 ThoughtWorks
+Copyright © 2015-2020 ThoughtWorks
 
 Distributed under the Eclipse Public License, the same as Clojure.

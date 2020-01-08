@@ -113,6 +113,7 @@ check-deps
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 GITHUB_USER=$1
 GITHUB_REPO=$2
+LEIN_USE_BOOTCLASSPATH=no
 
 echo -e "\033[33mChecking GitHub for repo '$GITHUB_REPO' for user '$GITHUB_USER'...\033[0m"
 
