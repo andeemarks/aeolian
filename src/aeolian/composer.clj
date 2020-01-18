@@ -7,8 +7,7 @@
             [aeolian.abc.notelength :as length]
             [aeolian.abc.core :as abc]
             [taoensso.timbre :as log]
-            [schema.core :as s]
-            [aeolian.abc.header :as h]))
+            [schema.core :as s]))
 
 (log/set-level! :info)
 
