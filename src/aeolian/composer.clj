@@ -38,11 +38,11 @@
 (defn build-note [line-length composition-key] (pitch/note-for-line-length line-length composition-key))
 
 (defn build-tempo [complexity]
-  (if (> complexity 1)
+  (when (> complexity 1)
     (abc/inline (t/tempo-for complexity))))
 
 (defn map-indentation [indentation?]
-  (if (not (nil? indentation?))
+  (when (not (nil? indentation?))
     (midi/volume-boost)))
 
 (defn build-note-length [metric-type]
@@ -99,5 +99,5 @@
     (apply str mapped-notes)))
 
 (s/defn compose [metrics :- [ParsedMetricLine] composition-key]
-  (if (> (count metrics) 0)
+  (when (> (count metrics) 0)
     (map-metrics metrics composition-key)))
