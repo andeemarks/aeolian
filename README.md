@@ -1,4 +1,4 @@
-# Aeolian
+![](./resources/logo.png)
 
 [![Build Status](https://travis-ci.org/andeemarks/aeolian.svg?branch=master)](https://travis-ci.org/andeemarks/aeolian) [![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/andeemarks/aeolian) ![GitHub issues](https://img.shields.io/github/issues/andeemarks/aeolian) ![GitHub language count](https://img.shields.io/github/languages/count/andeemarks/aeolian) ![GitHub top language](https://img.shields.io/github/languages/top/andeemarks/aeolian)
 
