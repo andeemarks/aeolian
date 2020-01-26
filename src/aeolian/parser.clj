@@ -1,5 +1,5 @@
 (ns aeolian.parser
-  (import java.text.NumberFormat)
+  (:import java.text.NumberFormat)
   (:require
    [taoensso.timbre :as log]))
 
