@@ -1,11 +1,12 @@
 (ns aeolian.abc.notepitch
-  (:require [aeolian.abc.key :as k]))
+  (:require [aeolian.abc.key :as k]
+            [clojure.string :as strg]))
 
 (def ^:const rest-note "z")
 (def ^:const major-raw-notes ["C" "E" "G" "B"])
 (def ^:const major-octave-1 (map #(str %1 ",") major-raw-notes))
 (def ^:const major-octave-2 major-raw-notes)
-(def ^:const major-octave-3 (map clojure.string/lower-case major-raw-notes))
+(def ^:const major-octave-3 (map strg/lower-case major-raw-notes))
 (def ^:const major-octave-4 (map #(str %1 "'") major-octave-3))
 (def ^:const major-octave-5 (map #(str %1 "'") major-octave-4))
 

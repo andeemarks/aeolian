@@ -4,7 +4,6 @@
             [aeolian.midi.instrument :as midi]
             [aeolian.parser :as parser]
             [taoensso.timbre :as log]
-            [schema.core :as s]
             [aeolian.abc.header :as h]
             [aeolian.abc.key :as k]
             [aeolian.banner :as banner]
