@@ -4,6 +4,8 @@ metadata:
   name: aeolian
   annotations:
     github.com/project-slug: andeemarks/aeolian
+  tags:
+  -  clojure
 spec:
   type: other
   lifecycle: unknown
